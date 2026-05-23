@@ -14,12 +14,14 @@ Current active execution line:
 Documentation hierarchy for architecture and scope:
 1. High-level architecture:
    - `HIGH_LEVEL_ARCHITECTURE.md`
-2. Low-level architecture set:
+2. Telemetry catalog:
+   - `TELEMETRY_CATALOG.md`
+3. Low-level architecture set:
    - `architecture/low-level/`
-3. MVP scope and action flow:
+4. MVP scope and action flow:
    - `MVP_SCOPE.md`
    - `MVP_PHASE_ACTION_PLAN.md`
-4. Production-ready scope:
+5. Production-ready scope:
    - `PRODUCTION_READY_SCOPE.md`
 
 ## 1. Selected pilot scope

@@ -37,10 +37,12 @@ Connect AzureRCAPlanner to real Azure telemetry sources to replace simulated sam
 ### 4. **Azure Monitor (Metrics)**
 - **Purpose**: Resource-level metrics
 - **Telemetry Types**:
-  - CPU, memory, disk usage
-  - Network in/out
-  - Database connections
-  - Query performance
+  - SQL metrics (CPU, sessions, workers, deadlocks, wait enrichment)
+  - VM metrics (CPU, memory, disk, network, queue depth)
+  - App Service metrics (HTTP status families, queue, response time, plan CPU/memory)
+  - Azure Firewall metrics (rule hits, SNAT utilization, threat intel alerts)
+  - Cosmos DB metrics (RU, requests, availability, replication latency)
+  - Redis metrics (hits/misses/read/write/load/connected clients)
 - **Query Tool**: Metrics API
 - **Mapping**: Database/Infrastructure-layer telemetry
 
@@ -57,6 +59,12 @@ Connect AzureRCAPlanner to real Azure telemetry sources to replace simulated sam
 - **Purpose**: OS-level and middleware telemetry
 - **Telemetry Types**: Application-specific metrics, business KPIs
 - **Mapping**: Application-layer custom events
+
+### Catalog Reference
+- Use `TELEMETRY_CATALOG.md` as parser/schema onboarding reference for:
+  - standard/custom/vendor schema behavior,
+  - source metric onboarding,
+  - parser versioning requirements for vendor logs.
 
 ---
 

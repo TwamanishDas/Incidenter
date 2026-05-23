@@ -36,10 +36,14 @@ All collectors inherit from `CollectorBase` abstract class which provides:
 - Maps to `NetworkPayload` telemetry
 
 **d) Azure Monitor Metrics Collector** (`monitor_metrics_collector.py`)
-- Queries resource metrics for SQL databases, VMs
-- Collects CPU, memory, disk, network metrics
+- Queries resource metrics for SQL databases, VMs, App Service, Azure Firewall, Cosmos DB, and Redis
+- Collects CPU, memory, disk, network, queue, request, cache, and platform availability metrics
 - Adds correlation enrichment for metrics events (`correlation_id`, `region` best effort)
 - Extensible for additional resource types
+
+Schema behavior reference for ingestion:
+- `TELEMETRY_CATALOG.md`
+- `backend/models.py` (`schema_type=custom/vendor` handling and parser version requirements)
 
 **e) Activity & Health Collector** (`activity_health_collector.py`)
 - Queries Azure Activity logs for deploy/config/RBAC change events

@@ -40,6 +40,7 @@ It was created separately from the existing `AzureLens` project.
 - `README.md` — MVP overview, running instructions, next steps
 - `MASTER_PHASE_STEP_TRACKER.md` — phase/step/sub-step status tracker and version map
 - `HIGH_LEVEL_ARCHITECTURE.md` — high-level architecture entry and low-level architecture routing
+- `TELEMETRY_CATALOG.md` — ingestion schema-type rules and source metric catalog
 - `MVP_SCOPE.md` — MVP component boundary by phase
 - `MVP_PHASE_ACTION_PLAN.md` — MVP execution order and control gates
 - `PRODUCTION_READY_SCOPE.md` — production-grade component expansion plan
@@ -146,6 +147,24 @@ It was created separately from the existing `AzureLens` project.
 - Linked architecture/scope docs into:
   - `PILOT_RCA_MVP_PLAN.md`
   - `MASTER_PHASE_STEP_TRACKER.md`
+
+### Latest update (May 23, 2026) - Telemetry catalog + ingestion schema upgrade
+
+- Added telemetry source catalog:
+  - `TELEMETRY_CATALOG.md`
+- Extended normalized telemetry event model (`backend/models.py`) with:
+  - `source_system`, `source_category`
+  - `record_type`, `schema_type`, `collection_channel`
+  - `ingestion_timestamp`, `fields`, `raw`, `environment`
+  - `parser_version` (required for vendor schema type)
+- Enforced schema behavior in model validation:
+  - custom schema persists full `raw` payload
+  - vendor schema requires `parser_version` and persists full `raw` payload
+- Expanded Monitor Metrics collector coverage (`backend/collectors/monitor_metrics_collector.py`):
+  - SQL, VM, App Service, Azure Firewall, Cosmos DB, Redis
+- Added tests:
+  - `backend/tests/test_telemetry_schema_rules.py`
+  - `backend/tests/test_monitor_metrics_collector_routing.py`
 
 ### Latest update (May 22, 2026) - Step 4 hardening
 

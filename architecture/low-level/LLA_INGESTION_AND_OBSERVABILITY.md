@@ -30,6 +30,7 @@ Define internals for telemetry ingestion, normalization, scheduler orchestration
    - App Insights query results
 2. Internal normalized contract:
    - `LAYER_1_DATA_CONTRACT.md`
+   - `TELEMETRY_CATALOG.md`
    - `TelemetryEvent` in `backend/models.py`
 3. Output:
    - events posted to `POST /telemetry`
@@ -50,6 +51,9 @@ Define internals for telemetry ingestion, normalization, scheduler orchestration
 3. Bind `.env` live-mode settings.
 4. Validate `/scheduler/status` and `/ingestion/checklist`.
 5. Move to tuning window/dedup strategy in Phase 2 Step 2.
+6. Onboard custom/vendor sources using schema-type rules:
+   - custom -> persist full `raw`
+   - vendor -> require `parser_version`
 
 ## Traceability
 

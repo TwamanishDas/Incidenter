@@ -8,12 +8,14 @@ Purpose: single source of truth for phase, step, and sub-step execution status.
 
 1. Top architecture entry:
    - `HIGH_LEVEL_ARCHITECTURE.md`
-2. Low-level architecture folder:
+2. Telemetry source catalog:
+   - `TELEMETRY_CATALOG.md`
+3. Low-level architecture folder:
    - `architecture/low-level/`
-3. MVP coverage and action mapping:
+4. MVP coverage and action mapping:
    - `MVP_SCOPE.md`
    - `MVP_PHASE_ACTION_PLAN.md`
-4. Production-ready extension:
+5. Production-ready extension:
    - `PRODUCTION_READY_SCOPE.md`
 
 ## Version Map
@@ -72,6 +74,7 @@ Purpose: single source of truth for phase, step, and sub-step execution status.
 7. Sub-step 1.7: NSG flow log enablement [Pending]
 8. Sub-step 1.8: Local `.env` live mode configuration and scheduler validation [Pending]
 9. Sub-step 1.9: Architecture documentation hierarchy (high-level -> low-level -> scope -> tracker) [Completed]
+10. Sub-step 1.10: Telemetry metrics catalog integration (docs + schema-aware ingestion model + metric collector expansion) [Completed]
 
 ### Step 2 - Ingestion tuning [Pending]
 1. Sub-step 2.1: tune `COLLECTION_INTERVAL`.

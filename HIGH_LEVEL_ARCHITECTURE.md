@@ -43,10 +43,12 @@ Users -> Edge (Front Door/App Gateway) -> App/API -> Azure SQL
 
 1. Master execution tracker:
    - `MASTER_PHASE_STEP_TRACKER.md`
-2. MVP scope and phase tracking:
+2. Telemetry source catalog:
+   - `TELEMETRY_CATALOG.md`
+3. MVP scope and phase tracking:
    - `MVP_SCOPE.md`
    - `MVP_PHASE_ACTION_PLAN.md`
-3. Production-ready scope and phase tracking:
+4. Production-ready scope and phase tracking:
    - `PRODUCTION_READY_SCOPE.md`
 
 ## Relationship Rules

@@ -11,7 +11,15 @@ from azure.core.exceptions import HttpResponseError
 from azure.monitor.query import LogsQueryClient, MetricsQueryClient
 
 from ..azure_config import AzureConfig, get_azure_credential
-from ..models import ApplicationPayload, DatabasePayload, TelemetryEvent, TelemetryOrigin, TelemetrySource
+from ..models import (
+    ApplicationPayload,
+    DatabasePayload,
+    NetworkPayload,
+    TelemetryEvent,
+    TelemetryOrigin,
+    TelemetryRecordType,
+    TelemetrySource,
+)
 from .collector_base import CollectorBase
 from .kql_utils import as_float, as_int, rows_as_dicts
 
@@ -69,14 +77,33 @@ class MonitorMetricsCollector(CollectorBase):
         start_time, end_time = self.get_query_window()
         events: list[TelemetryEvent] = []
         for resource_id in self.resource_ids:
-            if "/providers/Microsoft.Sql/servers/" in resource_id:
+            resource_id_lower = resource_id.lower()
+            if "/providers/microsoft.sql/servers/" in resource_id_lower:
                 sql_event = self._query_sql_metrics(resource_id, start_time, end_time)
                 if sql_event:
                     events.append(sql_event)
-            elif "/providers/Microsoft.Compute/virtualMachines/" in resource_id:
+            elif "/providers/microsoft.compute/virtualmachines/" in resource_id_lower:
                 vm_event = self._query_vm_metrics(resource_id, start_time, end_time)
                 if vm_event:
                     events.append(vm_event)
+            elif "/providers/microsoft.web/sites/" in resource_id_lower:
+                app_service_event = self._query_app_service_metrics(resource_id, start_time, end_time)
+                if app_service_event:
+                    events.append(app_service_event)
+            elif "/providers/microsoft.network/azurefirewalls/" in resource_id_lower:
+                firewall_event = self._query_azure_firewall_metrics(resource_id, start_time, end_time)
+                if firewall_event:
+                    events.append(firewall_event)
+            elif "/providers/microsoft.documentdb/databaseaccounts/" in resource_id_lower:
+                cosmos_event = self._query_cosmos_metrics(resource_id, start_time, end_time)
+                if cosmos_event:
+                    events.append(cosmos_event)
+            elif "/providers/microsoft.cache/redis/" in resource_id_lower:
+                redis_event = self._query_redis_metrics(resource_id, start_time, end_time)
+                if redis_event:
+                    events.append(redis_event)
+            else:
+                logger.debug("MonitorMetricsCollector: unsupported resource type for %s", resource_id)
         return events
 
     def _resolve_region(self, resource_id: str, source_region: str | None = None) -> str | None:
@@ -128,6 +155,10 @@ class MonitorMetricsCollector(CollectorBase):
             timestamp=end_time,
             source=TelemetrySource.DATABASE,
             origin=TelemetryOrigin.AZURE_MONITOR_METRICS,
+            source_system="Azure SQL Database",
+            source_category="sql_platform_metrics",
+            record_type=TelemetryRecordType.METRIC,
+            collection_channel="Azure Monitor Metrics API",
             payload=payload_data,
             raw_message="Azure Monitor SQL metrics summary",
             resource_id=resource_id,
@@ -144,12 +175,25 @@ class MonitorMetricsCollector(CollectorBase):
         end_time: datetime,
     ) -> TelemetryEvent | None:
         cpu_percent = self._first_available_metric(resource_id, ["Percentage CPU"], start_time, end_time)
+        available_memory_bytes = self._first_available_metric(resource_id, ["Available Memory Bytes"], start_time, end_time, preferred=("average", "minimum", "maximum", "total"))
         network_in = self._first_available_metric(resource_id, ["Network In Total"], start_time, end_time, preferred=("total", "average", "maximum"))
         network_out = self._first_available_metric(resource_id, ["Network Out Total"], start_time, end_time, preferred=("total", "average", "maximum"))
         disk_read = self._first_available_metric(resource_id, ["Disk Read Bytes"], start_time, end_time, preferred=("total", "average", "maximum"))
         disk_write = self._first_available_metric(resource_id, ["Disk Write Bytes"], start_time, end_time, preferred=("total", "average", "maximum"))
+        os_disk_queue_depth = self._first_available_metric(resource_id, ["OS Disk Queue Depth"], start_time, end_time, preferred=("maximum", "average", "total"))
 
-        if all(value is None for value in (cpu_percent, network_in, network_out, disk_read, disk_write)):
+        if all(
+            value is None
+            for value in (
+                cpu_percent,
+                available_memory_bytes,
+                network_in,
+                network_out,
+                disk_read,
+                disk_write,
+                os_disk_queue_depth,
+            )
+        ):
             return None
 
         inferred_error_rate = 0.0
@@ -173,16 +217,266 @@ class MonitorMetricsCollector(CollectorBase):
         payload_data["network_out_total"] = max(0.0, float(network_out or 0.0))
         payload_data["disk_read_bytes"] = max(0.0, float(disk_read or 0.0))
         payload_data["disk_write_bytes"] = max(0.0, float(disk_write or 0.0))
+        payload_data["available_memory_bytes"] = max(0.0, float(available_memory_bytes or 0.0))
+        payload_data["os_disk_queue_depth"] = max(0.0, float(os_disk_queue_depth or 0.0))
 
         return TelemetryEvent(
             timestamp=end_time,
             source=TelemetrySource.APPLICATION,
             origin=TelemetryOrigin.AZURE_MONITOR_METRICS,
+            source_system="Azure Virtual Machine",
+            source_category="vm_platform_metrics",
+            record_type=TelemetryRecordType.METRIC,
+            collection_channel="Azure Monitor Metrics API",
             payload=payload_data,
             raw_message="Azure Monitor VM metrics summary",
             resource_id=resource_id,
             subscription_id=_subscription_from_resource_id(resource_id) or AzureConfig.SUBSCRIPTION_ID,
             region=region,
+            operation_name=operation_name,
+            correlation_id=correlation_id,
+        )
+
+    def _query_app_service_metrics(
+        self,
+        resource_id: str,
+        start_time: datetime,
+        end_time: datetime,
+    ) -> TelemetryEvent | None:
+        http_2xx = self._first_available_metric(resource_id, ["Http2xx"], start_time, end_time, preferred=("total", "average", "maximum"))
+        http_3xx = self._first_available_metric(resource_id, ["Http3xx"], start_time, end_time, preferred=("total", "average", "maximum"))
+        http_4xx = self._first_available_metric(resource_id, ["Http4xx"], start_time, end_time, preferred=("total", "average", "maximum"))
+        http_5xx = self._first_available_metric(resource_id, ["Http5xx"], start_time, end_time, preferred=("total", "average", "maximum"))
+        avg_response_ms = self._first_available_metric(resource_id, ["AverageResponseTime"], start_time, end_time)
+        app_queue = self._first_available_metric(resource_id, ["RequestsInApplicationQueue", "HttpQueueLength"], start_time, end_time, preferred=("maximum", "average", "total"))
+        cpu_percent = self._first_available_metric(resource_id, ["CpuPercentage"], start_time, end_time)
+        memory_percent = self._first_available_metric(resource_id, ["MemoryPercentage"], start_time, end_time)
+
+        if all(
+            value is None
+            for value in (http_2xx, http_3xx, http_4xx, http_5xx, avg_response_ms, app_queue, cpu_percent, memory_percent)
+        ):
+            return None
+
+        total_requests = max(0.0, float(http_2xx or 0.0) + float(http_3xx or 0.0) + float(http_4xx or 0.0) + float(http_5xx or 0.0))
+        error_rate = min(100.0, (float(http_5xx or 0.0) / max(1.0, total_requests)) * 100.0)
+        window_minutes = max(1, int((end_time - start_time).total_seconds() / 60))
+        operation_name = "AzureMonitorAppServiceMetricsSummary"
+        correlation_id = self._synthetic_correlation_id(resource_id, operation_name, start_time, end_time)
+
+        payload = ApplicationPayload(
+            application_name=f"appservice:{_resource_name(resource_id)}",
+            request_rate_per_min=max(0, int(total_requests / window_minutes)),
+            error_rate_pct=error_rate,
+            avg_response_ms=max(0.0, float(avg_response_ms or 0.0)),
+            p95_response_ms=None,
+            status_5xx_count=max(0, int(http_5xx or 0.0)),
+        )
+        payload_data = payload.model_dump()
+        payload_data["http_2xx"] = max(0.0, float(http_2xx or 0.0))
+        payload_data["http_3xx"] = max(0.0, float(http_3xx or 0.0))
+        payload_data["http_4xx"] = max(0.0, float(http_4xx or 0.0))
+        payload_data["http_5xx"] = max(0.0, float(http_5xx or 0.0))
+        payload_data["requests_in_application_queue"] = max(0.0, float(app_queue or 0.0))
+        payload_data["plan_cpu_percent"] = max(0.0, float(cpu_percent or 0.0))
+        payload_data["plan_memory_percent"] = max(0.0, float(memory_percent or 0.0))
+
+        return TelemetryEvent(
+            timestamp=end_time,
+            source=TelemetrySource.APPLICATION,
+            origin=TelemetryOrigin.AZURE_MONITOR_METRICS,
+            source_system="Azure App Service",
+            source_category="app_service_http_and_plan_metrics",
+            record_type=TelemetryRecordType.METRIC,
+            collection_channel="Azure Monitor Metrics API",
+            payload=payload_data,
+            raw_message="Azure Monitor App Service metrics summary",
+            resource_id=resource_id,
+            subscription_id=_subscription_from_resource_id(resource_id) or AzureConfig.SUBSCRIPTION_ID,
+            region=self._resolve_region(resource_id),
+            operation_name=operation_name,
+            correlation_id=correlation_id,
+        )
+
+    def _query_azure_firewall_metrics(
+        self,
+        resource_id: str,
+        start_time: datetime,
+        end_time: datetime,
+    ) -> TelemetryEvent | None:
+        app_rule_hits = self._first_available_metric(resource_id, ["ApplicationRuleHit"], start_time, end_time, preferred=("total", "maximum", "average"))
+        network_rule_hits = self._first_available_metric(resource_id, ["NetworkRuleHit"], start_time, end_time, preferred=("total", "maximum", "average"))
+        data_processed = self._first_available_metric(resource_id, ["DataProcessed"], start_time, end_time, preferred=("total", "maximum", "average"))
+        snat_utilization = self._first_available_metric(resource_id, ["SNATPortUtilization"], start_time, end_time, preferred=("maximum", "average", "total"))
+        threat_intel_alerts = self._first_available_metric(resource_id, ["ThreatIntelAlerts"], start_time, end_time, preferred=("total", "maximum", "average"))
+
+        if all(value is None for value in (app_rule_hits, network_rule_hits, data_processed, snat_utilization, threat_intel_alerts)):
+            return None
+
+        operation_name = "AzureMonitorAzureFirewallMetricsSummary"
+        correlation_id = self._synthetic_correlation_id(resource_id, operation_name, start_time, end_time)
+        payload = NetworkPayload(
+            source_ip=None,
+            destination_ip=None,
+            destination_port=0,
+            packet_loss=0.0,
+            avg_latency_ms=0.0,
+            nsg_denied_connections=max(0, int(threat_intel_alerts or 0.0)),
+            tcp_retry_count=max(0, int((snat_utilization or 0.0) / 10)),
+        )
+        payload_data = payload.model_dump()
+        payload_data["application_rule_hit"] = max(0.0, float(app_rule_hits or 0.0))
+        payload_data["network_rule_hit"] = max(0.0, float(network_rule_hits or 0.0))
+        payload_data["data_processed"] = max(0.0, float(data_processed or 0.0))
+        payload_data["snat_port_utilization"] = max(0.0, float(snat_utilization or 0.0))
+        payload_data["threat_intel_alerts"] = max(0.0, float(threat_intel_alerts or 0.0))
+
+        return TelemetryEvent(
+            timestamp=end_time,
+            source=TelemetrySource.NETWORK,
+            origin=TelemetryOrigin.AZURE_MONITOR_METRICS,
+            source_system="Azure Firewall",
+            source_category="azure_firewall_metrics",
+            record_type=TelemetryRecordType.METRIC,
+            collection_channel="Azure Monitor Metrics API",
+            payload=payload_data,
+            raw_message="Azure Monitor Azure Firewall metrics summary",
+            resource_id=resource_id,
+            subscription_id=_subscription_from_resource_id(resource_id) or AzureConfig.SUBSCRIPTION_ID,
+            region=self._resolve_region(resource_id),
+            operation_name=operation_name,
+            correlation_id=correlation_id,
+        )
+
+    def _query_cosmos_metrics(
+        self,
+        resource_id: str,
+        start_time: datetime,
+        end_time: datetime,
+    ) -> TelemetryEvent | None:
+        request_units = self._first_available_metric(
+            resource_id,
+            ["TotalRequestUnits", "MongoRequestCharge", "Request Units consumed"],
+            start_time,
+            end_time,
+            preferred=("total", "average", "maximum"),
+        )
+        total_requests = self._first_available_metric(
+            resource_id,
+            ["TotalRequests", "Total Requests"],
+            start_time,
+            end_time,
+            preferred=("total", "average", "maximum"),
+        )
+        availability = self._first_available_metric(
+            resource_id,
+            ["Availability", "AvailabilityPercent"],
+            start_time,
+            end_time,
+            preferred=("average", "minimum", "maximum"),
+        )
+        replication_latency_ms = self._first_available_metric(
+            resource_id,
+            ["ReplicationLatency", "ReplicationLatencyMs"],
+            start_time,
+            end_time,
+            preferred=("average", "maximum", "total"),
+        )
+
+        if all(value is None for value in (request_units, total_requests, availability, replication_latency_ms)):
+            return None
+
+        operation_name = "AzureMonitorCosmosMetricsSummary"
+        correlation_id = self._synthetic_correlation_id(resource_id, operation_name, start_time, end_time)
+        payload = DatabasePayload(
+            database_name=f"cosmos:{_resource_name(resource_id)}",
+            connection_errors=0,
+            timeout_count=0,
+            deadlock_count=0,
+            avg_query_duration_ms=max(0.0, float(replication_latency_ms or 0.0)),
+            cpu_percent=None,
+            worker_count=None,
+        )
+        payload_data = payload.model_dump()
+        payload_data["request_units_consumed"] = max(0.0, float(request_units or 0.0))
+        payload_data["total_requests"] = max(0.0, float(total_requests or 0.0))
+        payload_data["availability_percent"] = max(0.0, float(availability or 0.0))
+        payload_data["replication_latency_ms"] = max(0.0, float(replication_latency_ms or 0.0))
+
+        return TelemetryEvent(
+            timestamp=end_time,
+            source=TelemetrySource.DATABASE,
+            origin=TelemetryOrigin.AZURE_MONITOR_METRICS,
+            source_system="Azure Cosmos DB",
+            source_category="cosmos_metrics",
+            record_type=TelemetryRecordType.METRIC,
+            collection_channel="Azure Monitor Metrics API",
+            payload=payload_data,
+            raw_message="Azure Monitor Cosmos DB metrics summary",
+            resource_id=resource_id,
+            subscription_id=_subscription_from_resource_id(resource_id) or AzureConfig.SUBSCRIPTION_ID,
+            region=self._resolve_region(resource_id),
+            operation_name=operation_name,
+            correlation_id=correlation_id,
+        )
+
+    def _query_redis_metrics(
+        self,
+        resource_id: str,
+        start_time: datetime,
+        end_time: datetime,
+    ) -> TelemetryEvent | None:
+        cache_hits = self._first_available_metric(resource_id, ["CacheHits"], start_time, end_time, preferred=("total", "average", "maximum"))
+        cache_misses = self._first_available_metric(resource_id, ["CacheMisses"], start_time, end_time, preferred=("total", "average", "maximum"))
+        cache_read = self._first_available_metric(resource_id, ["CacheRead"], start_time, end_time, preferred=("total", "average", "maximum"))
+        cache_write = self._first_available_metric(resource_id, ["CacheWrite"], start_time, end_time, preferred=("total", "average", "maximum"))
+        connected_clients = self._first_available_metric(resource_id, ["ConnectedClients"], start_time, end_time, preferred=("average", "maximum", "total"))
+        used_memory_pct = self._first_available_metric(resource_id, ["UsedMemoryPercentage"], start_time, end_time, preferred=("average", "maximum", "total"))
+        server_load = self._first_available_metric(resource_id, ["ServerLoad"], start_time, end_time, preferred=("average", "maximum", "total"))
+
+        if all(value is None for value in (cache_hits, cache_misses, cache_read, cache_write, connected_clients, used_memory_pct, server_load)):
+            return None
+
+        total_lookup = max(0.0, float(cache_hits or 0.0) + float(cache_misses or 0.0))
+        miss_rate_pct = min(100.0, (float(cache_misses or 0.0) / max(1.0, total_lookup)) * 100.0)
+        load_error_rate = 0.0 if server_load is None else min(100.0, max(0.0, float(server_load) - 85.0))
+        error_rate = max(miss_rate_pct, load_error_rate)
+        window_minutes = max(1, int((end_time - start_time).total_seconds() / 60))
+        total_ops = max(0.0, float(cache_read or 0.0) + float(cache_write or 0.0))
+        operation_name = "AzureMonitorRedisMetricsSummary"
+        correlation_id = self._synthetic_correlation_id(resource_id, operation_name, start_time, end_time)
+
+        payload = ApplicationPayload(
+            application_name=f"redis:{_resource_name(resource_id)}",
+            request_rate_per_min=max(0, int(total_ops / window_minutes)),
+            error_rate_pct=error_rate,
+            avg_response_ms=0.0,
+            p95_response_ms=None,
+            status_5xx_count=0,
+        )
+        payload_data = payload.model_dump()
+        payload_data["cache_hits"] = max(0.0, float(cache_hits or 0.0))
+        payload_data["cache_misses"] = max(0.0, float(cache_misses or 0.0))
+        payload_data["cache_read"] = max(0.0, float(cache_read or 0.0))
+        payload_data["cache_write"] = max(0.0, float(cache_write or 0.0))
+        payload_data["connected_clients"] = max(0.0, float(connected_clients or 0.0))
+        payload_data["used_memory_percentage"] = max(0.0, float(used_memory_pct or 0.0))
+        payload_data["server_load"] = max(0.0, float(server_load or 0.0))
+        payload_data["cache_miss_rate_pct"] = miss_rate_pct
+
+        return TelemetryEvent(
+            timestamp=end_time,
+            source=TelemetrySource.APPLICATION,
+            origin=TelemetryOrigin.AZURE_MONITOR_METRICS,
+            source_system="Azure Cache for Redis",
+            source_category="redis_cache_metrics",
+            record_type=TelemetryRecordType.METRIC,
+            collection_channel="Azure Monitor Metrics API",
+            payload=payload_data,
+            raw_message="Azure Monitor Redis metrics summary",
+            resource_id=resource_id,
+            subscription_id=_subscription_from_resource_id(resource_id) or AzureConfig.SUBSCRIPTION_ID,
+            region=self._resolve_region(resource_id),
             operation_name=operation_name,
             correlation_id=correlation_id,
         )
@@ -215,7 +509,7 @@ class MonitorMetricsCollector(CollectorBase):
                 metric_names=[metric_name],
                 timespan=(start_time, end_time),
                 granularity=timedelta(minutes=1),
-                aggregations=["Average", "Maximum", "Total"],
+                aggregations=["Average", "Maximum", "Total", "Minimum"],
             )
         except HttpResponseError:
             return None

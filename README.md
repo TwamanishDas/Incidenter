@@ -22,12 +22,14 @@ The current implementation focuses on:
    - `MASTER_PHASE_STEP_TRACKER.md`
 2. High-level architecture:
    - `HIGH_LEVEL_ARCHITECTURE.md`
-3. Low-level architecture:
+3. Telemetry ingestion catalog:
+   - `TELEMETRY_CATALOG.md`
+4. Low-level architecture:
    - `architecture/low-level/`
-4. MVP scope and action plan:
+5. MVP scope and action plan:
    - `MVP_SCOPE.md`
    - `MVP_PHASE_ACTION_PLAN.md`
-5. Production-ready scope:
+6. Production-ready scope:
    - `PRODUCTION_READY_SCOPE.md`
 
 ## Folder structure
