@@ -1,0 +1,10 @@
+fastapi==0.101.1
+uvicorn[standard]==0.23.2
+pydantic==2.8.0
+
+# Azure SDK for Phase 3 Integration
+azure-monitor-query==1.4.0
+azure-identity==1.15.0
+azure-core==1.29.0
+python-dotenv==1.0.0
+requests==2.31.0

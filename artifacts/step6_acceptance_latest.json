@@ -1,0 +1,2223 @@
+{
+  "run_started_at": "2026-05-22T09:20:45.134646+00:00",
+  "base_url": "http://127.0.0.1:8000",
+  "mode_expected": "sample_blob",
+  "result": "pass",
+  "reason": "All Step 6 acceptance criteria passed.",
+  "attempts": [
+    {
+      "captured_at": "2026-05-22T09:20:49.272545+00:00",
+      "scheduler_status_code": 200,
+      "checklist_status_code": 200,
+      "incidents_status_code": 200,
+      "scheduler_status": {
+        "is_running": true,
+        "interval_seconds": 10,
+        "collection_count": 1,
+        "total_events_collected": 0,
+        "total_events_posted": 0,
+        "total_events_deduped": 0,
+        "dedup_cache_size": 0,
+        "last_collection_time": "2026-05-22T09:20:48.975084",
+        "collectors": [
+          {
+            "name": "BlobSampleLogAnalyticsCollector",
+            "source": "application",
+            "events_collected": 0,
+            "last_error": null,
+            "last_collection_time": null,
+            "last_query_start_time": null,
+            "last_query_end_time": null,
+            "watermark_time": null,
+            "status": "healthy",
+            "source_folder": "log_analytics",
+            "source_prefix": "v1/log_analytics",
+            "last_blob_name": null,
+            "last_blob_candidate_count": 0,
+            "last_blob_discovery_time": "2026-05-22T09:20:48.976068",
+            "last_blob_list_status_code": null,
+            "last_blob_download_status_code": null,
+            "last_blob_records_parsed": 0,
+            "last_replay_outcome": "not_started",
+            "last_replay_error": null
+          },
+          {
+            "name": "BlobSampleAppInsightsCollector",
+            "source": "application",
+            "events_collected": 0,
+            "last_error": null,
+            "last_collection_time": null,
+            "last_query_start_time": null,
+            "last_query_end_time": null,
+            "watermark_time": null,
+            "status": "healthy",
+            "source_folder": "app_insights",
+            "source_prefix": "v1/app_insights",
+            "last_blob_name": null,
+            "last_blob_candidate_count": 0,
+            "last_blob_discovery_time": "2026-05-22T09:20:48.977067",
+            "last_blob_list_status_code": null,
+            "last_blob_download_status_code": null,
+            "last_blob_records_parsed": 0,
+            "last_replay_outcome": "not_started",
+            "last_replay_error": null
+          },
+          {
+            "name": "BlobSampleNetworkWatcherCollector",
+            "source": "network",
+            "events_collected": 0,
+            "last_error": null,
+            "last_collection_time": null,
+            "last_query_start_time": null,
+            "last_query_end_time": null,
+            "watermark_time": null,
+            "status": "healthy",
+            "source_folder": "network_watcher",
+            "source_prefix": "v1/network_watcher",
+            "last_blob_name": null,
+            "last_blob_candidate_count": 0,
+            "last_blob_discovery_time": "2026-05-22T09:20:48.978067",
+            "last_blob_list_status_code": null,
+            "last_blob_download_status_code": null,
+            "last_blob_records_parsed": 0,
+            "last_replay_outcome": "not_started",
+            "last_replay_error": null
+          },
+          {
+            "name": "BlobSampleMonitorMetricsCollector",
+            "source": "database",
+            "events_collected": 0,
+            "last_error": null,
+            "last_collection_time": null,
+            "last_query_start_time": null,
+            "last_query_end_time": null,
+            "watermark_time": null,
+            "status": "healthy",
+            "source_folder": "azure_monitor_metrics",
+            "source_prefix": "v1/azure_monitor_metrics",
+            "last_blob_name": null,
+            "last_blob_candidate_count": 0,
+            "last_blob_discovery_time": "2026-05-22T09:20:48.979069",
+            "last_blob_list_status_code": null,
+            "last_blob_download_status_code": null,
+            "last_blob_records_parsed": 0,
+            "last_replay_outcome": "not_started",
+            "last_replay_error": null
+          },
+          {
+            "name": "BlobSampleActivityHealthCollector",
+            "source": "application",
+            "events_collected": 0,
+            "last_error": null,
+            "last_collection_time": null,
+            "last_query_start_time": null,
+            "last_query_end_time": null,
+            "watermark_time": null,
+            "status": "healthy",
+            "source_folder": "activity_health",
+            "source_prefix": "v1/activity_health",
+            "last_blob_name": null,
+            "last_blob_candidate_count": 0,
+            "last_blob_discovery_time": "2026-05-22T09:20:48.981628",
+            "last_blob_list_status_code": null,
+            "last_blob_download_status_code": null,
+            "last_blob_records_parsed": 0,
+            "last_replay_outcome": "not_started",
+            "last_replay_error": null
+          }
+        ]
+      },
+      "ingestion_checklist": {
+        "overall_status": "warn",
+        "evaluated_at": "2026-05-22T09:20:49.266324",
+        "ingestion_mode": "sample_blob",
+        "freshness_sla_seconds": 90,
+        "summary": {
+          "checks_total": 6,
+          "checks_passed": 4,
+          "checks_warned": 2,
+          "checks_failed": 0
+        },
+        "checks": [
+          {
+            "id": "scheduler_running",
+            "status": "pass",
+            "message": "Scheduler run loop is active.",
+            "observed": true,
+            "expected": true
+          },
+          {
+            "id": "collectors_configured",
+            "status": "pass",
+            "message": "Collectors are configured.",
+            "observed": 5,
+            "expected": ">=3"
+          },
+          {
+            "id": "collector_errors",
+            "status": "pass",
+            "message": "No collector errors detected.",
+            "observed": [],
+            "expected": []
+          },
+          {
+            "id": "collector_freshness",
+            "status": "warn",
+            "message": "Some collectors are stale or have not reported a recent collection timestamp.",
+            "observed": [
+              "BlobSampleLogAnalyticsCollector",
+              "BlobSampleAppInsightsCollector",
+              "BlobSampleNetworkWatcherCollector",
+              "BlobSampleMonitorMetricsCollector",
+              "BlobSampleActivityHealthCollector"
+            ],
+            "expected": []
+          },
+          {
+            "id": "event_flow",
+            "status": "warn",
+            "message": "No telemetry events collected yet.",
+            "observed": 0,
+            "expected": ">0 after initial cycles"
+          },
+          {
+            "id": "dedup_behavior",
+            "status": "pass",
+            "message": "Dedup behavior is within expected range.",
+            "observed": {
+              "collection_count": 1,
+              "deduped": 0,
+              "cache_size": 0
+            },
+            "expected": "deduped <= collected"
+          }
+        ],
+        "collector_overview": {
+          "total_collectors": 5,
+          "healthy_collectors": 5,
+          "error_collectors": 0,
+          "stale_collectors": [
+            "BlobSampleLogAnalyticsCollector",
+            "BlobSampleAppInsightsCollector",
+            "BlobSampleNetworkWatcherCollector",
+            "BlobSampleMonitorMetricsCollector",
+            "BlobSampleActivityHealthCollector"
+          ]
+        },
+        "collectors": [
+          {
+            "name": "BlobSampleLogAnalyticsCollector",
+            "status": "healthy",
+            "last_error": null,
+            "last_collection_time": null,
+            "age_seconds": null,
+            "is_fresh": null,
+            "events_collected": 0,
+            "last_replay_outcome": "not_started",
+            "last_blob_name": null
+          },
+          {
+            "name": "BlobSampleAppInsightsCollector",
+            "status": "healthy",
+            "last_error": null,
+            "last_collection_time": null,
+            "age_seconds": null,
+            "is_fresh": null,
+            "events_collected": 0,
+            "last_replay_outcome": "not_started",
+            "last_blob_name": null
+          },
+          {
+            "name": "BlobSampleNetworkWatcherCollector",
+            "status": "healthy",
+            "last_error": null,
+            "last_collection_time": null,
+            "age_seconds": null,
+            "is_fresh": null,
+            "events_collected": 0,
+            "last_replay_outcome": "not_started",
+            "last_blob_name": null
+          },
+          {
+            "name": "BlobSampleMonitorMetricsCollector",
+            "status": "healthy",
+            "last_error": null,
+            "last_collection_time": null,
+            "age_seconds": null,
+            "is_fresh": null,
+            "events_collected": 0,
+            "last_replay_outcome": "not_started",
+            "last_blob_name": null
+          },
+          {
+            "name": "BlobSampleActivityHealthCollector",
+            "status": "healthy",
+            "last_error": null,
+            "last_collection_time": null,
+            "age_seconds": null,
+            "is_fresh": null,
+            "events_collected": 0,
+            "last_replay_outcome": "not_started",
+            "last_blob_name": null
+          }
+        ],
+        "counters": {
+          "interval_seconds": 10,
+          "collection_count": 1,
+          "total_events_collected": 0,
+          "total_events_posted": 0,
+          "total_events_deduped": 0,
+          "dedup_cache_size": 0,
+          "last_collection_time": "2026-05-22T09:20:48.975084"
+        }
+      },
+      "incidents_count": 0,
+      "evaluation": {
+        "overall_passed": false,
+        "summary": {
+          "criteria_total": 6,
+          "criteria_passed": 4,
+          "criteria_failed": 2
+        },
+        "criteria": [
+          {
+            "id": "scheduler_running",
+            "description": "Scheduler is running",
+            "passed": true,
+            "observed": true,
+            "expected": true
+          },
+          {
+            "id": "collectors_initialized",
+            "description": "At least 5 collectors are initialized",
+            "passed": true,
+            "observed": 5,
+            "expected": ">=5"
+          },
+          {
+            "id": "collections_progressing",
+            "description": "At least 2 collection cycles completed",
+            "passed": false,
+            "observed": 1,
+            "expected": ">=2"
+          },
+          {
+            "id": "collectors_healthy",
+            "description": "All initialized collectors are healthy",
+            "passed": true,
+            "observed": {
+              "healthy": 5,
+              "total": 5
+            },
+            "expected": "healthy == total"
+          },
+          {
+            "id": "ingestion_checklist_not_fail",
+            "description": "Ingestion checklist overall status is not fail",
+            "passed": true,
+            "observed": "warn",
+            "expected": "pass|warn"
+          },
+          {
+            "id": "incidents_generated",
+            "description": "At least one incident is generated from replayed data",
+            "passed": false,
+            "observed": 0,
+            "expected": ">=1"
+          }
+        ]
+      }
+    },
+    {
+      "captured_at": "2026-05-22T09:20:54.316756+00:00",
+      "scheduler_status_code": 200,
+      "checklist_status_code": 503,
+      "incidents_status_code": 200,
+      "scheduler_status": {
+        "is_running": true,
+        "interval_seconds": 10,
+        "collection_count": 1,
+        "total_events_collected": 5,
+        "total_events_posted": 0,
+        "total_events_deduped": 0,
+        "dedup_cache_size": 2,
+        "last_collection_time": "2026-05-22T09:20:48.975084",
+        "collectors": [
+          {
+            "name": "BlobSampleLogAnalyticsCollector",
+            "source": "application",
+            "events_collected": 1,
+            "last_error": null,
+            "last_collection_time": "2026-05-22T09:20:50.603310",
+            "last_query_start_time": null,
+            "last_query_end_time": null,
+            "watermark_time": "2026-05-22T09:20:50.603310",
+            "status": "healthy",
+            "source_folder": "log_analytics",
+            "source_prefix": "v1/log_analytics",
+            "last_blob_name": "v1/log_analytics/2026/05/21/batch-001.jsonl",
+            "last_blob_candidate_count": 1,
+            "last_blob_discovery_time": "2026-05-22T09:20:48.976068",
+            "last_blob_list_status_code": 200,
+            "last_blob_download_status_code": 200,
+            "last_blob_records_parsed": 1,
+            "last_replay_outcome": "processed",
+            "last_replay_error": null
+          },
+          {
+            "name": "BlobSampleAppInsightsCollector",
+            "source": "application",
+            "events_collected": 1,
+            "last_error": null,
+            "last_collection_time": "2026-05-22T09:20:50.613980",
+            "last_query_start_time": null,
+            "last_query_end_time": null,
+            "watermark_time": "2026-05-22T09:20:50.613980",
+            "status": "healthy",
+            "source_folder": "app_insights",
+            "source_prefix": "v1/app_insights",
+            "last_blob_name": "v1/app_insights/2026/05/21/batch-001.jsonl",
+            "last_blob_candidate_count": 1,
+            "last_blob_discovery_time": "2026-05-22T09:20:48.977067",
+            "last_blob_list_status_code": 200,
+            "last_blob_download_status_code": 200,
+            "last_blob_records_parsed": 1,
+            "last_replay_outcome": "processed",
+            "last_replay_error": null
+          },
+          {
+            "name": "BlobSampleNetworkWatcherCollector",
+            "source": "network",
+            "events_collected": 1,
+            "last_error": null,
+            "last_collection_time": "2026-05-22T09:20:50.894078",
+            "last_query_start_time": null,
+            "last_query_end_time": null,
+            "watermark_time": "2026-05-22T09:20:50.894078",
+            "status": "healthy",
+            "source_folder": "network_watcher",
+            "source_prefix": "v1/network_watcher",
+            "last_blob_name": "v1/network_watcher/2026/05/21/batch-001.jsonl",
+            "last_blob_candidate_count": 1,
+            "last_blob_discovery_time": "2026-05-22T09:20:48.978067",
+            "last_blob_list_status_code": 200,
+            "last_blob_download_status_code": 200,
+            "last_blob_records_parsed": 1,
+            "last_replay_outcome": "processed",
+            "last_replay_error": null
+          },
+          {
+            "name": "BlobSampleMonitorMetricsCollector",
+            "source": "database",
+            "events_collected": 1,
+            "last_error": null,
+            "last_collection_time": "2026-05-22T09:20:50.623393",
+            "last_query_start_time": null,
+            "last_query_end_time": null,
+            "watermark_time": "2026-05-22T09:20:50.623393",
+            "status": "healthy",
+            "source_folder": "azure_monitor_metrics",
+            "source_prefix": "v1/azure_monitor_metrics",
+            "last_blob_name": "v1/azure_monitor_metrics/2026/05/21/batch-001.jsonl",
+            "last_blob_candidate_count": 1,
+            "last_blob_discovery_time": "2026-05-22T09:20:48.979069",
+            "last_blob_list_status_code": 200,
+            "last_blob_download_status_code": 200,
+            "last_blob_records_parsed": 1,
+            "last_replay_outcome": "processed",
+            "last_replay_error": null
+          },
+          {
+            "name": "BlobSampleActivityHealthCollector",
+            "source": "application",
+            "events_collected": 1,
+            "last_error": null,
+            "last_collection_time": "2026-05-22T09:20:50.588469",
+            "last_query_start_time": null,
+            "last_query_end_time": null,
+            "watermark_time": "2026-05-22T09:20:50.588469",
+            "status": "healthy",
+            "source_folder": "activity_health",
+            "source_prefix": "v1/activity_health",
+            "last_blob_name": "v1/activity_health/2026/05/21/batch-001.jsonl",
+            "last_blob_candidate_count": 1,
+            "last_blob_discovery_time": "2026-05-22T09:20:48.981628",
+            "last_blob_list_status_code": 200,
+            "last_blob_download_status_code": 200,
+            "last_blob_records_parsed": 1,
+            "last_replay_outcome": "processed",
+            "last_replay_error": null
+          }
+        ]
+      },
+      "ingestion_checklist": {
+        "overall_status": "fail",
+        "evaluated_at": "2026-05-22T09:20:54.297896",
+        "ingestion_mode": "sample_blob",
+        "freshness_sla_seconds": 90,
+        "summary": {
+          "checks_total": 6,
+          "checks_passed": 5,
+          "checks_warned": 0,
+          "checks_failed": 1
+        },
+        "checks": [
+          {
+            "id": "scheduler_running",
+            "status": "pass",
+            "message": "Scheduler run loop is active.",
+            "observed": true,
+            "expected": true
+          },
+          {
+            "id": "collectors_configured",
+            "status": "pass",
+            "message": "Collectors are configured.",
+            "observed": 5,
+            "expected": ">=3"
+          },
+          {
+            "id": "collector_errors",
+            "status": "pass",
+            "message": "No collector errors detected.",
+            "observed": [],
+            "expected": []
+          },
+          {
+            "id": "collector_freshness",
+            "status": "pass",
+            "message": "Collector freshness is within SLA.",
+            "observed": [],
+            "expected": []
+          },
+          {
+            "id": "event_flow",
+            "status": "fail",
+            "message": "Collected events are not being posted or deduplicated.",
+            "observed": {
+              "collected": 5,
+              "posted": 0,
+              "deduped": 0
+            },
+            "expected": "posted + deduped > 0"
+          },
+          {
+            "id": "dedup_behavior",
+            "status": "pass",
+            "message": "Dedup behavior is within expected range.",
+            "observed": {
+              "collection_count": 1,
+              "deduped": 0,
+              "cache_size": 2
+            },
+            "expected": "deduped <= collected"
+          }
+        ],
+        "collector_overview": {
+          "total_collectors": 5,
+          "healthy_collectors": 5,
+          "error_collectors": 0,
+          "stale_collectors": []
+        },
+        "collectors": [
+          {
+            "name": "BlobSampleLogAnalyticsCollector",
+            "status": "healthy",
+            "last_error": null,
+            "last_collection_time": "2026-05-22T09:20:50.603310",
+            "age_seconds": 3,
+            "is_fresh": true,
+            "events_collected": 1,
+            "last_replay_outcome": "processed",
+            "last_blob_name": "v1/log_analytics/2026/05/21/batch-001.jsonl"
+          },
+          {
+            "name": "BlobSampleAppInsightsCollector",
+            "status": "healthy",
+            "last_error": null,
+            "last_collection_time": "2026-05-22T09:20:50.613980",
+            "age_seconds": 3,
+            "is_fresh": true,
+            "events_collected": 1,
+            "last_replay_outcome": "processed",
+            "last_blob_name": "v1/app_insights/2026/05/21/batch-001.jsonl"
+          },
+          {
+            "name": "BlobSampleNetworkWatcherCollector",
+            "status": "healthy",
+            "last_error": null,
+            "last_collection_time": "2026-05-22T09:20:50.894078",
+            "age_seconds": 3,
+            "is_fresh": true,
+            "events_collected": 1,
+            "last_replay_outcome": "processed",
+            "last_blob_name": "v1/network_watcher/2026/05/21/batch-001.jsonl"
+          },
+          {
+            "name": "BlobSampleMonitorMetricsCollector",
+            "status": "healthy",
+            "last_error": null,
+            "last_collection_time": "2026-05-22T09:20:50.623393",
+            "age_seconds": 3,
+            "is_fresh": true,
+            "events_collected": 1,
+            "last_replay_outcome": "processed",
+            "last_blob_name": "v1/azure_monitor_metrics/2026/05/21/batch-001.jsonl"
+          },
+          {
+            "name": "BlobSampleActivityHealthCollector",
+            "status": "healthy",
+            "last_error": null,
+            "last_collection_time": "2026-05-22T09:20:50.588469",
+            "age_seconds": 3,
+            "is_fresh": true,
+            "events_collected": 1,
+            "last_replay_outcome": "processed",
+            "last_blob_name": "v1/activity_health/2026/05/21/batch-001.jsonl"
+          }
+        ],
+        "counters": {
+          "interval_seconds": 10,
+          "collection_count": 1,
+          "total_events_collected": 5,
+          "total_events_posted": 0,
+          "total_events_deduped": 0,
+          "dedup_cache_size": 2,
+          "last_collection_time": "2026-05-22T09:20:48.975084"
+        }
+      },
+      "incidents_count": 0,
+      "evaluation": {
+        "overall_passed": false,
+        "summary": {
+          "criteria_total": 6,
+          "criteria_passed": 3,
+          "criteria_failed": 3
+        },
+        "criteria": [
+          {
+            "id": "scheduler_running",
+            "description": "Scheduler is running",
+            "passed": true,
+            "observed": true,
+            "expected": true
+          },
+          {
+            "id": "collectors_initialized",
+            "description": "At least 5 collectors are initialized",
+            "passed": true,
+            "observed": 5,
+            "expected": ">=5"
+          },
+          {
+            "id": "collections_progressing",
+            "description": "At least 2 collection cycles completed",
+            "passed": false,
+            "observed": 1,
+            "expected": ">=2"
+          },
+          {
+            "id": "collectors_healthy",
+            "description": "All initialized collectors are healthy",
+            "passed": true,
+            "observed": {
+              "healthy": 5,
+              "total": 5
+            },
+            "expected": "healthy == total"
+          },
+          {
+            "id": "ingestion_checklist_not_fail",
+            "description": "Ingestion checklist overall status is not fail",
+            "passed": false,
+            "observed": "fail",
+            "expected": "pass|warn"
+          },
+          {
+            "id": "incidents_generated",
+            "description": "At least one incident is generated from replayed data",
+            "passed": false,
+            "observed": 0,
+            "expected": ">=1"
+          }
+        ]
+      }
+    },
+    {
+      "captured_at": "2026-05-22T09:20:59.382752+00:00",
+      "scheduler_status_code": 200,
+      "checklist_status_code": 503,
+      "incidents_status_code": 200,
+      "scheduler_status": {
+        "is_running": true,
+        "interval_seconds": 10,
+        "collection_count": 1,
+        "total_events_collected": 5,
+        "total_events_posted": 0,
+        "total_events_deduped": 0,
+        "dedup_cache_size": 5,
+        "last_collection_time": "2026-05-22T09:20:48.975084",
+        "collectors": [
+          {
+            "name": "BlobSampleLogAnalyticsCollector",
+            "source": "application",
+            "events_collected": 1,
+            "last_error": null,
+            "last_collection_time": "2026-05-22T09:20:50.603310",
+            "last_query_start_time": null,
+            "last_query_end_time": null,
+            "watermark_time": "2026-05-22T09:20:50.603310",
+            "status": "healthy",
+            "source_folder": "log_analytics",
+            "source_prefix": "v1/log_analytics",
+            "last_blob_name": "v1/log_analytics/2026/05/21/batch-001.jsonl",
+            "last_blob_candidate_count": 1,
+            "last_blob_discovery_time": "2026-05-22T09:20:48.976068",
+            "last_blob_list_status_code": 200,
+            "last_blob_download_status_code": 200,
+            "last_blob_records_parsed": 1,
+            "last_replay_outcome": "processed",
+            "last_replay_error": null
+          },
+          {
+            "name": "BlobSampleAppInsightsCollector",
+            "source": "application",
+            "events_collected": 1,
+            "last_error": null,
+            "last_collection_time": "2026-05-22T09:20:50.613980",
+            "last_query_start_time": null,
+            "last_query_end_time": null,
+            "watermark_time": "2026-05-22T09:20:50.613980",
+            "status": "healthy",
+            "source_folder": "app_insights",
+            "source_prefix": "v1/app_insights",
+            "last_blob_name": "v1/app_insights/2026/05/21/batch-001.jsonl",
+            "last_blob_candidate_count": 1,
+            "last_blob_discovery_time": "2026-05-22T09:20:48.977067",
+            "last_blob_list_status_code": 200,
+            "last_blob_download_status_code": 200,
+            "last_blob_records_parsed": 1,
+            "last_replay_outcome": "processed",
+            "last_replay_error": null
+          },
+          {
+            "name": "BlobSampleNetworkWatcherCollector",
+            "source": "network",
+            "events_collected": 1,
+            "last_error": null,
+            "last_collection_time": "2026-05-22T09:20:50.894078",
+            "last_query_start_time": null,
+            "last_query_end_time": null,
+            "watermark_time": "2026-05-22T09:20:50.894078",
+            "status": "healthy",
+            "source_folder": "network_watcher",
+            "source_prefix": "v1/network_watcher",
+            "last_blob_name": "v1/network_watcher/2026/05/21/batch-001.jsonl",
+            "last_blob_candidate_count": 1,
+            "last_blob_discovery_time": "2026-05-22T09:20:48.978067",
+            "last_blob_list_status_code": 200,
+            "last_blob_download_status_code": 200,
+            "last_blob_records_parsed": 1,
+            "last_replay_outcome": "processed",
+            "last_replay_error": null
+          },
+          {
+            "name": "BlobSampleMonitorMetricsCollector",
+            "source": "database",
+            "events_collected": 1,
+            "last_error": null,
+            "last_collection_time": "2026-05-22T09:20:50.623393",
+            "last_query_start_time": null,
+            "last_query_end_time": null,
+            "watermark_time": "2026-05-22T09:20:50.623393",
+            "status": "healthy",
+            "source_folder": "azure_monitor_metrics",
+            "source_prefix": "v1/azure_monitor_metrics",
+            "last_blob_name": "v1/azure_monitor_metrics/2026/05/21/batch-001.jsonl",
+            "last_blob_candidate_count": 1,
+            "last_blob_discovery_time": "2026-05-22T09:20:48.979069",
+            "last_blob_list_status_code": 200,
+            "last_blob_download_status_code": 200,
+            "last_blob_records_parsed": 1,
+            "last_replay_outcome": "processed",
+            "last_replay_error": null
+          },
+          {
+            "name": "BlobSampleActivityHealthCollector",
+            "source": "application",
+            "events_collected": 1,
+            "last_error": null,
+            "last_collection_time": "2026-05-22T09:20:50.588469",
+            "last_query_start_time": null,
+            "last_query_end_time": null,
+            "watermark_time": "2026-05-22T09:20:50.588469",
+            "status": "healthy",
+            "source_folder": "activity_health",
+            "source_prefix": "v1/activity_health",
+            "last_blob_name": "v1/activity_health/2026/05/21/batch-001.jsonl",
+            "last_blob_candidate_count": 1,
+            "last_blob_discovery_time": "2026-05-22T09:20:48.981628",
+            "last_blob_list_status_code": 200,
+            "last_blob_download_status_code": 200,
+            "last_blob_records_parsed": 1,
+            "last_replay_outcome": "processed",
+            "last_replay_error": null
+          }
+        ]
+      },
+      "ingestion_checklist": {
+        "overall_status": "fail",
+        "evaluated_at": "2026-05-22T09:20:59.347881",
+        "ingestion_mode": "sample_blob",
+        "freshness_sla_seconds": 90,
+        "summary": {
+          "checks_total": 6,
+          "checks_passed": 5,
+          "checks_warned": 0,
+          "checks_failed": 1
+        },
+        "checks": [
+          {
+            "id": "scheduler_running",
+            "status": "pass",
+            "message": "Scheduler run loop is active.",
+            "observed": true,
+            "expected": true
+          },
+          {
+            "id": "collectors_configured",
+            "status": "pass",
+            "message": "Collectors are configured.",
+            "observed": 5,
+            "expected": ">=3"
+          },
+          {
+            "id": "collector_errors",
+            "status": "pass",
+            "message": "No collector errors detected.",
+            "observed": [],
+            "expected": []
+          },
+          {
+            "id": "collector_freshness",
+            "status": "pass",
+            "message": "Collector freshness is within SLA.",
+            "observed": [],
+            "expected": []
+          },
+          {
+            "id": "event_flow",
+            "status": "fail",
+            "message": "Collected events are not being posted or deduplicated.",
+            "observed": {
+              "collected": 5,
+              "posted": 0,
+              "deduped": 0
+            },
+            "expected": "posted + deduped > 0"
+          },
+          {
+            "id": "dedup_behavior",
+            "status": "pass",
+            "message": "Dedup behavior is within expected range.",
+            "observed": {
+              "collection_count": 1,
+              "deduped": 0,
+              "cache_size": 5
+            },
+            "expected": "deduped <= collected"
+          }
+        ],
+        "collector_overview": {
+          "total_collectors": 5,
+          "healthy_collectors": 5,
+          "error_collectors": 0,
+          "stale_collectors": []
+        },
+        "collectors": [
+          {
+            "name": "BlobSampleLogAnalyticsCollector",
+            "status": "healthy",
+            "last_error": null,
+            "last_collection_time": "2026-05-22T09:20:50.603310",
+            "age_seconds": 8,
+            "is_fresh": true,
+            "events_collected": 1,
+            "last_replay_outcome": "processed",
+            "last_blob_name": "v1/log_analytics/2026/05/21/batch-001.jsonl"
+          },
+          {
+            "name": "BlobSampleAppInsightsCollector",
+            "status": "healthy",
+            "last_error": null,
+            "last_collection_time": "2026-05-22T09:20:50.613980",
+            "age_seconds": 8,
+            "is_fresh": true,
+            "events_collected": 1,
+            "last_replay_outcome": "processed",
+            "last_blob_name": "v1/app_insights/2026/05/21/batch-001.jsonl"
+          },
+          {
+            "name": "BlobSampleNetworkWatcherCollector",
+            "status": "healthy",
+            "last_error": null,
+            "last_collection_time": "2026-05-22T09:20:50.894078",
+            "age_seconds": 8,
+            "is_fresh": true,
+            "events_collected": 1,
+            "last_replay_outcome": "processed",
+            "last_blob_name": "v1/network_watcher/2026/05/21/batch-001.jsonl"
+          },
+          {
+            "name": "BlobSampleMonitorMetricsCollector",
+            "status": "healthy",
+            "last_error": null,
+            "last_collection_time": "2026-05-22T09:20:50.623393",
+            "age_seconds": 8,
+            "is_fresh": true,
+            "events_collected": 1,
+            "last_replay_outcome": "processed",
+            "last_blob_name": "v1/azure_monitor_metrics/2026/05/21/batch-001.jsonl"
+          },
+          {
+            "name": "BlobSampleActivityHealthCollector",
+            "status": "healthy",
+            "last_error": null,
+            "last_collection_time": "2026-05-22T09:20:50.588469",
+            "age_seconds": 8,
+            "is_fresh": true,
+            "events_collected": 1,
+            "last_replay_outcome": "processed",
+            "last_blob_name": "v1/activity_health/2026/05/21/batch-001.jsonl"
+          }
+        ],
+        "counters": {
+          "interval_seconds": 10,
+          "collection_count": 1,
+          "total_events_collected": 5,
+          "total_events_posted": 0,
+          "total_events_deduped": 0,
+          "dedup_cache_size": 5,
+          "last_collection_time": "2026-05-22T09:20:48.975084"
+        }
+      },
+      "incidents_count": 2,
+      "evaluation": {
+        "overall_passed": false,
+        "summary": {
+          "criteria_total": 6,
+          "criteria_passed": 4,
+          "criteria_failed": 2
+        },
+        "criteria": [
+          {
+            "id": "scheduler_running",
+            "description": "Scheduler is running",
+            "passed": true,
+            "observed": true,
+            "expected": true
+          },
+          {
+            "id": "collectors_initialized",
+            "description": "At least 5 collectors are initialized",
+            "passed": true,
+            "observed": 5,
+            "expected": ">=5"
+          },
+          {
+            "id": "collections_progressing",
+            "description": "At least 2 collection cycles completed",
+            "passed": false,
+            "observed": 1,
+            "expected": ">=2"
+          },
+          {
+            "id": "collectors_healthy",
+            "description": "All initialized collectors are healthy",
+            "passed": true,
+            "observed": {
+              "healthy": 5,
+              "total": 5
+            },
+            "expected": "healthy == total"
+          },
+          {
+            "id": "ingestion_checklist_not_fail",
+            "description": "Ingestion checklist overall status is not fail",
+            "passed": false,
+            "observed": "fail",
+            "expected": "pass|warn"
+          },
+          {
+            "id": "incidents_generated",
+            "description": "At least one incident is generated from replayed data",
+            "passed": true,
+            "observed": 2,
+            "expected": ">=1"
+          }
+        ]
+      }
+    },
+    {
+      "captured_at": "2026-05-22T09:21:04.432704+00:00",
+      "scheduler_status_code": 200,
+      "checklist_status_code": 200,
+      "incidents_status_code": 200,
+      "scheduler_status": {
+        "is_running": true,
+        "interval_seconds": 10,
+        "collection_count": 1,
+        "total_events_collected": 5,
+        "total_events_posted": 5,
+        "total_events_deduped": 0,
+        "dedup_cache_size": 5,
+        "last_collection_time": "2026-05-22T09:20:48.975084",
+        "collectors": [
+          {
+            "name": "BlobSampleLogAnalyticsCollector",
+            "source": "application",
+            "events_collected": 1,
+            "last_error": null,
+            "last_collection_time": "2026-05-22T09:20:50.603310",
+            "last_query_start_time": null,
+            "last_query_end_time": null,
+            "watermark_time": "2026-05-22T09:20:50.603310",
+            "status": "healthy",
+            "source_folder": "log_analytics",
+            "source_prefix": "v1/log_analytics",
+            "last_blob_name": "v1/log_analytics/2026/05/21/batch-001.jsonl",
+            "last_blob_candidate_count": 1,
+            "last_blob_discovery_time": "2026-05-22T09:20:48.976068",
+            "last_blob_list_status_code": 200,
+            "last_blob_download_status_code": 200,
+            "last_blob_records_parsed": 1,
+            "last_replay_outcome": "processed",
+            "last_replay_error": null
+          },
+          {
+            "name": "BlobSampleAppInsightsCollector",
+            "source": "application",
+            "events_collected": 1,
+            "last_error": null,
+            "last_collection_time": "2026-05-22T09:20:50.613980",
+            "last_query_start_time": null,
+            "last_query_end_time": null,
+            "watermark_time": "2026-05-22T09:20:50.613980",
+            "status": "healthy",
+            "source_folder": "app_insights",
+            "source_prefix": "v1/app_insights",
+            "last_blob_name": "v1/app_insights/2026/05/21/batch-001.jsonl",
+            "last_blob_candidate_count": 1,
+            "last_blob_discovery_time": "2026-05-22T09:20:48.977067",
+            "last_blob_list_status_code": 200,
+            "last_blob_download_status_code": 200,
+            "last_blob_records_parsed": 1,
+            "last_replay_outcome": "processed",
+            "last_replay_error": null
+          },
+          {
+            "name": "BlobSampleNetworkWatcherCollector",
+            "source": "network",
+            "events_collected": 1,
+            "last_error": null,
+            "last_collection_time": "2026-05-22T09:20:50.894078",
+            "last_query_start_time": null,
+            "last_query_end_time": null,
+            "watermark_time": "2026-05-22T09:20:50.894078",
+            "status": "healthy",
+            "source_folder": "network_watcher",
+            "source_prefix": "v1/network_watcher",
+            "last_blob_name": "v1/network_watcher/2026/05/21/batch-001.jsonl",
+            "last_blob_candidate_count": 1,
+            "last_blob_discovery_time": "2026-05-22T09:20:48.978067",
+            "last_blob_list_status_code": 200,
+            "last_blob_download_status_code": 200,
+            "last_blob_records_parsed": 1,
+            "last_replay_outcome": "processed",
+            "last_replay_error": null
+          },
+          {
+            "name": "BlobSampleMonitorMetricsCollector",
+            "source": "database",
+            "events_collected": 1,
+            "last_error": null,
+            "last_collection_time": "2026-05-22T09:20:50.623393",
+            "last_query_start_time": null,
+            "last_query_end_time": null,
+            "watermark_time": "2026-05-22T09:20:50.623393",
+            "status": "healthy",
+            "source_folder": "azure_monitor_metrics",
+            "source_prefix": "v1/azure_monitor_metrics",
+            "last_blob_name": "v1/azure_monitor_metrics/2026/05/21/batch-001.jsonl",
+            "last_blob_candidate_count": 1,
+            "last_blob_discovery_time": "2026-05-22T09:20:48.979069",
+            "last_blob_list_status_code": 200,
+            "last_blob_download_status_code": 200,
+            "last_blob_records_parsed": 1,
+            "last_replay_outcome": "processed",
+            "last_replay_error": null
+          },
+          {
+            "name": "BlobSampleActivityHealthCollector",
+            "source": "application",
+            "events_collected": 1,
+            "last_error": null,
+            "last_collection_time": "2026-05-22T09:20:50.588469",
+            "last_query_start_time": null,
+            "last_query_end_time": null,
+            "watermark_time": "2026-05-22T09:20:50.588469",
+            "status": "healthy",
+            "source_folder": "activity_health",
+            "source_prefix": "v1/activity_health",
+            "last_blob_name": "v1/activity_health/2026/05/21/batch-001.jsonl",
+            "last_blob_candidate_count": 1,
+            "last_blob_discovery_time": "2026-05-22T09:20:48.981628",
+            "last_blob_list_status_code": 200,
+            "last_blob_download_status_code": 200,
+            "last_blob_records_parsed": 1,
+            "last_replay_outcome": "processed",
+            "last_replay_error": null
+          }
+        ]
+      },
+      "ingestion_checklist": {
+        "overall_status": "pass",
+        "evaluated_at": "2026-05-22T09:21:04.402948",
+        "ingestion_mode": "sample_blob",
+        "freshness_sla_seconds": 90,
+        "summary": {
+          "checks_total": 6,
+          "checks_passed": 6,
+          "checks_warned": 0,
+          "checks_failed": 0
+        },
+        "checks": [
+          {
+            "id": "scheduler_running",
+            "status": "pass",
+            "message": "Scheduler run loop is active.",
+            "observed": true,
+            "expected": true
+          },
+          {
+            "id": "collectors_configured",
+            "status": "pass",
+            "message": "Collectors are configured.",
+            "observed": 5,
+            "expected": ">=3"
+          },
+          {
+            "id": "collector_errors",
+            "status": "pass",
+            "message": "No collector errors detected.",
+            "observed": [],
+            "expected": []
+          },
+          {
+            "id": "collector_freshness",
+            "status": "pass",
+            "message": "Collector freshness is within SLA.",
+            "observed": [],
+            "expected": []
+          },
+          {
+            "id": "event_flow",
+            "status": "pass",
+            "message": "Event flow is healthy.",
+            "observed": {
+              "collected": 5,
+              "posted": 5,
+              "deduped": 0
+            },
+            "expected": "posted + deduped >= collected"
+          },
+          {
+            "id": "dedup_behavior",
+            "status": "pass",
+            "message": "Dedup behavior is within expected range.",
+            "observed": {
+              "collection_count": 1,
+              "deduped": 0,
+              "cache_size": 5
+            },
+            "expected": "deduped <= collected"
+          }
+        ],
+        "collector_overview": {
+          "total_collectors": 5,
+          "healthy_collectors": 5,
+          "error_collectors": 0,
+          "stale_collectors": []
+        },
+        "collectors": [
+          {
+            "name": "BlobSampleLogAnalyticsCollector",
+            "status": "healthy",
+            "last_error": null,
+            "last_collection_time": "2026-05-22T09:20:50.603310",
+            "age_seconds": 13,
+            "is_fresh": true,
+            "events_collected": 1,
+            "last_replay_outcome": "processed",
+            "last_blob_name": "v1/log_analytics/2026/05/21/batch-001.jsonl"
+          },
+          {
+            "name": "BlobSampleAppInsightsCollector",
+            "status": "healthy",
+            "last_error": null,
+            "last_collection_time": "2026-05-22T09:20:50.613980",
+            "age_seconds": 13,
+            "is_fresh": true,
+            "events_collected": 1,
+            "last_replay_outcome": "processed",
+            "last_blob_name": "v1/app_insights/2026/05/21/batch-001.jsonl"
+          },
+          {
+            "name": "BlobSampleNetworkWatcherCollector",
+            "status": "healthy",
+            "last_error": null,
+            "last_collection_time": "2026-05-22T09:20:50.894078",
+            "age_seconds": 13,
+            "is_fresh": true,
+            "events_collected": 1,
+            "last_replay_outcome": "processed",
+            "last_blob_name": "v1/network_watcher/2026/05/21/batch-001.jsonl"
+          },
+          {
+            "name": "BlobSampleMonitorMetricsCollector",
+            "status": "healthy",
+            "last_error": null,
+            "last_collection_time": "2026-05-22T09:20:50.623393",
+            "age_seconds": 13,
+            "is_fresh": true,
+            "events_collected": 1,
+            "last_replay_outcome": "processed",
+            "last_blob_name": "v1/azure_monitor_metrics/2026/05/21/batch-001.jsonl"
+          },
+          {
+            "name": "BlobSampleActivityHealthCollector",
+            "status": "healthy",
+            "last_error": null,
+            "last_collection_time": "2026-05-22T09:20:50.588469",
+            "age_seconds": 13,
+            "is_fresh": true,
+            "events_collected": 1,
+            "last_replay_outcome": "processed",
+            "last_blob_name": "v1/activity_health/2026/05/21/batch-001.jsonl"
+          }
+        ],
+        "counters": {
+          "interval_seconds": 10,
+          "collection_count": 1,
+          "total_events_collected": 5,
+          "total_events_posted": 5,
+          "total_events_deduped": 0,
+          "dedup_cache_size": 5,
+          "last_collection_time": "2026-05-22T09:20:48.975084"
+        }
+      },
+      "incidents_count": 2,
+      "evaluation": {
+        "overall_passed": false,
+        "summary": {
+          "criteria_total": 6,
+          "criteria_passed": 5,
+          "criteria_failed": 1
+        },
+        "criteria": [
+          {
+            "id": "scheduler_running",
+            "description": "Scheduler is running",
+            "passed": true,
+            "observed": true,
+            "expected": true
+          },
+          {
+            "id": "collectors_initialized",
+            "description": "At least 5 collectors are initialized",
+            "passed": true,
+            "observed": 5,
+            "expected": ">=5"
+          },
+          {
+            "id": "collections_progressing",
+            "description": "At least 2 collection cycles completed",
+            "passed": false,
+            "observed": 1,
+            "expected": ">=2"
+          },
+          {
+            "id": "collectors_healthy",
+            "description": "All initialized collectors are healthy",
+            "passed": true,
+            "observed": {
+              "healthy": 5,
+              "total": 5
+            },
+            "expected": "healthy == total"
+          },
+          {
+            "id": "ingestion_checklist_not_fail",
+            "description": "Ingestion checklist overall status is not fail",
+            "passed": true,
+            "observed": "pass",
+            "expected": "pass|warn"
+          },
+          {
+            "id": "incidents_generated",
+            "description": "At least one incident is generated from replayed data",
+            "passed": true,
+            "observed": 2,
+            "expected": ">=1"
+          }
+        ]
+      }
+    },
+    {
+      "captured_at": "2026-05-22T09:21:09.482257+00:00",
+      "scheduler_status_code": 200,
+      "checklist_status_code": 200,
+      "incidents_status_code": 200,
+      "scheduler_status": {
+        "is_running": true,
+        "interval_seconds": 10,
+        "collection_count": 1,
+        "total_events_collected": 5,
+        "total_events_posted": 5,
+        "total_events_deduped": 0,
+        "dedup_cache_size": 5,
+        "last_collection_time": "2026-05-22T09:20:48.975084",
+        "collectors": [
+          {
+            "name": "BlobSampleLogAnalyticsCollector",
+            "source": "application",
+            "events_collected": 1,
+            "last_error": null,
+            "last_collection_time": "2026-05-22T09:20:50.603310",
+            "last_query_start_time": null,
+            "last_query_end_time": null,
+            "watermark_time": "2026-05-22T09:20:50.603310",
+            "status": "healthy",
+            "source_folder": "log_analytics",
+            "source_prefix": "v1/log_analytics",
+            "last_blob_name": "v1/log_analytics/2026/05/21/batch-001.jsonl",
+            "last_blob_candidate_count": 1,
+            "last_blob_discovery_time": "2026-05-22T09:20:48.976068",
+            "last_blob_list_status_code": 200,
+            "last_blob_download_status_code": 200,
+            "last_blob_records_parsed": 1,
+            "last_replay_outcome": "processed",
+            "last_replay_error": null
+          },
+          {
+            "name": "BlobSampleAppInsightsCollector",
+            "source": "application",
+            "events_collected": 1,
+            "last_error": null,
+            "last_collection_time": "2026-05-22T09:20:50.613980",
+            "last_query_start_time": null,
+            "last_query_end_time": null,
+            "watermark_time": "2026-05-22T09:20:50.613980",
+            "status": "healthy",
+            "source_folder": "app_insights",
+            "source_prefix": "v1/app_insights",
+            "last_blob_name": "v1/app_insights/2026/05/21/batch-001.jsonl",
+            "last_blob_candidate_count": 1,
+            "last_blob_discovery_time": "2026-05-22T09:20:48.977067",
+            "last_blob_list_status_code": 200,
+            "last_blob_download_status_code": 200,
+            "last_blob_records_parsed": 1,
+            "last_replay_outcome": "processed",
+            "last_replay_error": null
+          },
+          {
+            "name": "BlobSampleNetworkWatcherCollector",
+            "source": "network",
+            "events_collected": 1,
+            "last_error": null,
+            "last_collection_time": "2026-05-22T09:20:50.894078",
+            "last_query_start_time": null,
+            "last_query_end_time": null,
+            "watermark_time": "2026-05-22T09:20:50.894078",
+            "status": "healthy",
+            "source_folder": "network_watcher",
+            "source_prefix": "v1/network_watcher",
+            "last_blob_name": "v1/network_watcher/2026/05/21/batch-001.jsonl",
+            "last_blob_candidate_count": 1,
+            "last_blob_discovery_time": "2026-05-22T09:20:48.978067",
+            "last_blob_list_status_code": 200,
+            "last_blob_download_status_code": 200,
+            "last_blob_records_parsed": 1,
+            "last_replay_outcome": "processed",
+            "last_replay_error": null
+          },
+          {
+            "name": "BlobSampleMonitorMetricsCollector",
+            "source": "database",
+            "events_collected": 1,
+            "last_error": null,
+            "last_collection_time": "2026-05-22T09:20:50.623393",
+            "last_query_start_time": null,
+            "last_query_end_time": null,
+            "watermark_time": "2026-05-22T09:20:50.623393",
+            "status": "healthy",
+            "source_folder": "azure_monitor_metrics",
+            "source_prefix": "v1/azure_monitor_metrics",
+            "last_blob_name": "v1/azure_monitor_metrics/2026/05/21/batch-001.jsonl",
+            "last_blob_candidate_count": 1,
+            "last_blob_discovery_time": "2026-05-22T09:20:48.979069",
+            "last_blob_list_status_code": 200,
+            "last_blob_download_status_code": 200,
+            "last_blob_records_parsed": 1,
+            "last_replay_outcome": "processed",
+            "last_replay_error": null
+          },
+          {
+            "name": "BlobSampleActivityHealthCollector",
+            "source": "application",
+            "events_collected": 1,
+            "last_error": null,
+            "last_collection_time": "2026-05-22T09:20:50.588469",
+            "last_query_start_time": null,
+            "last_query_end_time": null,
+            "watermark_time": "2026-05-22T09:20:50.588469",
+            "status": "healthy",
+            "source_folder": "activity_health",
+            "source_prefix": "v1/activity_health",
+            "last_blob_name": "v1/activity_health/2026/05/21/batch-001.jsonl",
+            "last_blob_candidate_count": 1,
+            "last_blob_discovery_time": "2026-05-22T09:20:48.981628",
+            "last_blob_list_status_code": 200,
+            "last_blob_download_status_code": 200,
+            "last_blob_records_parsed": 1,
+            "last_replay_outcome": "processed",
+            "last_replay_error": null
+          }
+        ]
+      },
+      "ingestion_checklist": {
+        "overall_status": "pass",
+        "evaluated_at": "2026-05-22T09:21:09.463591",
+        "ingestion_mode": "sample_blob",
+        "freshness_sla_seconds": 90,
+        "summary": {
+          "checks_total": 6,
+          "checks_passed": 6,
+          "checks_warned": 0,
+          "checks_failed": 0
+        },
+        "checks": [
+          {
+            "id": "scheduler_running",
+            "status": "pass",
+            "message": "Scheduler run loop is active.",
+            "observed": true,
+            "expected": true
+          },
+          {
+            "id": "collectors_configured",
+            "status": "pass",
+            "message": "Collectors are configured.",
+            "observed": 5,
+            "expected": ">=3"
+          },
+          {
+            "id": "collector_errors",
+            "status": "pass",
+            "message": "No collector errors detected.",
+            "observed": [],
+            "expected": []
+          },
+          {
+            "id": "collector_freshness",
+            "status": "pass",
+            "message": "Collector freshness is within SLA.",
+            "observed": [],
+            "expected": []
+          },
+          {
+            "id": "event_flow",
+            "status": "pass",
+            "message": "Event flow is healthy.",
+            "observed": {
+              "collected": 5,
+              "posted": 5,
+              "deduped": 0
+            },
+            "expected": "posted + deduped >= collected"
+          },
+          {
+            "id": "dedup_behavior",
+            "status": "pass",
+            "message": "Dedup behavior is within expected range.",
+            "observed": {
+              "collection_count": 1,
+              "deduped": 0,
+              "cache_size": 5
+            },
+            "expected": "deduped <= collected"
+          }
+        ],
+        "collector_overview": {
+          "total_collectors": 5,
+          "healthy_collectors": 5,
+          "error_collectors": 0,
+          "stale_collectors": []
+        },
+        "collectors": [
+          {
+            "name": "BlobSampleLogAnalyticsCollector",
+            "status": "healthy",
+            "last_error": null,
+            "last_collection_time": "2026-05-22T09:20:50.603310",
+            "age_seconds": 18,
+            "is_fresh": true,
+            "events_collected": 1,
+            "last_replay_outcome": "processed",
+            "last_blob_name": "v1/log_analytics/2026/05/21/batch-001.jsonl"
+          },
+          {
+            "name": "BlobSampleAppInsightsCollector",
+            "status": "healthy",
+            "last_error": null,
+            "last_collection_time": "2026-05-22T09:20:50.613980",
+            "age_seconds": 18,
+            "is_fresh": true,
+            "events_collected": 1,
+            "last_replay_outcome": "processed",
+            "last_blob_name": "v1/app_insights/2026/05/21/batch-001.jsonl"
+          },
+          {
+            "name": "BlobSampleNetworkWatcherCollector",
+            "status": "healthy",
+            "last_error": null,
+            "last_collection_time": "2026-05-22T09:20:50.894078",
+            "age_seconds": 18,
+            "is_fresh": true,
+            "events_collected": 1,
+            "last_replay_outcome": "processed",
+            "last_blob_name": "v1/network_watcher/2026/05/21/batch-001.jsonl"
+          },
+          {
+            "name": "BlobSampleMonitorMetricsCollector",
+            "status": "healthy",
+            "last_error": null,
+            "last_collection_time": "2026-05-22T09:20:50.623393",
+            "age_seconds": 18,
+            "is_fresh": true,
+            "events_collected": 1,
+            "last_replay_outcome": "processed",
+            "last_blob_name": "v1/azure_monitor_metrics/2026/05/21/batch-001.jsonl"
+          },
+          {
+            "name": "BlobSampleActivityHealthCollector",
+            "status": "healthy",
+            "last_error": null,
+            "last_collection_time": "2026-05-22T09:20:50.588469",
+            "age_seconds": 18,
+            "is_fresh": true,
+            "events_collected": 1,
+            "last_replay_outcome": "processed",
+            "last_blob_name": "v1/activity_health/2026/05/21/batch-001.jsonl"
+          }
+        ],
+        "counters": {
+          "interval_seconds": 10,
+          "collection_count": 1,
+          "total_events_collected": 5,
+          "total_events_posted": 5,
+          "total_events_deduped": 0,
+          "dedup_cache_size": 5,
+          "last_collection_time": "2026-05-22T09:20:48.975084"
+        }
+      },
+      "incidents_count": 2,
+      "evaluation": {
+        "overall_passed": false,
+        "summary": {
+          "criteria_total": 6,
+          "criteria_passed": 5,
+          "criteria_failed": 1
+        },
+        "criteria": [
+          {
+            "id": "scheduler_running",
+            "description": "Scheduler is running",
+            "passed": true,
+            "observed": true,
+            "expected": true
+          },
+          {
+            "id": "collectors_initialized",
+            "description": "At least 5 collectors are initialized",
+            "passed": true,
+            "observed": 5,
+            "expected": ">=5"
+          },
+          {
+            "id": "collections_progressing",
+            "description": "At least 2 collection cycles completed",
+            "passed": false,
+            "observed": 1,
+            "expected": ">=2"
+          },
+          {
+            "id": "collectors_healthy",
+            "description": "All initialized collectors are healthy",
+            "passed": true,
+            "observed": {
+              "healthy": 5,
+              "total": 5
+            },
+            "expected": "healthy == total"
+          },
+          {
+            "id": "ingestion_checklist_not_fail",
+            "description": "Ingestion checklist overall status is not fail",
+            "passed": true,
+            "observed": "pass",
+            "expected": "pass|warn"
+          },
+          {
+            "id": "incidents_generated",
+            "description": "At least one incident is generated from replayed data",
+            "passed": true,
+            "observed": 2,
+            "expected": ">=1"
+          }
+        ]
+      }
+    },
+    {
+      "captured_at": "2026-05-22T09:21:14.530583+00:00",
+      "scheduler_status_code": 200,
+      "checklist_status_code": 200,
+      "incidents_status_code": 200,
+      "scheduler_status": {
+        "is_running": true,
+        "interval_seconds": 10,
+        "collection_count": 2,
+        "total_events_collected": 10,
+        "total_events_posted": 5,
+        "total_events_deduped": 0,
+        "dedup_cache_size": 6,
+        "last_collection_time": "2026-05-22T09:21:11.161117",
+        "collectors": [
+          {
+            "name": "BlobSampleLogAnalyticsCollector",
+            "source": "application",
+            "events_collected": 2,
+            "last_error": null,
+            "last_collection_time": "2026-05-22T09:21:12.539548",
+            "last_query_start_time": null,
+            "last_query_end_time": null,
+            "watermark_time": "2026-05-22T09:21:12.539548",
+            "status": "healthy",
+            "source_folder": "log_analytics",
+            "source_prefix": "v1/log_analytics",
+            "last_blob_name": "v1/log_analytics/2026/05/21/batch-001.jsonl",
+            "last_blob_candidate_count": 1,
+            "last_blob_discovery_time": "2026-05-22T09:21:11.161117",
+            "last_blob_list_status_code": 200,
+            "last_blob_download_status_code": 200,
+            "last_blob_records_parsed": 1,
+            "last_replay_outcome": "processed",
+            "last_replay_error": null
+          },
+          {
+            "name": "BlobSampleAppInsightsCollector",
+            "source": "application",
+            "events_collected": 2,
+            "last_error": null,
+            "last_collection_time": "2026-05-22T09:21:12.482258",
+            "last_query_start_time": null,
+            "last_query_end_time": null,
+            "watermark_time": "2026-05-22T09:21:12.482258",
+            "status": "healthy",
+            "source_folder": "app_insights",
+            "source_prefix": "v1/app_insights",
+            "last_blob_name": "v1/app_insights/2026/05/21/batch-001.jsonl",
+            "last_blob_candidate_count": 1,
+            "last_blob_discovery_time": "2026-05-22T09:21:11.162119",
+            "last_blob_list_status_code": 200,
+            "last_blob_download_status_code": 200,
+            "last_blob_records_parsed": 1,
+            "last_replay_outcome": "processed",
+            "last_replay_error": null
+          },
+          {
+            "name": "BlobSampleNetworkWatcherCollector",
+            "source": "network",
+            "events_collected": 2,
+            "last_error": null,
+            "last_collection_time": "2026-05-22T09:21:12.431524",
+            "last_query_start_time": null,
+            "last_query_end_time": null,
+            "watermark_time": "2026-05-22T09:21:12.431524",
+            "status": "healthy",
+            "source_folder": "network_watcher",
+            "source_prefix": "v1/network_watcher",
+            "last_blob_name": "v1/network_watcher/2026/05/21/batch-001.jsonl",
+            "last_blob_candidate_count": 1,
+            "last_blob_discovery_time": "2026-05-22T09:21:11.163448",
+            "last_blob_list_status_code": 200,
+            "last_blob_download_status_code": 200,
+            "last_blob_records_parsed": 1,
+            "last_replay_outcome": "processed",
+            "last_replay_error": null
+          },
+          {
+            "name": "BlobSampleMonitorMetricsCollector",
+            "source": "database",
+            "events_collected": 2,
+            "last_error": null,
+            "last_collection_time": "2026-05-22T09:21:12.468443",
+            "last_query_start_time": null,
+            "last_query_end_time": null,
+            "watermark_time": "2026-05-22T09:21:12.468443",
+            "status": "healthy",
+            "source_folder": "azure_monitor_metrics",
+            "source_prefix": "v1/azure_monitor_metrics",
+            "last_blob_name": "v1/azure_monitor_metrics/2026/05/21/batch-001.jsonl",
+            "last_blob_candidate_count": 1,
+            "last_blob_discovery_time": "2026-05-22T09:21:11.165451",
+            "last_blob_list_status_code": 200,
+            "last_blob_download_status_code": 200,
+            "last_blob_records_parsed": 1,
+            "last_replay_outcome": "processed",
+            "last_replay_error": null
+          },
+          {
+            "name": "BlobSampleActivityHealthCollector",
+            "source": "application",
+            "events_collected": 2,
+            "last_error": null,
+            "last_collection_time": "2026-05-22T09:21:12.500306",
+            "last_query_start_time": null,
+            "last_query_end_time": null,
+            "watermark_time": "2026-05-22T09:21:12.500306",
+            "status": "healthy",
+            "source_folder": "activity_health",
+            "source_prefix": "v1/activity_health",
+            "last_blob_name": "v1/activity_health/2026/05/21/batch-001.jsonl",
+            "last_blob_candidate_count": 1,
+            "last_blob_discovery_time": "2026-05-22T09:21:11.166533",
+            "last_blob_list_status_code": 200,
+            "last_blob_download_status_code": 200,
+            "last_blob_records_parsed": 1,
+            "last_replay_outcome": "processed",
+            "last_replay_error": null
+          }
+        ]
+      },
+      "ingestion_checklist": {
+        "overall_status": "warn",
+        "evaluated_at": "2026-05-22T09:21:14.502366",
+        "ingestion_mode": "sample_blob",
+        "freshness_sla_seconds": 90,
+        "summary": {
+          "checks_total": 6,
+          "checks_passed": 4,
+          "checks_warned": 2,
+          "checks_failed": 0
+        },
+        "checks": [
+          {
+            "id": "scheduler_running",
+            "status": "pass",
+            "message": "Scheduler run loop is active.",
+            "observed": true,
+            "expected": true
+          },
+          {
+            "id": "collectors_configured",
+            "status": "pass",
+            "message": "Collectors are configured.",
+            "observed": 5,
+            "expected": ">=3"
+          },
+          {
+            "id": "collector_errors",
+            "status": "pass",
+            "message": "No collector errors detected.",
+            "observed": [],
+            "expected": []
+          },
+          {
+            "id": "collector_freshness",
+            "status": "pass",
+            "message": "Collector freshness is within SLA.",
+            "observed": [],
+            "expected": []
+          },
+          {
+            "id": "event_flow",
+            "status": "warn",
+            "message": "Some collected events were neither posted nor deduplicated.",
+            "observed": {
+              "collected": 10,
+              "posted": 5,
+              "deduped": 0
+            },
+            "expected": "posted + deduped ~= collected"
+          },
+          {
+            "id": "dedup_behavior",
+            "status": "warn",
+            "message": "No deduplicated events observed yet in sample replay mode.",
+            "observed": {
+              "collection_count": 2,
+              "deduped": 0,
+              "cache_size": 6
+            },
+            "expected": "deduped > 0 after repeated replay"
+          }
+        ],
+        "collector_overview": {
+          "total_collectors": 5,
+          "healthy_collectors": 5,
+          "error_collectors": 0,
+          "stale_collectors": []
+        },
+        "collectors": [
+          {
+            "name": "BlobSampleLogAnalyticsCollector",
+            "status": "healthy",
+            "last_error": null,
+            "last_collection_time": "2026-05-22T09:21:12.539548",
+            "age_seconds": 1,
+            "is_fresh": true,
+            "events_collected": 2,
+            "last_replay_outcome": "processed",
+            "last_blob_name": "v1/log_analytics/2026/05/21/batch-001.jsonl"
+          },
+          {
+            "name": "BlobSampleAppInsightsCollector",
+            "status": "healthy",
+            "last_error": null,
+            "last_collection_time": "2026-05-22T09:21:12.482258",
+            "age_seconds": 2,
+            "is_fresh": true,
+            "events_collected": 2,
+            "last_replay_outcome": "processed",
+            "last_blob_name": "v1/app_insights/2026/05/21/batch-001.jsonl"
+          },
+          {
+            "name": "BlobSampleNetworkWatcherCollector",
+            "status": "healthy",
+            "last_error": null,
+            "last_collection_time": "2026-05-22T09:21:12.431524",
+            "age_seconds": 2,
+            "is_fresh": true,
+            "events_collected": 2,
+            "last_replay_outcome": "processed",
+            "last_blob_name": "v1/network_watcher/2026/05/21/batch-001.jsonl"
+          },
+          {
+            "name": "BlobSampleMonitorMetricsCollector",
+            "status": "healthy",
+            "last_error": null,
+            "last_collection_time": "2026-05-22T09:21:12.468443",
+            "age_seconds": 2,
+            "is_fresh": true,
+            "events_collected": 2,
+            "last_replay_outcome": "processed",
+            "last_blob_name": "v1/azure_monitor_metrics/2026/05/21/batch-001.jsonl"
+          },
+          {
+            "name": "BlobSampleActivityHealthCollector",
+            "status": "healthy",
+            "last_error": null,
+            "last_collection_time": "2026-05-22T09:21:12.500306",
+            "age_seconds": 2,
+            "is_fresh": true,
+            "events_collected": 2,
+            "last_replay_outcome": "processed",
+            "last_blob_name": "v1/activity_health/2026/05/21/batch-001.jsonl"
+          }
+        ],
+        "counters": {
+          "interval_seconds": 10,
+          "collection_count": 2,
+          "total_events_collected": 10,
+          "total_events_posted": 5,
+          "total_events_deduped": 0,
+          "dedup_cache_size": 6,
+          "last_collection_time": "2026-05-22T09:21:11.161117"
+        }
+      },
+      "incidents_count": 2,
+      "evaluation": {
+        "overall_passed": true,
+        "summary": {
+          "criteria_total": 6,
+          "criteria_passed": 6,
+          "criteria_failed": 0
+        },
+        "criteria": [
+          {
+            "id": "scheduler_running",
+            "description": "Scheduler is running",
+            "passed": true,
+            "observed": true,
+            "expected": true
+          },
+          {
+            "id": "collectors_initialized",
+            "description": "At least 5 collectors are initialized",
+            "passed": true,
+            "observed": 5,
+            "expected": ">=5"
+          },
+          {
+            "id": "collections_progressing",
+            "description": "At least 2 collection cycles completed",
+            "passed": true,
+            "observed": 2,
+            "expected": ">=2"
+          },
+          {
+            "id": "collectors_healthy",
+            "description": "All initialized collectors are healthy",
+            "passed": true,
+            "observed": {
+              "healthy": 5,
+              "total": 5
+            },
+            "expected": "healthy == total"
+          },
+          {
+            "id": "ingestion_checklist_not_fail",
+            "description": "Ingestion checklist overall status is not fail",
+            "passed": true,
+            "observed": "warn",
+            "expected": "pass|warn"
+          },
+          {
+            "id": "incidents_generated",
+            "description": "At least one incident is generated from replayed data",
+            "passed": true,
+            "observed": 2,
+            "expected": ">=1"
+          }
+        ]
+      }
+    }
+  ],
+  "final_snapshot": {
+    "captured_at": "2026-05-22T09:21:14.530583+00:00",
+    "scheduler_status_code": 200,
+    "checklist_status_code": 200,
+    "incidents_status_code": 200,
+    "scheduler_status": {
+      "is_running": true,
+      "interval_seconds": 10,
+      "collection_count": 2,
+      "total_events_collected": 10,
+      "total_events_posted": 5,
+      "total_events_deduped": 0,
+      "dedup_cache_size": 6,
+      "last_collection_time": "2026-05-22T09:21:11.161117",
+      "collectors": [
+        {
+          "name": "BlobSampleLogAnalyticsCollector",
+          "source": "application",
+          "events_collected": 2,
+          "last_error": null,
+          "last_collection_time": "2026-05-22T09:21:12.539548",
+          "last_query_start_time": null,
+          "last_query_end_time": null,
+          "watermark_time": "2026-05-22T09:21:12.539548",
+          "status": "healthy",
+          "source_folder": "log_analytics",
+          "source_prefix": "v1/log_analytics",
+          "last_blob_name": "v1/log_analytics/2026/05/21/batch-001.jsonl",
+          "last_blob_candidate_count": 1,
+          "last_blob_discovery_time": "2026-05-22T09:21:11.161117",
+          "last_blob_list_status_code": 200,
+          "last_blob_download_status_code": 200,
+          "last_blob_records_parsed": 1,
+          "last_replay_outcome": "processed",
+          "last_replay_error": null
+        },
+        {
+          "name": "BlobSampleAppInsightsCollector",
+          "source": "application",
+          "events_collected": 2,
+          "last_error": null,
+          "last_collection_time": "2026-05-22T09:21:12.482258",
+          "last_query_start_time": null,
+          "last_query_end_time": null,
+          "watermark_time": "2026-05-22T09:21:12.482258",
+          "status": "healthy",
+          "source_folder": "app_insights",
+          "source_prefix": "v1/app_insights",
+          "last_blob_name": "v1/app_insights/2026/05/21/batch-001.jsonl",
+          "last_blob_candidate_count": 1,
+          "last_blob_discovery_time": "2026-05-22T09:21:11.162119",
+          "last_blob_list_status_code": 200,
+          "last_blob_download_status_code": 200,
+          "last_blob_records_parsed": 1,
+          "last_replay_outcome": "processed",
+          "last_replay_error": null
+        },
+        {
+          "name": "BlobSampleNetworkWatcherCollector",
+          "source": "network",
+          "events_collected": 2,
+          "last_error": null,
+          "last_collection_time": "2026-05-22T09:21:12.431524",
+          "last_query_start_time": null,
+          "last_query_end_time": null,
+          "watermark_time": "2026-05-22T09:21:12.431524",
+          "status": "healthy",
+          "source_folder": "network_watcher",
+          "source_prefix": "v1/network_watcher",
+          "last_blob_name": "v1/network_watcher/2026/05/21/batch-001.jsonl",
+          "last_blob_candidate_count": 1,
+          "last_blob_discovery_time": "2026-05-22T09:21:11.163448",
+          "last_blob_list_status_code": 200,
+          "last_blob_download_status_code": 200,
+          "last_blob_records_parsed": 1,
+          "last_replay_outcome": "processed",
+          "last_replay_error": null
+        },
+        {
+          "name": "BlobSampleMonitorMetricsCollector",
+          "source": "database",
+          "events_collected": 2,
+          "last_error": null,
+          "last_collection_time": "2026-05-22T09:21:12.468443",
+          "last_query_start_time": null,
+          "last_query_end_time": null,
+          "watermark_time": "2026-05-22T09:21:12.468443",
+          "status": "healthy",
+          "source_folder": "azure_monitor_metrics",
+          "source_prefix": "v1/azure_monitor_metrics",
+          "last_blob_name": "v1/azure_monitor_metrics/2026/05/21/batch-001.jsonl",
+          "last_blob_candidate_count": 1,
+          "last_blob_discovery_time": "2026-05-22T09:21:11.165451",
+          "last_blob_list_status_code": 200,
+          "last_blob_download_status_code": 200,
+          "last_blob_records_parsed": 1,
+          "last_replay_outcome": "processed",
+          "last_replay_error": null
+        },
+        {
+          "name": "BlobSampleActivityHealthCollector",
+          "source": "application",
+          "events_collected": 2,
+          "last_error": null,
+          "last_collection_time": "2026-05-22T09:21:12.500306",
+          "last_query_start_time": null,
+          "last_query_end_time": null,
+          "watermark_time": "2026-05-22T09:21:12.500306",
+          "status": "healthy",
+          "source_folder": "activity_health",
+          "source_prefix": "v1/activity_health",
+          "last_blob_name": "v1/activity_health/2026/05/21/batch-001.jsonl",
+          "last_blob_candidate_count": 1,
+          "last_blob_discovery_time": "2026-05-22T09:21:11.166533",
+          "last_blob_list_status_code": 200,
+          "last_blob_download_status_code": 200,
+          "last_blob_records_parsed": 1,
+          "last_replay_outcome": "processed",
+          "last_replay_error": null
+        }
+      ]
+    },
+    "ingestion_checklist": {
+      "overall_status": "warn",
+      "evaluated_at": "2026-05-22T09:21:14.502366",
+      "ingestion_mode": "sample_blob",
+      "freshness_sla_seconds": 90,
+      "summary": {
+        "checks_total": 6,
+        "checks_passed": 4,
+        "checks_warned": 2,
+        "checks_failed": 0
+      },
+      "checks": [
+        {
+          "id": "scheduler_running",
+          "status": "pass",
+          "message": "Scheduler run loop is active.",
+          "observed": true,
+          "expected": true
+        },
+        {
+          "id": "collectors_configured",
+          "status": "pass",
+          "message": "Collectors are configured.",
+          "observed": 5,
+          "expected": ">=3"
+        },
+        {
+          "id": "collector_errors",
+          "status": "pass",
+          "message": "No collector errors detected.",
+          "observed": [],
+          "expected": []
+        },
+        {
+          "id": "collector_freshness",
+          "status": "pass",
+          "message": "Collector freshness is within SLA.",
+          "observed": [],
+          "expected": []
+        },
+        {
+          "id": "event_flow",
+          "status": "warn",
+          "message": "Some collected events were neither posted nor deduplicated.",
+          "observed": {
+            "collected": 10,
+            "posted": 5,
+            "deduped": 0
+          },
+          "expected": "posted + deduped ~= collected"
+        },
+        {
+          "id": "dedup_behavior",
+          "status": "warn",
+          "message": "No deduplicated events observed yet in sample replay mode.",
+          "observed": {
+            "collection_count": 2,
+            "deduped": 0,
+            "cache_size": 6
+          },
+          "expected": "deduped > 0 after repeated replay"
+        }
+      ],
+      "collector_overview": {
+        "total_collectors": 5,
+        "healthy_collectors": 5,
+        "error_collectors": 0,
+        "stale_collectors": []
+      },
+      "collectors": [
+        {
+          "name": "BlobSampleLogAnalyticsCollector",
+          "status": "healthy",
+          "last_error": null,
+          "last_collection_time": "2026-05-22T09:21:12.539548",
+          "age_seconds": 1,
+          "is_fresh": true,
+          "events_collected": 2,
+          "last_replay_outcome": "processed",
+          "last_blob_name": "v1/log_analytics/2026/05/21/batch-001.jsonl"
+        },
+        {
+          "name": "BlobSampleAppInsightsCollector",
+          "status": "healthy",
+          "last_error": null,
+          "last_collection_time": "2026-05-22T09:21:12.482258",
+          "age_seconds": 2,
+          "is_fresh": true,
+          "events_collected": 2,
+          "last_replay_outcome": "processed",
+          "last_blob_name": "v1/app_insights/2026/05/21/batch-001.jsonl"
+        },
+        {
+          "name": "BlobSampleNetworkWatcherCollector",
+          "status": "healthy",
+          "last_error": null,
+          "last_collection_time": "2026-05-22T09:21:12.431524",
+          "age_seconds": 2,
+          "is_fresh": true,
+          "events_collected": 2,
+          "last_replay_outcome": "processed",
+          "last_blob_name": "v1/network_watcher/2026/05/21/batch-001.jsonl"
+        },
+        {
+          "name": "BlobSampleMonitorMetricsCollector",
+          "status": "healthy",
+          "last_error": null,
+          "last_collection_time": "2026-05-22T09:21:12.468443",
+          "age_seconds": 2,
+          "is_fresh": true,
+          "events_collected": 2,
+          "last_replay_outcome": "processed",
+          "last_blob_name": "v1/azure_monitor_metrics/2026/05/21/batch-001.jsonl"
+        },
+        {
+          "name": "BlobSampleActivityHealthCollector",
+          "status": "healthy",
+          "last_error": null,
+          "last_collection_time": "2026-05-22T09:21:12.500306",
+          "age_seconds": 2,
+          "is_fresh": true,
+          "events_collected": 2,
+          "last_replay_outcome": "processed",
+          "last_blob_name": "v1/activity_health/2026/05/21/batch-001.jsonl"
+        }
+      ],
+      "counters": {
+        "interval_seconds": 10,
+        "collection_count": 2,
+        "total_events_collected": 10,
+        "total_events_posted": 5,
+        "total_events_deduped": 0,
+        "dedup_cache_size": 6,
+        "last_collection_time": "2026-05-22T09:21:11.161117"
+      }
+    },
+    "incidents_count": 2,
+    "evaluation": {
+      "overall_passed": true,
+      "summary": {
+        "criteria_total": 6,
+        "criteria_passed": 6,
+        "criteria_failed": 0
+      },
+      "criteria": [
+        {
+          "id": "scheduler_running",
+          "description": "Scheduler is running",
+          "passed": true,
+          "observed": true,
+          "expected": true
+        },
+        {
+          "id": "collectors_initialized",
+          "description": "At least 5 collectors are initialized",
+          "passed": true,
+          "observed": 5,
+          "expected": ">=5"
+        },
+        {
+          "id": "collections_progressing",
+          "description": "At least 2 collection cycles completed",
+          "passed": true,
+          "observed": 2,
+          "expected": ">=2"
+        },
+        {
+          "id": "collectors_healthy",
+          "description": "All initialized collectors are healthy",
+          "passed": true,
+          "observed": {
+            "healthy": 5,
+            "total": 5
+          },
+          "expected": "healthy == total"
+        },
+        {
+          "id": "ingestion_checklist_not_fail",
+          "description": "Ingestion checklist overall status is not fail",
+          "passed": true,
+          "observed": "warn",
+          "expected": "pass|warn"
+        },
+        {
+          "id": "incidents_generated",
+          "description": "At least one incident is generated from replayed data",
+          "passed": true,
+          "observed": 2,
+          "expected": ">=1"
+        }
+      ]
+    }
+  },
+  "run_finished_at": "2026-05-22T09:21:14.530583+00:00"
+}
