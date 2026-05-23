@@ -19,7 +19,18 @@ It was created separately from the existing `AzureLens` project.
 - Rule-based RCA engine for network/application/database incidents
 - In-memory incident store for MVP testing and validation
 - Scenario simulation endpoints
-- Phase 3 Azure integration plan and live collector framework implementations
+- Azure integration collector framework implementations
+
+## Current Execution State (Phase / Step / Sub-step)
+
+- Primary tracker file:
+  - `MASTER_PHASE_STEP_TRACKER.md`
+- Current working header:
+  - `Working: Phase 2 | Step 1 | Version v0.2.0 (planning)`
+- Status summary:
+  - Phase 1 (`v0.1.0`) is complete and tagged.
+  - Phase 2 Step 1 is in progress.
+  - Phases 3-6 are pending by design.
 
 ---
 
@@ -27,6 +38,7 @@ It was created separately from the existing `AzureLens` project.
 
 ### Root files
 - `README.md` — MVP overview, running instructions, next steps
+- `MASTER_PHASE_STEP_TRACKER.md` — phase/step/sub-step status tracker and version map
 - `PILOT_RCA_MVP_PLAN.md` — pilot selection, architecture diagram, MVP deliverables, and phased implementation plan
 - `PHASE_3_AZURE_INTEGRATION_PLAN.md` — Azure Layer 1 integration plan, collector architecture, auth strategy, expected telemetry formats, and success criteria
 - `SESSION_SUMMARY.md` — this document
@@ -205,9 +217,10 @@ This project has a dedicated Phase 3 plan in `PHASE_3_AZURE_INTEGRATION_PLAN.md`
 
 - `AzureRCAPlanner` is the working pilot project.
 - `AzureLens` is a separate workspace/project and should not be mixed with `AzureRCAPlanner` unless you explicitly decide to merge later.
-- Continue Phase 3 by validating live Azure ingestion and tuning thresholds for your environment.
-- After Phase 3, move to Phase 4 by replacing in-memory storage with Azure persistence (Cosmos DB or Azure SQL).
-- Later phases will include forecasting, dashboarding, OS/middleware RCA, and real Azure incident visualization.
+- Continue from `MASTER_PHASE_STEP_TRACKER.md` current line:
+  - `Working: Phase 2 | Step 1 | Version v0.2.0 (planning)`
+- Complete pending Phase 2 Step 1 sub-steps before moving to Phase 2 Step 2.
+- Do not skip directly to Phase 3 tasks unless Phase 2 acceptance gate is completed.
 
 ---
 
@@ -230,6 +243,7 @@ This project has a dedicated Phase 3 plan in `PHASE_3_AZURE_INTEGRATION_PLAN.md`
 - The system currently uses in-memory storage only.
 
 If you open a new session later, start by reading this file and then inspect:
+- `MASTER_PHASE_STEP_TRACKER.md`
 - `backend/app.py`
 - `backend/processors.py`
 - `backend/collectors/`

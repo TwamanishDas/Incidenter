@@ -1,5 +1,16 @@
 # Pilot RCA MVP Plan
 
+## 0. Execution Tracking (Phase / Step / Sub-step)
+
+Use `MASTER_PHASE_STEP_TRACKER.md` as the execution source of truth for:
+- phase sequencing,
+- step-level progress,
+- sub-step completion status,
+- version labels (`v0.1.0` to `v0.6.0`).
+
+Current active execution line:
+- `Working: Phase 2 | Step 1 | Version v0.2.0 (planning)`
+
 ## 1. Selected pilot scope
 
 Start with a focused pilot that delivers incident flagging, forecasting, and root cause analysis for:
