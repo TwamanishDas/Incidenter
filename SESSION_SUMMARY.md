@@ -77,6 +77,34 @@ It was created separately from the existing `AzureLens` project.
 
 ## Current implementation details
 
+### Latest update (May 23, 2026) - Step 7 finalized and published
+
+- Initialized project-local Git repository in `AzureRCAPlanner`.
+- Added local ignore baseline:
+  - `.gitignore` (`.venv/`, `.env`, Python cache artifacts)
+- Created release baseline commit:
+  - `6127001` - `release: phase1 ingestion baseline v0.1.0`
+- Created and published release tags:
+  - `cp/p1-s7`
+  - `v0.1.0`
+- Published to GitHub remote:
+  - `origin -> https://github.com/TwamanishDas/Incidenter.git`
+- Current remote state:
+  - `main` tracking `origin/main`
+  - `HEAD`, `cp/p1-s7`, and `v0.1.0` resolve to the same commit (`6127001`)
+
+### Latest update (May 23, 2026) - Phase 2 Step 1 kickoff artifact
+
+- Added beginner-friendly execution runbook:
+  - `PHASE2_STEP1_TELEMETRY_COLLECTION_KICKOFF.md`
+- Runbook provides strict Goal/Action/Verify/Next flow for:
+  - Azure CLI prerequisite checks
+  - Log Analytics workspace setup
+  - Workspace-based Application Insights setup
+  - SQL diagnostic settings setup
+  - NSG flow log setup via Network Watcher
+  - Local `.env` live-mode configuration and scheduler/checklist validation
+
 ### Latest update (May 22, 2026) - Step 4 hardening
 
 - Added replay diagnostics to `backend/replay/blob_sample_collector.py` and exposed them via `GET /scheduler/status` for sample mode.
