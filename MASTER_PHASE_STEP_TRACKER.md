@@ -1,6 +1,6 @@
 # Master Phase-Step Tracker
 
-Working: Phase 2 | Step 1 | Version v0.2.0 (planning)
+Working: Phase 2 | Step 2 | Version v0.2.0 (planning)
 
 Purpose: single source of truth for phase, step, and sub-step execution status.
 
@@ -62,17 +62,20 @@ Purpose: single source of truth for phase, step, and sub-step execution status.
 
 ## Phase 2 - Telemetry Collection Execution (`v0.2.0`) [In Progress]
 
-### Step 1 - Azure telemetry setup kickoff [In Progress]
+### Step 1 - Azure telemetry setup kickoff [Completed]
 1. Sub-step 1.1: Create operational runbook:
    - `PHASE2_STEP1_TELEMETRY_COLLECTION_KICKOFF.md` [Completed]
 2. Sub-step 1.2: Local prerequisites:
-   - Azure CLI installation check (`az --version`) [Blocked: CLI missing]
-3. Sub-step 1.3: Azure login and subscription selection [Pending]
-4. Sub-step 1.4: Log Analytics workspace provisioning [Pending]
-5. Sub-step 1.5: Workspace-based Application Insights setup [Pending]
-6. Sub-step 1.6: SQL diagnostics enablement [Pending]
-7. Sub-step 1.7: NSG flow log enablement [Pending]
-8. Sub-step 1.8: Local `.env` live mode configuration and scheduler validation [Pending]
+   - Azure CLI installed in project `.venv`; `az --version` verified [Completed]
+3. Sub-step 1.3: Azure login and subscription selection (`1f5ee0d1-cee1-4424-9768-4eac65a0ad83`) [Completed]
+4. Sub-step 1.4: Log Analytics workspace provisioning (`law-incidenter-pilot`) [Completed]
+5. Sub-step 1.5: Workspace-based Application Insights setup (`appi-incidenter-pilot`) [Completed]
+6. Sub-step 1.6: SQL diagnostics enablement (`sql-to-law` on `incidenterdb`) [Completed]
+7. Sub-step 1.7: Network flow telemetry enablement:
+   - NSG flow logs retired by Azure policy; switched to VNet flow logs (`incidenter-vnet-flowlog`) [Completed]
+8. Sub-step 1.8: Local `.env` live mode configuration and scheduler validation:
+   - `/scheduler/status` = 200
+   - `/ingestion/checklist` = pass [Completed]
 9. Sub-step 1.9: Architecture documentation hierarchy (high-level -> low-level -> scope -> tracker) [Completed]
 10. Sub-step 1.10: Telemetry metrics catalog integration (docs + schema-aware ingestion model + metric collector expansion) [Completed]
 

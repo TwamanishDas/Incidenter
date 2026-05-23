@@ -65,19 +65,41 @@ class LogAnalyticsCollector(CollectorBase):
     def _query_application_metrics(self, start_time: datetime, end_time: datetime) -> list[TelemetryEvent]:
         query = f"""
         union isfuzzy=true AppRequests, requests
-        | extend EventTime = coalesce(TimeGenerated, timestamp)
+        | extend EventTime = coalesce(
+            todatetime(column_ifexists("TimeGenerated", datetime(null))),
+            todatetime(column_ifexists("timestamp", datetime(null)))
+          )
+        | where isnotnull(EventTime)
         | where EventTime between (datetime({_to_kql_datetime(start_time)}) .. datetime({_to_kql_datetime(end_time)}))
         | summarize
             TotalRequests = count(),
-            FailedRequests = countif(tobool(coalesce(Success, success)) == false),
-            Errors5xx = countif(tostring(coalesce(ResultCode, resultCode)) startswith "5"),
-            AvgDurationMs = avg(todouble(coalesce(DurationMs, duration))),
-            P95DurationMs = percentile(todouble(coalesce(DurationMs, duration)), 95),
+            FailedRequests = countif(
+                tobool(coalesce(column_ifexists("Success", bool(null)), column_ifexists("success", bool(null)))) == false
+              ),
+            Errors5xx = countif(
+                tostring(coalesce(column_ifexists("ResultCode", ""), column_ifexists("resultCode", ""))) startswith "5"
+              ),
+            AvgDurationMs = avg(
+                todouble(coalesce(column_ifexists("DurationMs", real(null)), column_ifexists("duration", real(null))))
+              ),
+            P95DurationMs = percentile(
+                todouble(coalesce(column_ifexists("DurationMs", real(null)), column_ifexists("duration", real(null)))),
+                95
+              ),
             LastSeen = max(EventTime),
-            ResourceId = any(tostring(coalesce(_ResourceId, ResourceId))),
-            SubscriptionId = any(tostring(coalesce(_SubscriptionId, SubscriptionId))),
-            Region = any(tostring(coalesce(ResourceLocation, AppRoleInstance)))
-          by AppName = tostring(coalesce(AppId, cloud_RoleName, AppRoleName, "unknown-app"))
+            ResourceId = any(tostring(coalesce(column_ifexists("_ResourceId", ""), column_ifexists("ResourceId", "")))),
+            SubscriptionId = any(tostring(coalesce(column_ifexists("_SubscriptionId", ""), column_ifexists("SubscriptionId", "")))),
+            Region = any(tostring(coalesce(
+                column_ifexists("ResourceLocation", ""),
+                column_ifexists("AppRoleInstance", ""),
+                column_ifexists("cloud_RoleInstance", "")
+              )))
+          by AppName = tostring(coalesce(
+              column_ifexists("AppId", ""),
+              column_ifexists("cloud_RoleName", ""),
+              column_ifexists("AppRoleName", ""),
+              "unknown-app"
+            ))
         | where TotalRequests > 0
         """
 

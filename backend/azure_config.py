@@ -5,7 +5,7 @@ Handles credentials for Azure SDK clients.
 
 import json
 import os
-from azure.identity import DefaultAzureCredential
+from azure.identity import ClientSecretCredential, DefaultAzureCredential
 from dotenv import load_dotenv
 
 # Load environment variables from .env file
@@ -87,9 +87,23 @@ def get_azure_credential():
     For local environments that cannot reach IMDS, set:
     AZURE_DISABLE_MANAGED_IDENTITY=true
 
+    If service principal environment variables are set, use ClientSecretCredential
+    to enforce least-privilege SP authentication and avoid dependency on Azure CLI
+    user/device login state.
+
     Returns:
         azure.identity credential object
     """
+    tenant_id = (os.getenv("AZURE_TENANT_ID") or "").strip()
+    client_id = (os.getenv("AZURE_CLIENT_ID") or "").strip()
+    client_secret = (os.getenv("AZURE_CLIENT_SECRET") or "").strip()
+    if tenant_id and client_id and client_secret:
+        return ClientSecretCredential(
+            tenant_id=tenant_id,
+            client_id=client_id,
+            client_secret=client_secret,
+        )
+
     disable_managed_identity = (
         os.getenv("AZURE_DISABLE_MANAGED_IDENTITY", "false").strip().lower()
         in {"1", "true", "yes", "on"}

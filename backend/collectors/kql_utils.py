@@ -9,7 +9,19 @@ def rows_as_dicts(query_result: Any) -> list[dict[str, Any]]:
     if not getattr(query_result, "tables", None):
         return []
     table = query_result.tables[0]
-    column_names = [column.name for column in table.columns]
+    column_names: list[str] = []
+    for index, column in enumerate(table.columns):
+        if isinstance(column, str):
+            column_names.append(column)
+            continue
+        name = getattr(column, "name", None)
+        if name:
+            column_names.append(str(name))
+            continue
+        if isinstance(column, dict) and column.get("name"):
+            column_names.append(str(column["name"]))
+            continue
+        column_names.append(f"col_{index}")
     return [dict(zip(column_names, row)) for row in table.rows]
 
 
