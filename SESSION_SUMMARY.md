@@ -39,10 +39,21 @@ It was created separately from the existing `AzureLens` project.
 ### Root files
 - `README.md` — MVP overview, running instructions, next steps
 - `MASTER_PHASE_STEP_TRACKER.md` — phase/step/sub-step status tracker and version map
+- `HIGH_LEVEL_ARCHITECTURE.md` — high-level architecture entry and low-level architecture routing
+- `MVP_SCOPE.md` — MVP component boundary by phase
+- `MVP_PHASE_ACTION_PLAN.md` — MVP execution order and control gates
+- `PRODUCTION_READY_SCOPE.md` — production-grade component expansion plan
 - `PILOT_RCA_MVP_PLAN.md` — pilot selection, architecture diagram, MVP deliverables, and phased implementation plan
 - `PHASE_3_AZURE_INTEGRATION_PLAN.md` — Azure Layer 1 integration plan, collector architecture, auth strategy, expected telemetry formats, and success criteria
 - `SESSION_SUMMARY.md` — this document
 - `.env.example` — environment variables template for Azure integration
+
+### Architecture files
+- `architecture/low-level/LLA_INGESTION_AND_OBSERVABILITY.md`
+- `architecture/low-level/LLA_DETECTION_AND_CORRELATION.md`
+- `architecture/low-level/LLA_RCA_ENGINE_AND_INCIDENT_MODEL.md`
+- `architecture/low-level/LLA_DASHBOARD_AND_ALERTING.md`
+- `architecture/low-level/LLA_PLATFORM_SECURITY_AND_OPERATIONS.md`
 
 ### Backend files
 - `backend/app.py` — FastAPI app with endpoints:
@@ -116,6 +127,25 @@ It was created separately from the existing `AzureLens` project.
   - SQL diagnostic settings setup
   - NSG flow log setup via Network Watcher
   - Local `.env` live-mode configuration and scheduler/checklist validation
+
+### Latest update (May 23, 2026) - Architecture hierarchy upgrade
+
+- Added top-level architecture index:
+  - `HIGH_LEVEL_ARCHITECTURE.md`
+- Added low-level architecture set linked by component area:
+  - `architecture/low-level/LLA_INGESTION_AND_OBSERVABILITY.md`
+  - `architecture/low-level/LLA_DETECTION_AND_CORRELATION.md`
+  - `architecture/low-level/LLA_RCA_ENGINE_AND_INCIDENT_MODEL.md`
+  - `architecture/low-level/LLA_DASHBOARD_AND_ALERTING.md`
+  - `architecture/low-level/LLA_PLATFORM_SECURITY_AND_OPERATIONS.md`
+- Added MVP scope and action tracking files:
+  - `MVP_SCOPE.md`
+  - `MVP_PHASE_ACTION_PLAN.md`
+- Added production-ready scope file:
+  - `PRODUCTION_READY_SCOPE.md`
+- Linked architecture/scope docs into:
+  - `PILOT_RCA_MVP_PLAN.md`
+  - `MASTER_PHASE_STEP_TRACKER.md`
 
 ### Latest update (May 22, 2026) - Step 4 hardening
 

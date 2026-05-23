@@ -16,6 +16,20 @@ The current implementation focuses on:
 - In-memory incident store for proof-of-concept
 - Sample telemetry payloads for development and simulation
 
+## Architecture and Tracking Documents
+
+1. Execution tracker:
+   - `MASTER_PHASE_STEP_TRACKER.md`
+2. High-level architecture:
+   - `HIGH_LEVEL_ARCHITECTURE.md`
+3. Low-level architecture:
+   - `architecture/low-level/`
+4. MVP scope and action plan:
+   - `MVP_SCOPE.md`
+   - `MVP_PHASE_ACTION_PLAN.md`
+5. Production-ready scope:
+   - `PRODUCTION_READY_SCOPE.md`
+
 ## Folder structure
 
 - `backend/`
@@ -70,16 +84,8 @@ To connect to real Azure telemetry sources instead of simulated data:
 
 ## Implementation Roadmap
 
-### ✅ Complete
-- Phase 1-2: MVP backend with rule-based RCA
-- Sample telemetry simulation
-- In-memory incident storage
+Roadmap status is maintained in:
+- `MASTER_PHASE_STEP_TRACKER.md`
 
-### 🔄 In Progress  
-- Phase 3: Real Azure telemetry collection
-- Automatic scheduler-based polling
-
-### 📋 Planned
-- Phase 4: Persistent storage (Cosmos DB/SQL)
-- Phase 5: Forecasting and anomaly detection
-- Phase 6: Dashboard visualization
+Current active line:
+- `Working: Phase 2 | Step 1 | Version v0.2.0 (planning)`

@@ -11,6 +11,17 @@ Use `MASTER_PHASE_STEP_TRACKER.md` as the execution source of truth for:
 Current active execution line:
 - `Working: Phase 2 | Step 1 | Version v0.2.0 (planning)`
 
+Documentation hierarchy for architecture and scope:
+1. High-level architecture:
+   - `HIGH_LEVEL_ARCHITECTURE.md`
+2. Low-level architecture set:
+   - `architecture/low-level/`
+3. MVP scope and action flow:
+   - `MVP_SCOPE.md`
+   - `MVP_PHASE_ACTION_PLAN.md`
+4. Production-ready scope:
+   - `PRODUCTION_READY_SCOPE.md`
+
 ## 1. Selected pilot scope
 
 Start with a focused pilot that delivers incident flagging, forecasting, and root cause analysis for:

@@ -4,6 +4,18 @@ Working: Phase 2 | Step 1 | Version v0.2.0 (planning)
 
 Purpose: single source of truth for phase, step, and sub-step execution status.
 
+## Documentation Linkage
+
+1. Top architecture entry:
+   - `HIGH_LEVEL_ARCHITECTURE.md`
+2. Low-level architecture folder:
+   - `architecture/low-level/`
+3. MVP coverage and action mapping:
+   - `MVP_SCOPE.md`
+   - `MVP_PHASE_ACTION_PLAN.md`
+4. Production-ready extension:
+   - `PRODUCTION_READY_SCOPE.md`
+
 ## Version Map
 
 1. `v0.1.0` - Phase 1 completion baseline (tagged and published).
@@ -59,6 +71,7 @@ Purpose: single source of truth for phase, step, and sub-step execution status.
 6. Sub-step 1.6: SQL diagnostics enablement [Pending]
 7. Sub-step 1.7: NSG flow log enablement [Pending]
 8. Sub-step 1.8: Local `.env` live mode configuration and scheduler validation [Pending]
+9. Sub-step 1.9: Architecture documentation hierarchy (high-level -> low-level -> scope -> tracker) [Completed]
 
 ### Step 2 - Ingestion tuning [Pending]
 1. Sub-step 2.1: tune `COLLECTION_INTERVAL`.
