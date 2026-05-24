@@ -79,8 +79,11 @@ Purpose: single source of truth for phase, step, and sub-step execution status.
 9. Sub-step 1.9: Architecture documentation hierarchy (high-level -> low-level -> scope -> tracker) [Completed]
 10. Sub-step 1.10: Telemetry metrics catalog integration (docs + schema-aware ingestion model + metric collector expansion) [Completed]
 
-### Step 2 - Ingestion tuning [Pending]
+### Step 2 - Ingestion tuning [In Progress]
 1. Sub-step 2.1: tune `COLLECTION_INTERVAL`.
+   - Updated local live setting to `COLLECTION_INTERVAL=30` (from 10) and revalidated:
+   - `/scheduler/status` = 200 (`interval_seconds: 30`)
+   - `/ingestion/checklist` = pass [Completed]
 2. Sub-step 2.2: tune lookback/overlap/delay windows.
 3. Sub-step 2.3: tune dedup window and verify false-positive suppression.
 
