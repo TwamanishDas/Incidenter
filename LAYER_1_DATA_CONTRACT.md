@@ -64,13 +64,15 @@ Collectors populate these fields when available from source records.
 
 ## Authentication Contract
 
-`backend/azure_config.py` uses this credential chain:
+`backend/azure_config.py` resolves credentials in this order:
 
-1. `ManagedIdentityCredential` (preferred for Azure-hosted runtime)
-2. `ClientSecretCredential` using `AZURE_TENANT_ID`, `AZURE_CLIENT_ID`, `AZURE_CLIENT_SECRET`
-3. `DefaultAzureCredential` fallback (includes Azure CLI identity for local development)
+1. `ClientSecretCredential` when all service principal variables are set:
+   - `AZURE_TENANT_ID`
+   - `AZURE_CLIENT_ID`
+   - `AZURE_CLIENT_SECRET`
+2. `DefaultAzureCredential` fallback when SP variables are not present.
+   - `AZURE_DISABLE_MANAGED_IDENTITY=true` can be used to skip managed identity probing in local environments.
 
-Note: `AZURE_DISABLE_MANAGED_IDENTITY=true` can be used in local environments to skip Managed Identity probing.
 Note: Application Insights ingestion requires `APP_INSIGHTS_RESOURCE_ID` (ARM resource ID). `APP_INSIGHTS_APP_ID` is deprecated and not used for queries.
 
 ### Required RBAC
@@ -91,10 +93,22 @@ These roles are required at subscription/resource-group/resource scope depending
 | Ingress logs (Front Door/App Gateway/WAF via `AzureDiagnostics`) | `LogsQueryClient.query_workspace` (KQL summarize) | `front_door_waf` / `app_gateway_waf` | `network` | request count, blocked requests, avg latency, WAF signal | every 30s, watermark window |
 | Application Insights (`requests`/`exceptions`/`dependencies`) | `LogsQueryClient.query_resource` | `app_insights` | `application` + dependency-driven `database` | request/error/latency, exceptions, dependency failures | every 30s, watermark window |
 | Network Watcher logs (`AzureNetworkAnalytics_CL`, `NetworkMonitoring_Perf_CL`, `Syslog`) | `LogsQueryClient.query_workspace` | `network_watcher` | `network` | NSG denies, packet loss, latency, TCP retries | every 30s, watermark window |
-| Azure Monitor Metrics (SQL + VM + App Service + Azure Firewall + Cosmos DB + Redis) | `MetricsQueryClient.query_resource` | `azure_monitor_metrics` | SQL/Cosmos -> `database`, VM/App Service/Redis -> `application`, Firewall -> `network` | SQL CPU/sessions/workers/deadlocks/waits, VM CPU/memory/network/disk, App Service HTTP + queue + plan metrics, Firewall rule/SNAT/threat metrics, Cosmos RU/request/availability/replication metrics, Redis hit/miss/read/write/load metrics | every 30s, watermark window |
+| Azure Monitor Metrics (collector capability: SQL + VM + App Service + Azure Firewall + Cosmos DB + Redis; current pilot config: SQL server + SQL databases) | `MetricsQueryClient.query_resource` | `azure_monitor_metrics` | SQL/Cosmos -> `database`, VM/App Service/Redis -> `application`, Firewall -> `network` | SQL CPU/sessions/workers/deadlocks/waits, VM CPU/memory/network/disk, App Service HTTP + queue + plan metrics, Firewall rule/SNAT/threat metrics, Cosmos RU/request/availability/replication metrics, Redis hit/miss/read/write/load metrics | every 30s, watermark window |
 | Activity Log changes (`AzureActivity`) | `LogsQueryClient.query_workspace` (Administrative/Policy/Security) | `azure_activity_log` | inferred by provider/operation | deploy/config/RBAC change events, failed operation counts | every 30s, watermark window |
 | Resource Health (`AzureActivity` category `ResourceHealth`) | `LogsQueryClient.query_workspace` | `azure_resource_health` | inferred by provider/operation | resource health status transitions | every 30s, watermark window |
 | Service Health (`AzureActivity` category `ServiceHealth`) | `LogsQueryClient.query_workspace` | `azure_service_health` | inferred by provider/operation | platform service health incidents/advisories | every 30s, watermark window |
+
+---
+
+## Current Live-Enabled Source Matrix (Step 3.3 Snapshot - 2026-05-25)
+
+| Collector | Enabled | Current Input Scope | Latest Validation Snapshot |
+|---|---|---|---|
+| `LogAnalyticsCollector` | yes | `LOG_ANALYTICS_WORKSPACE_ID=4755af10-2632-41ff-9bf0-d780e2d5e680` | healthy (`/ingestion/checklist` pass) |
+| `AppInsightsCollector` | yes | `APP_INSIGHTS_RESOURCE_ID=/subscriptions/1f5ee0d1-cee1-4424-9768-4eac65a0ad83/resourceGroups/rg-incidenter-pilot/providers/microsoft.insights/components/appi-incidenter-pilot` | healthy (`/ingestion/checklist` pass) |
+| `NetworkWatcherCollector` | yes | `NETWORK_WATCHER_RESOURCE_GROUP=NetworkWatcherRG`, `NETWORK_WATCHER_NAME=NetworkWatcher_eastus` | healthy (`/ingestion/checklist` pass) |
+| `MonitorMetricsCollector` | yes | `MONITOR_RESOURCE_IDS` contains 3 SQL-scope IDs (server + `incidenterdb` + `master`) with 3 `centralindia` overrides | healthy, actively producing events |
+| `ActivityHealthCollector` | yes | Azure Activity/ResourceHealth/ServiceHealth queries through Log Analytics workspace | healthy (`/ingestion/checklist` pass) |
 
 ---
 
@@ -147,7 +161,7 @@ Duplicate events inside TTL are suppressed before posting to `/telemetry`.
 2. Configure:
    - `LOG_ANALYTICS_WORKSPACE_ID`
    - `APP_INSIGHTS_RESOURCE_ID`
-   - `MONITOR_RESOURCE_IDS` (SQL DB, VMs, etc.)
+   - `MONITOR_RESOURCE_IDS` (currently 3 SQL-scope IDs in pilot; add VM/App Service/Firewall/Cosmos/Redis IDs to expand coverage)
    - `RESOURCE_REGION_OVERRIDES_JSON` (optional region hints keyed by resource id)
 3. Ensure identity has monitoring/log reader permissions.
 
@@ -158,4 +172,5 @@ Duplicate events inside TTL are suppressed before posting to `/telemetry`.
 - RCA remains rule-based (`network`, `application`, `database`) and consumes normalized payloads.
 - Control-plane and health events are normalized into layer payloads so they can participate in RCA correlation.
 - Monitor metrics collector now supports SQL, VM, App Service, Azure Firewall, Cosmos DB, and Redis resource IDs in `MONITOR_RESOURCE_IDS`.
+- Current pilot live monitor scope is SQL-focused (`sqlincidenter46744`, `incidenterdb`, `master`) and can be expanded by adding resource IDs.
 - Custom and vendor schema behaviors are enforced by model validation (`backend/models.py`).

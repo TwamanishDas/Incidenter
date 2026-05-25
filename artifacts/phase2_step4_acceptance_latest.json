@@ -1,0 +1,983 @@
+{
+  "run_started_at": "2026-05-25T16:55:41.265973+00:00",
+  "phase": "Phase 2",
+  "step": "Step 4",
+  "version": "v0.2.0",
+  "mode_expected": "live",
+  "base_url": "http://127.0.0.1:8000",
+  "attempts": [
+    {
+      "captured_at": "2026-05-25T16:55:41.304674+00:00",
+      "health_status_code": 200,
+      "health": {
+        "status": "healthy",
+        "incidents": 0
+      },
+      "scheduler_status_code": 200,
+      "scheduler_status": {
+        "is_running": true,
+        "interval_seconds": 30,
+        "collection_count": 511,
+        "total_events_collected": 1022,
+        "total_events_posted": 1022,
+        "total_events_deduped": 0,
+        "dedup_cache_size": 24,
+        "last_collection_time": "2026-05-25T16:55:02.990889",
+        "collectors": [
+          {
+            "name": "LogAnalyticsCollector",
+            "source": "application",
+            "events_collected": 0,
+            "last_error": null,
+            "last_collection_time": "2026-05-25T16:55:07.957641",
+            "last_query_start_time": "2026-05-25T16:51:56.445226",
+            "last_query_end_time": "2026-05-25T16:53:32.990889",
+            "watermark_time": "2026-05-25T16:53:32.990889",
+            "status": "healthy"
+          },
+          {
+            "name": "AppInsightsCollector",
+            "source": "application",
+            "events_collected": 0,
+            "last_error": null,
+            "last_collection_time": "2026-05-25T16:55:07.044651",
+            "last_query_start_time": "2026-05-25T16:51:56.445226",
+            "last_query_end_time": "2026-05-25T16:53:32.990889",
+            "watermark_time": "2026-05-25T16:53:32.990889",
+            "status": "healthy"
+          },
+          {
+            "name": "NetworkWatcherCollector",
+            "source": "network",
+            "events_collected": 0,
+            "last_error": null,
+            "last_collection_time": "2026-05-25T16:55:07.966086",
+            "last_query_start_time": "2026-05-25T16:51:56.445226",
+            "last_query_end_time": "2026-05-25T16:53:32.990889",
+            "watermark_time": "2026-05-25T16:53:32.990889",
+            "status": "healthy"
+          },
+          {
+            "name": "MonitorMetricsCollector",
+            "source": "database",
+            "events_collected": 1022,
+            "last_error": null,
+            "last_collection_time": "2026-05-25T16:55:19.406716",
+            "last_query_start_time": "2026-05-25T16:51:56.445226",
+            "last_query_end_time": "2026-05-25T16:53:32.990889",
+            "watermark_time": "2026-05-25T16:53:32.990889",
+            "status": "healthy"
+          },
+          {
+            "name": "ActivityHealthCollector",
+            "source": "application",
+            "events_collected": 0,
+            "last_error": null,
+            "last_collection_time": "2026-05-25T16:55:07.269037",
+            "last_query_start_time": "2026-05-25T16:51:56.447769",
+            "last_query_end_time": "2026-05-25T16:53:32.990889",
+            "watermark_time": "2026-05-25T16:53:32.990889",
+            "status": "healthy"
+          }
+        ]
+      },
+      "checklist_status_code": 200,
+      "ingestion_checklist": {
+        "overall_status": "pass",
+        "evaluated_at": "2026-05-25T16:55:41.296073",
+        "ingestion_mode": "live",
+        "freshness_sla_seconds": 90,
+        "summary": {
+          "checks_total": 6,
+          "checks_passed": 6,
+          "checks_warned": 0,
+          "checks_failed": 0
+        },
+        "checks": [
+          {
+            "id": "scheduler_running",
+            "status": "pass",
+            "message": "Scheduler run loop is active.",
+            "observed": true,
+            "expected": true
+          },
+          {
+            "id": "collectors_configured",
+            "status": "pass",
+            "message": "Collectors are configured.",
+            "observed": 5,
+            "expected": ">=3"
+          },
+          {
+            "id": "collector_errors",
+            "status": "pass",
+            "message": "No collector errors detected.",
+            "observed": [],
+            "expected": []
+          },
+          {
+            "id": "collector_freshness",
+            "status": "pass",
+            "message": "Collector freshness is within SLA.",
+            "observed": [],
+            "expected": []
+          },
+          {
+            "id": "event_flow",
+            "status": "pass",
+            "message": "Event flow is healthy.",
+            "observed": {
+              "collected": 1022,
+              "posted": 1022,
+              "deduped": 0
+            },
+            "expected": "posted + deduped >= collected"
+          },
+          {
+            "id": "dedup_behavior",
+            "status": "pass",
+            "message": "Dedup behavior is within expected range.",
+            "observed": {
+              "collection_count": 511,
+              "deduped": 0,
+              "cache_size": 24
+            },
+            "expected": "deduped <= collected"
+          }
+        ],
+        "collector_overview": {
+          "total_collectors": 5,
+          "healthy_collectors": 5,
+          "error_collectors": 0,
+          "stale_collectors": []
+        },
+        "collectors": [
+          {
+            "name": "LogAnalyticsCollector",
+            "status": "healthy",
+            "last_error": null,
+            "last_collection_time": "2026-05-25T16:55:07.957641",
+            "age_seconds": 33,
+            "is_fresh": true,
+            "events_collected": 0,
+            "last_replay_outcome": null,
+            "last_blob_name": null
+          },
+          {
+            "name": "AppInsightsCollector",
+            "status": "healthy",
+            "last_error": null,
+            "last_collection_time": "2026-05-25T16:55:07.044651",
+            "age_seconds": 34,
+            "is_fresh": true,
+            "events_collected": 0,
+            "last_replay_outcome": null,
+            "last_blob_name": null
+          },
+          {
+            "name": "NetworkWatcherCollector",
+            "status": "healthy",
+            "last_error": null,
+            "last_collection_time": "2026-05-25T16:55:07.966086",
+            "age_seconds": 33,
+            "is_fresh": true,
+            "events_collected": 0,
+            "last_replay_outcome": null,
+            "last_blob_name": null
+          },
+          {
+            "name": "MonitorMetricsCollector",
+            "status": "healthy",
+            "last_error": null,
+            "last_collection_time": "2026-05-25T16:55:19.406716",
+            "age_seconds": 21,
+            "is_fresh": true,
+            "events_collected": 1022,
+            "last_replay_outcome": null,
+            "last_blob_name": null
+          },
+          {
+            "name": "ActivityHealthCollector",
+            "status": "healthy",
+            "last_error": null,
+            "last_collection_time": "2026-05-25T16:55:07.269037",
+            "age_seconds": 34,
+            "is_fresh": true,
+            "events_collected": 0,
+            "last_replay_outcome": null,
+            "last_blob_name": null
+          }
+        ],
+        "counters": {
+          "interval_seconds": 30,
+          "collection_count": 511,
+          "total_events_collected": 1022,
+          "total_events_posted": 1022,
+          "total_events_deduped": 0,
+          "dedup_cache_size": 24,
+          "last_collection_time": "2026-05-25T16:55:02.990889"
+        }
+      },
+      "incidents_status_code": 200,
+      "incidents_count": 0
+    },
+    {
+      "captured_at": "2026-05-25T16:56:16.357511+00:00",
+      "health_status_code": 200,
+      "health": {
+        "status": "healthy",
+        "incidents": 0
+      },
+      "scheduler_status_code": 200,
+      "scheduler_status": {
+        "is_running": true,
+        "interval_seconds": 30,
+        "collection_count": 512,
+        "total_events_collected": 1024,
+        "total_events_posted": 1022,
+        "total_events_deduped": 0,
+        "dedup_cache_size": 23,
+        "last_collection_time": "2026-05-25T16:55:53.552200",
+        "collectors": [
+          {
+            "name": "LogAnalyticsCollector",
+            "source": "application",
+            "events_collected": 0,
+            "last_error": null,
+            "last_collection_time": "2026-05-25T16:55:58.453316",
+            "last_query_start_time": "2026-05-25T16:52:47.990889",
+            "last_query_end_time": "2026-05-25T16:54:23.554221",
+            "watermark_time": "2026-05-25T16:54:23.554221",
+            "status": "healthy"
+          },
+          {
+            "name": "AppInsightsCollector",
+            "source": "application",
+            "events_collected": 0,
+            "last_error": null,
+            "last_collection_time": "2026-05-25T16:55:58.138648",
+            "last_query_start_time": "2026-05-25T16:52:47.990889",
+            "last_query_end_time": "2026-05-25T16:54:23.556237",
+            "watermark_time": "2026-05-25T16:54:23.556237",
+            "status": "healthy"
+          },
+          {
+            "name": "NetworkWatcherCollector",
+            "source": "network",
+            "events_collected": 0,
+            "last_error": null,
+            "last_collection_time": "2026-05-25T16:56:01.572320",
+            "last_query_start_time": "2026-05-25T16:52:47.990889",
+            "last_query_end_time": "2026-05-25T16:54:23.557253",
+            "watermark_time": "2026-05-25T16:54:23.557253",
+            "status": "healthy"
+          },
+          {
+            "name": "MonitorMetricsCollector",
+            "source": "database",
+            "events_collected": 1024,
+            "last_error": null,
+            "last_collection_time": "2026-05-25T16:56:14.827162",
+            "last_query_start_time": "2026-05-25T16:52:47.990889",
+            "last_query_end_time": "2026-05-25T16:54:23.557253",
+            "watermark_time": "2026-05-25T16:54:23.557253",
+            "status": "healthy"
+          },
+          {
+            "name": "ActivityHealthCollector",
+            "source": "application",
+            "events_collected": 0,
+            "last_error": null,
+            "last_collection_time": "2026-05-25T16:56:00.974755",
+            "last_query_start_time": "2026-05-25T16:52:47.990889",
+            "last_query_end_time": "2026-05-25T16:54:23.557253",
+            "watermark_time": "2026-05-25T16:54:23.557253",
+            "status": "healthy"
+          }
+        ]
+      },
+      "checklist_status_code": 200,
+      "ingestion_checklist": {
+        "overall_status": "warn",
+        "evaluated_at": "2026-05-25T16:56:16.342575",
+        "ingestion_mode": "live",
+        "freshness_sla_seconds": 90,
+        "summary": {
+          "checks_total": 6,
+          "checks_passed": 5,
+          "checks_warned": 1,
+          "checks_failed": 0
+        },
+        "checks": [
+          {
+            "id": "scheduler_running",
+            "status": "pass",
+            "message": "Scheduler run loop is active.",
+            "observed": true,
+            "expected": true
+          },
+          {
+            "id": "collectors_configured",
+            "status": "pass",
+            "message": "Collectors are configured.",
+            "observed": 5,
+            "expected": ">=3"
+          },
+          {
+            "id": "collector_errors",
+            "status": "pass",
+            "message": "No collector errors detected.",
+            "observed": [],
+            "expected": []
+          },
+          {
+            "id": "collector_freshness",
+            "status": "pass",
+            "message": "Collector freshness is within SLA.",
+            "observed": [],
+            "expected": []
+          },
+          {
+            "id": "event_flow",
+            "status": "warn",
+            "message": "Some collected events were neither posted nor deduplicated.",
+            "observed": {
+              "collected": 1024,
+              "posted": 1022,
+              "deduped": 0
+            },
+            "expected": "posted + deduped ~= collected"
+          },
+          {
+            "id": "dedup_behavior",
+            "status": "pass",
+            "message": "Dedup behavior is within expected range.",
+            "observed": {
+              "collection_count": 512,
+              "deduped": 0,
+              "cache_size": 23
+            },
+            "expected": "deduped <= collected"
+          }
+        ],
+        "collector_overview": {
+          "total_collectors": 5,
+          "healthy_collectors": 5,
+          "error_collectors": 0,
+          "stale_collectors": []
+        },
+        "collectors": [
+          {
+            "name": "LogAnalyticsCollector",
+            "status": "healthy",
+            "last_error": null,
+            "last_collection_time": "2026-05-25T16:55:58.453316",
+            "age_seconds": 17,
+            "is_fresh": true,
+            "events_collected": 0,
+            "last_replay_outcome": null,
+            "last_blob_name": null
+          },
+          {
+            "name": "AppInsightsCollector",
+            "status": "healthy",
+            "last_error": null,
+            "last_collection_time": "2026-05-25T16:55:58.138648",
+            "age_seconds": 18,
+            "is_fresh": true,
+            "events_collected": 0,
+            "last_replay_outcome": null,
+            "last_blob_name": null
+          },
+          {
+            "name": "NetworkWatcherCollector",
+            "status": "healthy",
+            "last_error": null,
+            "last_collection_time": "2026-05-25T16:56:01.572320",
+            "age_seconds": 14,
+            "is_fresh": true,
+            "events_collected": 0,
+            "last_replay_outcome": null,
+            "last_blob_name": null
+          },
+          {
+            "name": "MonitorMetricsCollector",
+            "status": "healthy",
+            "last_error": null,
+            "last_collection_time": "2026-05-25T16:56:14.827162",
+            "age_seconds": 1,
+            "is_fresh": true,
+            "events_collected": 1024,
+            "last_replay_outcome": null,
+            "last_blob_name": null
+          },
+          {
+            "name": "ActivityHealthCollector",
+            "status": "healthy",
+            "last_error": null,
+            "last_collection_time": "2026-05-25T16:56:00.974755",
+            "age_seconds": 15,
+            "is_fresh": true,
+            "events_collected": 0,
+            "last_replay_outcome": null,
+            "last_blob_name": null
+          }
+        ],
+        "counters": {
+          "interval_seconds": 30,
+          "collection_count": 512,
+          "total_events_collected": 1024,
+          "total_events_posted": 1022,
+          "total_events_deduped": 0,
+          "dedup_cache_size": 23,
+          "last_collection_time": "2026-05-25T16:55:53.552200"
+        }
+      },
+      "incidents_status_code": 200,
+      "incidents_count": 0
+    },
+    {
+      "captured_at": "2026-05-25T16:56:51.389329+00:00",
+      "health_status_code": 200,
+      "health": {
+        "status": "healthy",
+        "incidents": 0
+      },
+      "scheduler_status_code": 200,
+      "scheduler_status": {
+        "is_running": true,
+        "interval_seconds": 30,
+        "collection_count": 513,
+        "total_events_collected": 1024,
+        "total_events_posted": 1024,
+        "total_events_deduped": 0,
+        "dedup_cache_size": 24,
+        "last_collection_time": "2026-05-25T16:56:48.924313",
+        "collectors": [
+          {
+            "name": "LogAnalyticsCollector",
+            "source": "application",
+            "events_collected": 0,
+            "last_error": null,
+            "last_collection_time": "2026-05-25T16:55:58.453316",
+            "last_query_start_time": "2026-05-25T16:53:38.554221",
+            "last_query_end_time": "2026-05-25T16:55:18.924313",
+            "watermark_time": "2026-05-25T16:54:23.554221",
+            "status": "healthy"
+          },
+          {
+            "name": "AppInsightsCollector",
+            "source": "application",
+            "events_collected": 0,
+            "last_error": null,
+            "last_collection_time": "2026-05-25T16:55:58.138648",
+            "last_query_start_time": "2026-05-25T16:53:38.556237",
+            "last_query_end_time": "2026-05-25T16:55:18.924313",
+            "watermark_time": "2026-05-25T16:54:23.556237",
+            "status": "healthy"
+          },
+          {
+            "name": "NetworkWatcherCollector",
+            "source": "network",
+            "events_collected": 0,
+            "last_error": null,
+            "last_collection_time": "2026-05-25T16:56:01.572320",
+            "last_query_start_time": "2026-05-25T16:53:38.557253",
+            "last_query_end_time": "2026-05-25T16:55:18.926332",
+            "watermark_time": "2026-05-25T16:54:23.557253",
+            "status": "healthy"
+          },
+          {
+            "name": "MonitorMetricsCollector",
+            "source": "database",
+            "events_collected": 1024,
+            "last_error": null,
+            "last_collection_time": "2026-05-25T16:56:14.827162",
+            "last_query_start_time": "2026-05-25T16:53:38.557253",
+            "last_query_end_time": "2026-05-25T16:55:18.926332",
+            "watermark_time": "2026-05-25T16:54:23.557253",
+            "status": "healthy"
+          },
+          {
+            "name": "ActivityHealthCollector",
+            "source": "application",
+            "events_collected": 0,
+            "last_error": null,
+            "last_collection_time": "2026-05-25T16:56:00.974755",
+            "last_query_start_time": "2026-05-25T16:53:38.557253",
+            "last_query_end_time": "2026-05-25T16:55:18.926332",
+            "watermark_time": "2026-05-25T16:54:23.557253",
+            "status": "healthy"
+          }
+        ]
+      },
+      "checklist_status_code": 200,
+      "ingestion_checklist": {
+        "overall_status": "pass",
+        "evaluated_at": "2026-05-25T16:56:51.383004",
+        "ingestion_mode": "live",
+        "freshness_sla_seconds": 90,
+        "summary": {
+          "checks_total": 6,
+          "checks_passed": 6,
+          "checks_warned": 0,
+          "checks_failed": 0
+        },
+        "checks": [
+          {
+            "id": "scheduler_running",
+            "status": "pass",
+            "message": "Scheduler run loop is active.",
+            "observed": true,
+            "expected": true
+          },
+          {
+            "id": "collectors_configured",
+            "status": "pass",
+            "message": "Collectors are configured.",
+            "observed": 5,
+            "expected": ">=3"
+          },
+          {
+            "id": "collector_errors",
+            "status": "pass",
+            "message": "No collector errors detected.",
+            "observed": [],
+            "expected": []
+          },
+          {
+            "id": "collector_freshness",
+            "status": "pass",
+            "message": "Collector freshness is within SLA.",
+            "observed": [],
+            "expected": []
+          },
+          {
+            "id": "event_flow",
+            "status": "pass",
+            "message": "Event flow is healthy.",
+            "observed": {
+              "collected": 1024,
+              "posted": 1024,
+              "deduped": 0
+            },
+            "expected": "posted + deduped >= collected"
+          },
+          {
+            "id": "dedup_behavior",
+            "status": "pass",
+            "message": "Dedup behavior is within expected range.",
+            "observed": {
+              "collection_count": 513,
+              "deduped": 0,
+              "cache_size": 24
+            },
+            "expected": "deduped <= collected"
+          }
+        ],
+        "collector_overview": {
+          "total_collectors": 5,
+          "healthy_collectors": 5,
+          "error_collectors": 0,
+          "stale_collectors": []
+        },
+        "collectors": [
+          {
+            "name": "LogAnalyticsCollector",
+            "status": "healthy",
+            "last_error": null,
+            "last_collection_time": "2026-05-25T16:55:58.453316",
+            "age_seconds": 52,
+            "is_fresh": true,
+            "events_collected": 0,
+            "last_replay_outcome": null,
+            "last_blob_name": null
+          },
+          {
+            "name": "AppInsightsCollector",
+            "status": "healthy",
+            "last_error": null,
+            "last_collection_time": "2026-05-25T16:55:58.138648",
+            "age_seconds": 53,
+            "is_fresh": true,
+            "events_collected": 0,
+            "last_replay_outcome": null,
+            "last_blob_name": null
+          },
+          {
+            "name": "NetworkWatcherCollector",
+            "status": "healthy",
+            "last_error": null,
+            "last_collection_time": "2026-05-25T16:56:01.572320",
+            "age_seconds": 49,
+            "is_fresh": true,
+            "events_collected": 0,
+            "last_replay_outcome": null,
+            "last_blob_name": null
+          },
+          {
+            "name": "MonitorMetricsCollector",
+            "status": "healthy",
+            "last_error": null,
+            "last_collection_time": "2026-05-25T16:56:14.827162",
+            "age_seconds": 36,
+            "is_fresh": true,
+            "events_collected": 1024,
+            "last_replay_outcome": null,
+            "last_blob_name": null
+          },
+          {
+            "name": "ActivityHealthCollector",
+            "status": "healthy",
+            "last_error": null,
+            "last_collection_time": "2026-05-25T16:56:00.974755",
+            "age_seconds": 50,
+            "is_fresh": true,
+            "events_collected": 0,
+            "last_replay_outcome": null,
+            "last_blob_name": null
+          }
+        ],
+        "counters": {
+          "interval_seconds": 30,
+          "collection_count": 513,
+          "total_events_collected": 1024,
+          "total_events_posted": 1024,
+          "total_events_deduped": 0,
+          "dedup_cache_size": 24,
+          "last_collection_time": "2026-05-25T16:56:48.924313"
+        }
+      },
+      "incidents_status_code": 200,
+      "incidents_count": 0
+    }
+  ],
+  "result": "pass",
+  "reason": "Phase 2 Step 4 live acceptance criteria passed.",
+  "evaluation": {
+    "overall_passed": true,
+    "summary": {
+      "criteria_total": 12,
+      "criteria_passed": 12,
+      "criteria_failed": 0
+    },
+    "criteria": [
+      {
+        "id": "backend_healthy",
+        "description": "Backend health endpoint returns healthy",
+        "passed": true,
+        "observed": {
+          "status_code": 200,
+          "status": "healthy"
+        },
+        "expected": {
+          "status_code": 200,
+          "status": "healthy"
+        }
+      },
+      {
+        "id": "scheduler_running",
+        "description": "Scheduler is running in final snapshot",
+        "passed": true,
+        "observed": true,
+        "expected": true
+      },
+      {
+        "id": "collector_count",
+        "description": "At least 5 collectors are configured",
+        "passed": true,
+        "observed": 5,
+        "expected": ">=5"
+      },
+      {
+        "id": "collectors_no_error",
+        "description": "Checklist reports zero collector errors",
+        "passed": true,
+        "observed": 0,
+        "expected": 0
+      },
+      {
+        "id": "collectors_not_stale",
+        "description": "Checklist reports zero stale collectors",
+        "passed": true,
+        "observed": [],
+        "expected": []
+      },
+      {
+        "id": "live_mode",
+        "description": "Ingestion checklist mode is live",
+        "passed": true,
+        "observed": "live",
+        "expected": "live"
+      },
+      {
+        "id": "checklist_pass",
+        "description": "Ingestion checklist overall status is pass",
+        "passed": true,
+        "observed": "pass",
+        "expected": "pass"
+      },
+      {
+        "id": "event_flow_integrity",
+        "description": "Collected events are processed correctly",
+        "passed": true,
+        "observed": {
+          "collected": 1024,
+          "posted": 1024,
+          "deduped": 0
+        },
+        "expected": "collected > 0 and posted + deduped >= collected"
+      },
+      {
+        "id": "dedup_sanity",
+        "description": "Dedup count does not exceed collected count",
+        "passed": true,
+        "observed": {
+          "collected": 1024,
+          "deduped": 0
+        },
+        "expected": "deduped <= collected"
+      },
+      {
+        "id": "monitor_scope_expanded",
+        "description": "Monitor resource scope includes at least 3 resource IDs",
+        "passed": true,
+        "observed": 3,
+        "expected": ">=3"
+      },
+      {
+        "id": "collections_progressing",
+        "description": "Collection count progressed across snapshots",
+        "passed": true,
+        "observed": {
+          "first": 511,
+          "final": 513
+        },
+        "expected": "final > first"
+      },
+      {
+        "id": "monitor_events_present",
+        "description": "Monitor metrics collector has collected events",
+        "passed": true,
+        "observed": 1024,
+        "expected": ">0"
+      }
+    ]
+  },
+  "final_snapshot": {
+    "captured_at": "2026-05-25T16:56:51.389329+00:00",
+    "health_status_code": 200,
+    "health": {
+      "status": "healthy",
+      "incidents": 0
+    },
+    "scheduler_status_code": 200,
+    "scheduler_status": {
+      "is_running": true,
+      "interval_seconds": 30,
+      "collection_count": 513,
+      "total_events_collected": 1024,
+      "total_events_posted": 1024,
+      "total_events_deduped": 0,
+      "dedup_cache_size": 24,
+      "last_collection_time": "2026-05-25T16:56:48.924313",
+      "collectors": [
+        {
+          "name": "LogAnalyticsCollector",
+          "source": "application",
+          "events_collected": 0,
+          "last_error": null,
+          "last_collection_time": "2026-05-25T16:55:58.453316",
+          "last_query_start_time": "2026-05-25T16:53:38.554221",
+          "last_query_end_time": "2026-05-25T16:55:18.924313",
+          "watermark_time": "2026-05-25T16:54:23.554221",
+          "status": "healthy"
+        },
+        {
+          "name": "AppInsightsCollector",
+          "source": "application",
+          "events_collected": 0,
+          "last_error": null,
+          "last_collection_time": "2026-05-25T16:55:58.138648",
+          "last_query_start_time": "2026-05-25T16:53:38.556237",
+          "last_query_end_time": "2026-05-25T16:55:18.924313",
+          "watermark_time": "2026-05-25T16:54:23.556237",
+          "status": "healthy"
+        },
+        {
+          "name": "NetworkWatcherCollector",
+          "source": "network",
+          "events_collected": 0,
+          "last_error": null,
+          "last_collection_time": "2026-05-25T16:56:01.572320",
+          "last_query_start_time": "2026-05-25T16:53:38.557253",
+          "last_query_end_time": "2026-05-25T16:55:18.926332",
+          "watermark_time": "2026-05-25T16:54:23.557253",
+          "status": "healthy"
+        },
+        {
+          "name": "MonitorMetricsCollector",
+          "source": "database",
+          "events_collected": 1024,
+          "last_error": null,
+          "last_collection_time": "2026-05-25T16:56:14.827162",
+          "last_query_start_time": "2026-05-25T16:53:38.557253",
+          "last_query_end_time": "2026-05-25T16:55:18.926332",
+          "watermark_time": "2026-05-25T16:54:23.557253",
+          "status": "healthy"
+        },
+        {
+          "name": "ActivityHealthCollector",
+          "source": "application",
+          "events_collected": 0,
+          "last_error": null,
+          "last_collection_time": "2026-05-25T16:56:00.974755",
+          "last_query_start_time": "2026-05-25T16:53:38.557253",
+          "last_query_end_time": "2026-05-25T16:55:18.926332",
+          "watermark_time": "2026-05-25T16:54:23.557253",
+          "status": "healthy"
+        }
+      ]
+    },
+    "checklist_status_code": 200,
+    "ingestion_checklist": {
+      "overall_status": "pass",
+      "evaluated_at": "2026-05-25T16:56:51.383004",
+      "ingestion_mode": "live",
+      "freshness_sla_seconds": 90,
+      "summary": {
+        "checks_total": 6,
+        "checks_passed": 6,
+        "checks_warned": 0,
+        "checks_failed": 0
+      },
+      "checks": [
+        {
+          "id": "scheduler_running",
+          "status": "pass",
+          "message": "Scheduler run loop is active.",
+          "observed": true,
+          "expected": true
+        },
+        {
+          "id": "collectors_configured",
+          "status": "pass",
+          "message": "Collectors are configured.",
+          "observed": 5,
+          "expected": ">=3"
+        },
+        {
+          "id": "collector_errors",
+          "status": "pass",
+          "message": "No collector errors detected.",
+          "observed": [],
+          "expected": []
+        },
+        {
+          "id": "collector_freshness",
+          "status": "pass",
+          "message": "Collector freshness is within SLA.",
+          "observed": [],
+          "expected": []
+        },
+        {
+          "id": "event_flow",
+          "status": "pass",
+          "message": "Event flow is healthy.",
+          "observed": {
+            "collected": 1024,
+            "posted": 1024,
+            "deduped": 0
+          },
+          "expected": "posted + deduped >= collected"
+        },
+        {
+          "id": "dedup_behavior",
+          "status": "pass",
+          "message": "Dedup behavior is within expected range.",
+          "observed": {
+            "collection_count": 513,
+            "deduped": 0,
+            "cache_size": 24
+          },
+          "expected": "deduped <= collected"
+        }
+      ],
+      "collector_overview": {
+        "total_collectors": 5,
+        "healthy_collectors": 5,
+        "error_collectors": 0,
+        "stale_collectors": []
+      },
+      "collectors": [
+        {
+          "name": "LogAnalyticsCollector",
+          "status": "healthy",
+          "last_error": null,
+          "last_collection_time": "2026-05-25T16:55:58.453316",
+          "age_seconds": 52,
+          "is_fresh": true,
+          "events_collected": 0,
+          "last_replay_outcome": null,
+          "last_blob_name": null
+        },
+        {
+          "name": "AppInsightsCollector",
+          "status": "healthy",
+          "last_error": null,
+          "last_collection_time": "2026-05-25T16:55:58.138648",
+          "age_seconds": 53,
+          "is_fresh": true,
+          "events_collected": 0,
+          "last_replay_outcome": null,
+          "last_blob_name": null
+        },
+        {
+          "name": "NetworkWatcherCollector",
+          "status": "healthy",
+          "last_error": null,
+          "last_collection_time": "2026-05-25T16:56:01.572320",
+          "age_seconds": 49,
+          "is_fresh": true,
+          "events_collected": 0,
+          "last_replay_outcome": null,
+          "last_blob_name": null
+        },
+        {
+          "name": "MonitorMetricsCollector",
+          "status": "healthy",
+          "last_error": null,
+          "last_collection_time": "2026-05-25T16:56:14.827162",
+          "age_seconds": 36,
+          "is_fresh": true,
+          "events_collected": 1024,
+          "last_replay_outcome": null,
+          "last_blob_name": null
+        },
+        {
+          "name": "ActivityHealthCollector",
+          "status": "healthy",
+          "last_error": null,
+          "last_collection_time": "2026-05-25T16:56:00.974755",
+          "age_seconds": 50,
+          "is_fresh": true,
+          "events_collected": 0,
+          "last_replay_outcome": null,
+          "last_blob_name": null
+        }
+      ],
+      "counters": {
+        "interval_seconds": 30,
+        "collection_count": 513,
+        "total_events_collected": 1024,
+        "total_events_posted": 1024,
+        "total_events_deduped": 0,
+        "dedup_cache_size": 24,
+        "last_collection_time": "2026-05-25T16:56:48.924313"
+      }
+    },
+    "incidents_status_code": 200,
+    "incidents_count": 0
+  },
+  "run_finished_at": "2026-05-25T16:56:51.389329+00:00"
+}

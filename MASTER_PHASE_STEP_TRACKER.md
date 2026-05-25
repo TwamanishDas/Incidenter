@@ -1,6 +1,6 @@
 # Master Phase-Step Tracker
 
-Working: Phase 2 | Step 3 | Version v0.2.0 (planning)
+Working: Phase 3 | Step 1 | Version v0.3.0 (next)
 
 Purpose: single source of truth for phase, step, and sub-step execution status.
 
@@ -22,13 +22,14 @@ Purpose: single source of truth for phase, step, and sub-step execution status.
    - `PHASE2_STEP1_TELEMETRY_COLLECTION_KICKOFF.md`
    - `PHASE2_STEP2_INGESTION_TUNING.md`
    - `PHASE2_STEP3_SOURCE_COVERAGE_EXPANSION.md`
+   - `PHASE2_STEP4_ACCEPTANCE_GATE.md`
 7. Production-ready extension:
    - `PRODUCTION_READY_SCOPE.md`
 
 ## Version Map
 
 1. `v0.1.0` - Phase 1 completion baseline (tagged and published).
-2. `v0.2.0` - Phase 2 execution track (in progress).
+2. `v0.2.0` - Phase 2 execution track (completed and tagged).
 3. `v0.3.0` - Phase 3 detection and correlation target.
 4. `v0.4.0` - Phase 4 RCA engine target.
 5. `v0.5.0` - Phase 5 dashboard and notifications target.
@@ -69,7 +70,7 @@ Purpose: single source of truth for phase, step, and sub-step execution status.
 3. Sub-step 7.3: Release tag created: `v0.1.0`.
 4. Sub-step 7.4: Pushed to GitHub (`origin/main` and tags).
 
-## Phase 2 - Telemetry Collection Execution (`v0.2.0`) [In Progress]
+## Phase 2 - Telemetry Collection Execution (`v0.2.0`) [Completed]
 
 ### Step 1 - Azure telemetry setup kickoff [Completed]
 1. Sub-step 1.1: Create operational runbook:
@@ -106,7 +107,7 @@ Purpose: single source of truth for phase, step, and sub-step execution status.
 4. Runbook reference:
    - `PHASE2_STEP2_INGESTION_TUNING.md`
 
-### Step 3 - Source coverage expansion [In Progress]
+### Step 3 - Source coverage expansion [Completed]
 1. Sub-step 3.1: validate per-source live event freshness.
    - Live validation executed across 3 samples (~70 seconds total, interval=30s):
    - Sample 1: `collection_count=1`, checklist=`pass`, `healthy_collectors=5`, `error_collectors=0`, `stale_collectors=0`
@@ -122,13 +123,34 @@ Purpose: single source of truth for phase, step, and sub-step execution status.
    - Runtime config load: `monitor_resource_count=3`, `region_override_count=3`
    - Checklist stable pass after restart: `healthy_collectors=5`, `error_collectors=0`, `stale_collectors=0`, `event_flow=pass`, `dedup_behavior=pass` [Completed]
 3. Sub-step 3.3: update Layer 1 contract and source matrix.
+   - `LAYER_1_DATA_CONTRACT.md` updated with:
+   - SP-first auth contract
+   - Step 3.3 live source matrix snapshot
+   - explicit distinction between collector capability and current pilot config
+   - `TELEMETRY_CATALOG.md` updated with Step 3.3 live source matrix snapshot
+   - Live scope captured as 5 enabled collectors with `MONITOR_RESOURCE_IDS` set to 3 SQL-scope IDs
+   - Validation alignment check:
+   - `/ingestion/checklist` `overall_status=pass`
+   - `healthy_collectors=5`, `error_collectors=0`, `stale_collectors=0` [Completed]
 4. Runbook reference:
    - `PHASE2_STEP3_SOURCE_COVERAGE_EXPANSION.md`
 
-### Step 4 - Phase 2 acceptance gate [Pending]
+### Step 4 - Phase 2 acceptance gate [Completed]
 1. Sub-step 4.1: define live-mode acceptance checklist.
+   - Implemented executable checker:
+   - `backend/scripts/run_phase2_step4_acceptance.py`
+   - 12 acceptance criteria codified for live mode [Completed]
 2. Sub-step 4.2: capture evidence artifact.
+   - Executed Phase 2 Step 4 acceptance runner:
+   - `.\.venv\Scripts\python.exe backend\scripts\run_phase2_step4_acceptance.py`
+   - Artifact saved: `artifacts/phase2_step4_acceptance_latest.json`
+   - Result: `pass` (`criteria_passed=12`, `criteria_failed=0`) [Completed]
 3. Sub-step 4.3: create `cp/p2-s4` checkpoint and `v0.2.0` release tag.
+   - Release notes prepared: `releases/v0.2.0.md`
+   - Checkpoint tag created: `cp/p2-s4`
+   - Release tag created: `v0.2.0` [Completed]
+4. Runbook reference:
+   - `PHASE2_STEP4_ACCEPTANCE_GATE.md`
 
 ## Phase 3 - Detection and Correlation (`v0.3.0`) [Pending]
 

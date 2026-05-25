@@ -1,6 +1,6 @@
 # Phase 2 Step 3 Source Coverage Expansion
 
-Working: Phase 2 | Step 3 | Version v0.2.0 (planning)
+Working: Phase 2 | Step 3.3 | Version v0.2.0 (execution)
 
 Purpose: operational runbook to expand and validate live telemetry source coverage after ingestion tuning.
 
@@ -70,13 +70,22 @@ Next: update Layer 1 contract/source matrix with added sources (Step 3.3).
 Goal: align documentation contract with actual live-enabled sources.
 
 Action:
-1. Update:
-   - `LAYER_1_DATA_CONTRACT.md`
-   - `TELEMETRY_CATALOG.md` (if source schema coverage changed)
-2. Record changes in tracker.
+1. Updated `LAYER_1_DATA_CONTRACT.md`:
+   - corrected authentication contract to reflect SP-first credential resolution in `backend/azure_config.py`.
+   - added "Current Live-Enabled Source Matrix (Step 3.3 Snapshot - 2026-05-25)".
+   - clarified monitor collector capability vs current pilot configuration (3 SQL-scope resource IDs).
+2. Updated `TELEMETRY_CATALOG.md`:
+   - added "Live Source Matrix (Step 3.3 Snapshot - 2026-05-25)" for enabled collectors.
+   - documented that current pilot `MONITOR_RESOURCE_IDS` is SQL-only and expansion path is by adding resource IDs.
+3. Recorded Step 3.3 completion details in `MASTER_PHASE_STEP_TRACKER.md`.
 
 Verify:
-1. Contract tables match current source coverage.
-2. Tracker status and runbook references are in sync.
+1. Runtime config still matches documented live scope:
+   - `monitor_resource_count=3`
+   - `region_override_count=3`
+2. Health check remains stable after doc-alignment validation:
+   - `/ingestion/checklist` -> `overall_status=pass`
+   - `healthy_collectors=5`, `error_collectors=0`, `stale_collectors=0`
+3. Tracker and runbook references are synchronized for Step 3 completion.
 
 Next: proceed to Phase 2 Step 4 acceptance gate preparation.

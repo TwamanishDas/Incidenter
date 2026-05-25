@@ -35,6 +35,8 @@ The current implementation focuses on:
    - `PHASE1_EXECUTION_RUNBOOK.md`
    - `PHASE2_STEP1_TELEMETRY_COLLECTION_KICKOFF.md`
    - `PHASE2_STEP2_INGESTION_TUNING.md`
+   - `PHASE2_STEP3_SOURCE_COVERAGE_EXPANSION.md`
+   - `PHASE2_STEP4_ACCEPTANCE_GATE.md`
 8. Production-ready scope:
    - `PRODUCTION_READY_SCOPE.md`
 
@@ -96,4 +98,4 @@ Roadmap status is maintained in:
 - `MASTER_PHASE_STEP_TRACKER.md`
 
 Current active line:
-- `Working: Phase 2 | Step 3 | Version v0.2.0 (planning)`
+- `Working: Phase 3 | Step 1 | Version v0.3.0 (next)`

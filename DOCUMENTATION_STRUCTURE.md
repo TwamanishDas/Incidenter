@@ -1,6 +1,6 @@
 # Documentation Structure and Governance
 
-Working: Phase 2 | Step 2 | Version v0.2.0 (planning)
+Working: Phase 3 | Step 1 | Version v0.3.0 (next)
 
 Purpose: define how documentation is organized, named, and maintained so phase/step execution is consistent.
 
@@ -15,6 +15,8 @@ Purpose: define how documentation is organized, named, and maintained so phase/s
    - `PHASE1_EXECUTION_RUNBOOK.md`
    - `PHASE2_STEP1_TELEMETRY_COLLECTION_KICKOFF.md`
    - `PHASE2_STEP2_INGESTION_TUNING.md`
+   - `PHASE2_STEP3_SOURCE_COVERAGE_EXPANSION.md`
+   - `PHASE2_STEP4_ACCEPTANCE_GATE.md`
 
 ## 2. Naming Convention
 
@@ -62,5 +64,7 @@ Purpose: define how documentation is organized, named, and maintained so phase/s
 2. Phase 2:
    - Step 1: `PHASE2_STEP1_TELEMETRY_COLLECTION_KICKOFF.md` (present)
    - Step 2: `PHASE2_STEP2_INGESTION_TUNING.md` (present)
+   - Step 3: `PHASE2_STEP3_SOURCE_COVERAGE_EXPANSION.md` (present)
+   - Step 4: `PHASE2_STEP4_ACCEPTANCE_GATE.md` (present)
 3. Upcoming required:
-   - Phase 2 Step 3 runbook (to be created when Step 3 execution starts)
+   - Phase 3 Step 1 runbook

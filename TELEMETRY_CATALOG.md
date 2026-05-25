@@ -1,6 +1,6 @@
 # Telemetry Ingestion Catalog
 
-Working: Phase 2 | Step 1 | Version v0.2.0 (planning)
+Working: Phase 2 | Step 3.3 | Version v0.2.0 (execution)
 
 Purpose: reference catalog for ingestion engine schema handling and source metrics onboarding.
 
@@ -116,6 +116,22 @@ The following source metrics are now mapped in `MonitorMetricsCollector`:
 - `ConnectedClients`
 - `UsedMemoryPercentage`
 - `ServerLoad`
+
+## Live Source Matrix (Step 3.3 Snapshot - 2026-05-25)
+
+This table captures what is currently enabled in the pilot environment (not just collector capability):
+
+| Collector | Enabled | Current Scope | Latest Health Snapshot |
+|---|---|---|---|
+| `LogAnalyticsCollector` | yes | workspace `law-incidenter-pilot` (`LOG_ANALYTICS_WORKSPACE_ID=4755af10-2632-41ff-9bf0-d780e2d5e680`) | healthy |
+| `AppInsightsCollector` | yes | resource `appi-incidenter-pilot` (`APP_INSIGHTS_RESOURCE_ID` configured) | healthy |
+| `NetworkWatcherCollector` | yes | `NetworkWatcherRG` / `NetworkWatcher_eastus` with Log Analytics queries | healthy |
+| `MonitorMetricsCollector` | yes | 3 SQL-scope monitor IDs (`sqlincidenter46744`, `incidenterdb`, `master`) with `centralindia` overrides | healthy, event-producing |
+| `ActivityHealthCollector` | yes | Azure Activity + Resource Health + Service Health via workspace queries | healthy |
+
+Current pilot note:
+- Monitor collector capability includes SQL, VM, App Service, Azure Firewall, Cosmos DB, and Redis.
+- Current `MONITOR_RESOURCE_IDS` configuration is SQL-only. Add other resource IDs to onboard those sources live.
 
 ## Extended Source Catalog (Planned Parser/Collector Backlog)
 
