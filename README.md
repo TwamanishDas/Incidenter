@@ -18,18 +18,24 @@ The current implementation focuses on:
 
 ## Architecture and Tracking Documents
 
-1. Execution tracker:
+1. Documentation structure and governance:
+   - `DOCUMENTATION_STRUCTURE.md`
+2. Execution tracker:
    - `MASTER_PHASE_STEP_TRACKER.md`
-2. High-level architecture:
+3. High-level architecture:
    - `HIGH_LEVEL_ARCHITECTURE.md`
-3. Telemetry ingestion catalog:
+4. Telemetry ingestion catalog:
    - `TELEMETRY_CATALOG.md`
-4. Low-level architecture:
+5. Low-level architecture:
    - `architecture/low-level/`
-5. MVP scope and action plan:
+6. MVP scope and action plan:
    - `MVP_SCOPE.md`
    - `MVP_PHASE_ACTION_PLAN.md`
-6. Production-ready scope:
+7. Operational runbooks:
+   - `PHASE1_EXECUTION_RUNBOOK.md`
+   - `PHASE2_STEP1_TELEMETRY_COLLECTION_KICKOFF.md`
+   - `PHASE2_STEP2_INGESTION_TUNING.md`
+8. Production-ready scope:
    - `PRODUCTION_READY_SCOPE.md`
 
 ## Folder structure
@@ -90,4 +96,4 @@ Roadmap status is maintained in:
 - `MASTER_PHASE_STEP_TRACKER.md`
 
 Current active line:
-- `Working: Phase 2 | Step 1 | Version v0.2.0 (planning)`
+- `Working: Phase 2 | Step 3 | Version v0.2.0 (planning)`

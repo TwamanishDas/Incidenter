@@ -4,6 +4,11 @@ Working: Phase 2 | Step 1 | Version v0.2.0 (planning)
 
 Purpose: establish a beginner-friendly, executable path to start live telemetry collection setup for AzureRCAPlanner.
 
+Related runbooks:
+1. `PHASE1_EXECUTION_RUNBOOK.md`
+2. `PHASE2_STEP2_INGESTION_TUNING.md`
+3. `DOCUMENTATION_STRUCTURE.md`
+
 ## Execution Snapshot (2026-05-23)
 
 1. Subscription: `1f5ee0d1-cee1-4424-9768-4eac65a0ad83`

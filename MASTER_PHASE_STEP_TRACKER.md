@@ -1,21 +1,28 @@
 # Master Phase-Step Tracker
 
-Working: Phase 2 | Step 2 | Version v0.2.0 (planning)
+Working: Phase 2 | Step 3 | Version v0.2.0 (planning)
 
 Purpose: single source of truth for phase, step, and sub-step execution status.
 
 ## Documentation Linkage
 
-1. Top architecture entry:
+1. Documentation structure and governance:
+   - `DOCUMENTATION_STRUCTURE.md`
+2. Top architecture entry:
    - `HIGH_LEVEL_ARCHITECTURE.md`
-2. Telemetry source catalog:
+3. Telemetry source catalog:
    - `TELEMETRY_CATALOG.md`
-3. Low-level architecture folder:
+4. Low-level architecture folder:
    - `architecture/low-level/`
-4. MVP coverage and action mapping:
+5. MVP coverage and action mapping:
    - `MVP_SCOPE.md`
    - `MVP_PHASE_ACTION_PLAN.md`
-5. Production-ready extension:
+6. Operational runbooks:
+   - `PHASE1_EXECUTION_RUNBOOK.md`
+   - `PHASE2_STEP1_TELEMETRY_COLLECTION_KICKOFF.md`
+   - `PHASE2_STEP2_INGESTION_TUNING.md`
+   - `PHASE2_STEP3_SOURCE_COVERAGE_EXPANSION.md`
+7. Production-ready extension:
    - `PRODUCTION_READY_SCOPE.md`
 
 ## Version Map
@@ -32,6 +39,8 @@ Purpose: single source of truth for phase, step, and sub-step execution status.
 ### Step 1 - Sample data staged [Completed]
 1. Sub-step 1.1: Sample ingestion payloads prepared.
 2. Sub-step 1.2: Blob container/prefix aligned for replay.
+3. Runbook reference:
+   - `PHASE1_EXECUTION_RUNBOOK.md`
 
 ### Step 2 - Ingestion mode switch [Completed]
 1. Sub-step 2.1: `INGESTION_MODE` support added.
@@ -94,11 +103,27 @@ Purpose: single source of truth for phase, step, and sub-step execution status.
    - Retained `DEDUP_WINDOW_MINUTES=10` after live validation across 2 cycles:
    - `collection_count=2`, `total_events_collected=2`, `total_events_posted=2`, `total_events_deduped=0`
    - No false-positive suppression observed; checklist `dedup_behavior` = pass [Completed]
+4. Runbook reference:
+   - `PHASE2_STEP2_INGESTION_TUNING.md`
 
-### Step 3 - Source coverage expansion [Pending]
+### Step 3 - Source coverage expansion [In Progress]
 1. Sub-step 3.1: validate per-source live event freshness.
+   - Live validation executed across 3 samples (~70 seconds total, interval=30s):
+   - Sample 1: `collection_count=1`, checklist=`pass`, `healthy_collectors=5`, `error_collectors=0`, `stale_collectors=0`
+   - Sample 2: `collection_count=2`, checklist=`pass`, `healthy_collectors=5`, `error_collectors=0`, `stale_collectors=0`
+   - Sample 3: `collection_count=3`, checklist=`pass`, `healthy_collectors=5`, `error_collectors=0`, `stale_collectors=0`
+   - All configured collectors reported `status=healthy` with non-null `last_collection_time` [Completed]
+   - Re-validated on `2026-05-24`: Sample counts `8 -> 9 -> 10`, checklist=`pass`, `healthy_collectors=5`, `error_collectors=0`, `stale_collectors=0`, all collectors had non-null `last_collection_time` [Completed]
 2. Sub-step 3.2: expand monitored resource IDs.
+   - Expanded `MONITOR_RESOURCE_IDS` from 1 to 3 SQL-scope resource IDs:
+   - SQL server, `incidenterdb`, and `master` database resource IDs
+   - Expanded `RESOURCE_REGION_OVERRIDES_JSON` to 3 `centralindia` mappings
+   - Restarted live backend and validated:
+   - Runtime config load: `monitor_resource_count=3`, `region_override_count=3`
+   - Checklist stable pass after restart: `healthy_collectors=5`, `error_collectors=0`, `stale_collectors=0`, `event_flow=pass`, `dedup_behavior=pass` [Completed]
 3. Sub-step 3.3: update Layer 1 contract and source matrix.
+4. Runbook reference:
+   - `PHASE2_STEP3_SOURCE_COVERAGE_EXPANSION.md`
 
 ### Step 4 - Phase 2 acceptance gate [Pending]
 1. Sub-step 4.1: define live-mode acceptance checklist.
