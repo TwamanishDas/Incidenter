@@ -1,0 +1,56 @@
+{
+  "run_started_at": "2026-05-25T18:20:03.759775+00:00",
+  "phase": "Phase 3",
+  "step": "Step 1",
+  "version": "v0.3.0",
+  "workspace_id": "4755af10-2632-41ff-9bf0-d780e2d5e680",
+  "lookback_minutes": 7,
+  "query_dir": "kql\\phase3_step1",
+  "result": "pass",
+  "reason": "All Phase 3 Step 1 signal pack queries executed successfully.",
+  "queries": [
+    {
+      "id": "failed_request_rate",
+      "file": "kql\\phase3_step1\\01_failed_request_rate.kql",
+      "status": "pass",
+      "row_count": 0,
+      "sample_rows": [],
+      "error": null,
+      "warning": null
+    },
+    {
+      "id": "latency_spike",
+      "file": "kql\\phase3_step1\\02_latency_spike.kql",
+      "status": "pass",
+      "row_count": 0,
+      "sample_rows": [],
+      "error": null,
+      "warning": null
+    },
+    {
+      "id": "sql_connectivity_errors",
+      "file": "kql\\phase3_step1\\03_sql_connectivity_errors.kql",
+      "status": "pass",
+      "row_count": 0,
+      "sample_rows": [],
+      "error": null,
+      "warning": null
+    },
+    {
+      "id": "nsg_deny_packet_drop",
+      "file": "kql\\phase3_step1\\04_nsg_deny_packet_drop.kql",
+      "status": "pass",
+      "row_count": 0,
+      "sample_rows": [],
+      "error": null,
+      "warning": null
+    }
+  ],
+  "summary": {
+    "queries_total": 4,
+    "queries_passed": 4,
+    "queries_warned": 0,
+    "queries_failed": 0
+  },
+  "run_finished_at": "2026-05-25T18:20:10.358321+00:00"
+}

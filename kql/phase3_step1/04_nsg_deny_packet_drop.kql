@@ -1,0 +1,26 @@
+// Phase 3 Step 1.4 - NSG deny and packet-drop-like signal pack
+let lookback = {{LOOKBACK_MINUTES}}m;
+let signal_window = 5m;
+AzureDiagnostics
+| where TimeGenerated >= ago(lookback)
+| where ResourceProvider =~ "MICROSOFT.NETWORK"
+| extend
+    CategoryName = tostring(column_ifexists("Category", "")),
+    ResourceId = tostring(column_ifexists("_ResourceId", "")),
+    SrcIP = tostring(coalesce(column_ifexists("src_ip_s", ""), column_ifexists("SourceIP", ""), column_ifexists("SourceIP_s", ""))),
+    DestIP = tostring(coalesce(column_ifexists("dest_ip_s", ""), column_ifexists("DestinationIP", ""), column_ifexists("DestinationIP_s", ""))),
+    DestPort = tostring(coalesce(column_ifexists("dest_port_s", ""), column_ifexists("DestinationPort", ""), column_ifexists("DestinationPort_s", ""))),
+    Action = tostring(coalesce(column_ifexists("Action", ""), column_ifexists("Action_s", ""), column_ifexists("action_s", ""))),
+    MessageText = tostring(coalesce(column_ifexists("msg_s", ""), column_ifexists("message_s", ""), column_ifexists("Message", "")))
+| where CategoryName has_any ("NetworkSecurityGroup", "Flow", "AzureFirewall")
+| extend
+    IsDenied = iif(tolower(Action) in ("deny", "denied", "blocked") or MessageText has_any ("deny", "blocked"), 1, 0),
+    IsDropLike = iif(MessageText has_any ("drop", "packet loss", "tcp retry"), 1, 0)
+| summarize
+    TotalEvents = count(),
+    DeniedEvents = sum(IsDenied),
+    DropLikeEvents = sum(IsDropLike)
+    by bin(TimeGenerated, signal_window), SrcIP, DestIP, DestPort, ResourceId, CategoryName
+| extend DenyRatePct = iif(TotalEvents == 0, 0.0, 100.0 * todouble(DeniedEvents) / todouble(TotalEvents))
+| where DeniedEvents > 0 or DropLikeEvents > 0
+| order by TimeGenerated desc

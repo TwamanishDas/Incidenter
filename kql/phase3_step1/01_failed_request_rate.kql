@@ -1,0 +1,20 @@
+// Phase 3 Step 1.1 - Failed request rate signal pack
+let lookback = {{LOOKBACK_MINUTES}}m;
+let signal_window = 5m;
+AppRequests
+| project
+    TimeGenerated,
+    AppName = tostring(coalesce(column_ifexists("AppRoleName", ""), column_ifexists("cloud_RoleName", ""), column_ifexists("AppRoleName_s", ""))),
+    Success = tobool(column_ifexists("Success", bool(null))),
+    ResultCode = tostring(column_ifexists("ResultCode", "")),
+    OperationName = tostring(column_ifexists("OperationName", "")),
+    ResourceId = tostring(column_ifexists("_ResourceId", ""))
+| where TimeGenerated >= ago(lookback)
+| summarize
+    TotalRequests = count(),
+    FailedRequests = countif(Success == false or toint(ResultCode) >= 500),
+    Status5xx = countif(toint(ResultCode) between (500 .. 599))
+    by bin(TimeGenerated, signal_window), AppName, OperationName, ResourceId
+| extend FailureRatePct = iif(TotalRequests == 0, 0.0, 100.0 * todouble(FailedRequests) / todouble(TotalRequests))
+| where TotalRequests >= 20 and FailureRatePct >= 2.0
+| order by TimeGenerated desc

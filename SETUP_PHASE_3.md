@@ -256,6 +256,15 @@ Outputs:
 - JSON report: `artifacts/step6_acceptance_latest.json`
 - Exit code `0` on pass, `1` on fail
 
+### Phase 3 Step 1 Signal Pack Validation
+```bash
+.\.venv\Scripts\python.exe backend\scripts\run_phase3_step1_signal_pack.py
+```
+
+Outputs:
+- JSON report: `artifacts/phase3_step1_signal_pack_latest.json`
+- Exit code `0` on pass/warn, `1` on fail
+
 ### List Incidents
 ```bash
 curl http://localhost:8000/incidents

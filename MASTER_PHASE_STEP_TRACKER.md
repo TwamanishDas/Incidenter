@@ -1,6 +1,6 @@
 # Master Phase-Step Tracker
 
-Working: Phase 3 | Step 1 | Version v0.3.0 (next)
+Working: Phase 3 | Step 2 | Version v0.3.0 (next)
 
 Purpose: single source of truth for phase, step, and sub-step execution status.
 
@@ -23,6 +23,7 @@ Purpose: single source of truth for phase, step, and sub-step execution status.
    - `PHASE2_STEP2_INGESTION_TUNING.md`
    - `PHASE2_STEP3_SOURCE_COVERAGE_EXPANSION.md`
    - `PHASE2_STEP4_ACCEPTANCE_GATE.md`
+   - `PHASE3_STEP1_KQL_SIGNAL_PACKS.md`
 7. Production-ready extension:
    - `PRODUCTION_READY_SCOPE.md`
 
@@ -30,7 +31,7 @@ Purpose: single source of truth for phase, step, and sub-step execution status.
 
 1. `v0.1.0` - Phase 1 completion baseline (tagged and published).
 2. `v0.2.0` - Phase 2 execution track (completed and tagged).
-3. `v0.3.0` - Phase 3 detection and correlation target.
+3. `v0.3.0` - Phase 3 detection and correlation track (in progress).
 4. `v0.4.0` - Phase 4 RCA engine target.
 5. `v0.5.0` - Phase 5 dashboard and notifications target.
 6. `v0.6.0` - Phase 6 validation and handoff target.
@@ -152,15 +153,25 @@ Purpose: single source of truth for phase, step, and sub-step execution status.
 4. Runbook reference:
    - `PHASE2_STEP4_ACCEPTANCE_GATE.md`
 
-## Phase 3 - Detection and Correlation (`v0.3.0`) [Pending]
+## Phase 3 - Detection and Correlation (`v0.3.0`) [In Progress]
 
-### Step 1 - KQL signal packs
+### Step 1 - KQL signal packs [Completed]
 1. Sub-step 1.1: failed request rate query.
+   - Implemented: `kql/phase3_step1/01_failed_request_rate.kql` [Completed]
 2. Sub-step 1.2: latency spike query.
+   - Implemented: `kql/phase3_step1/02_latency_spike.kql` [Completed]
 3. Sub-step 1.3: SQL connectivity error query.
+   - Implemented: `kql/phase3_step1/03_sql_connectivity_errors.kql` [Completed]
 4. Sub-step 1.4: NSG deny and packet-drop query.
+   - Implemented: `kql/phase3_step1/04_nsg_deny_packet_drop.kql` [Completed]
+5. Validation:
+   - Runner: `backend/scripts/run_phase3_step1_signal_pack.py`
+   - Artifact: `artifacts/phase3_step1_signal_pack_latest.json`
+   - Result: `pass` (`queries_passed=4`, `queries_failed=0`) [Completed]
+6. Runbook reference:
+   - `PHASE3_STEP1_KQL_SIGNAL_PACKS.md`
 
-### Step 2 - Correlation enricher
+### Step 2 - Correlation enricher [Pending]
 1. Sub-step 2.1: add metadata join strategy.
 2. Sub-step 2.2: implement ingestion of query outputs to normalized contract.
 

@@ -1,0 +1,21 @@
+// Phase 3 Step 1.2 - Latency spike signal pack
+let lookback = {{LOOKBACK_MINUTES}}m;
+let signal_window = 5m;
+AppRequests
+| project
+    TimeGenerated,
+    AppName = tostring(coalesce(column_ifexists("AppRoleName", ""), column_ifexists("cloud_RoleName", ""), column_ifexists("AppRoleName_s", ""))),
+    OperationName = tostring(column_ifexists("OperationName", "")),
+    DurationMs = todouble(column_ifexists("DurationMs", real(null))),
+    ResourceId = tostring(column_ifexists("_ResourceId", ""))
+| where TimeGenerated >= ago(lookback)
+| where isnotnull(DurationMs) and DurationMs >= 0
+| summarize
+    Requests = count(),
+    AvgLatencyMs = round(avg(DurationMs), 2),
+    P95LatencyMs = round(percentile(DurationMs, 95), 2),
+    P99LatencyMs = round(percentile(DurationMs, 99), 2),
+    MaxLatencyMs = round(max(DurationMs), 2)
+    by bin(TimeGenerated, signal_window), AppName, OperationName, ResourceId
+| where Requests >= 20 and (P95LatencyMs >= 1000 or P99LatencyMs >= 2000)
+| order by TimeGenerated desc

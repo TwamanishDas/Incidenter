@@ -1,6 +1,6 @@
 # High Level Architecture
 
-Working: Phase 2 | Step 1 | Version v0.2.0 (planning)
+Working: Phase 3 | Step 2 | Version v0.3.0 (next)
 
 Purpose: define the top-level system architecture and route readers to low-level architecture and implementation tracking.
 

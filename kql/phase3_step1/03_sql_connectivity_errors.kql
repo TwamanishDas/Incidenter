@@ -1,0 +1,24 @@
+// Phase 3 Step 1.3 - SQL connectivity and timeout signal pack
+let lookback = {{LOOKBACK_MINUTES}}m;
+let signal_window = 5m;
+AzureDiagnostics
+| where TimeGenerated >= ago(lookback)
+| where ResourceProvider =~ "MICROSOFT.SQL"
+| where Category in ("Errors", "SQLInsights", "AutomaticTuning", "QueryStoreRuntimeStatistics")
+| extend
+    ResourceId = tostring(column_ifexists("_ResourceId", "")),
+    DatabaseName = tostring(coalesce(column_ifexists("database_name_s", ""), column_ifexists("DatabaseName", ""), column_ifexists("Resource", ""))),
+    MessageText = tostring(coalesce(column_ifexists("message_s", ""), column_ifexists("Message", ""), column_ifexists("OperationName", ""), column_ifexists("operationName_s", "")))
+| extend
+    IsConnectivityError = iif(MessageText has_any ("timeout", "connection", "transport-level", "network-related"), 1, 0),
+    IsDeadlock = iif(MessageText has "deadlock", 1, 0),
+    IsTimeout = iif(MessageText has "timeout", 1, 0)
+| summarize
+    TotalEvents = count(),
+    ConnectivityErrors = sum(IsConnectivityError),
+    DeadlockCount = sum(IsDeadlock),
+    TimeoutCount = sum(IsTimeout)
+    by bin(TimeGenerated, signal_window), DatabaseName, ResourceId
+| extend ConnectivityErrorRatePct = iif(TotalEvents == 0, 0.0, 100.0 * todouble(ConnectivityErrors) / todouble(TotalEvents))
+| where ConnectivityErrors > 0 or DeadlockCount > 0 or TimeoutCount > 0
+| order by TimeGenerated desc

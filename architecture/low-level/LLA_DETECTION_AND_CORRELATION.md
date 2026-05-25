@@ -1,6 +1,6 @@
 # Low Level Architecture: Detection and Correlation
 
-Working: Phase 2 | Step 1 | Version v0.2.0 (planning)
+Working: Phase 3 | Step 2 | Version v0.3.0 (next)
 
 ## Purpose
 
@@ -48,6 +48,16 @@ Define the detailed design for signal extraction, anomaly detection, and cross-l
    - operation/correlation IDs.
 3. Build evidence schema with deterministic fields.
 4. Add validation tests for signal correctness and join behavior.
+
+## Current Execution Status
+
+1. Phase 3 Step 1 (KQL signal packs) completed:
+   - `kql/phase3_step1/01_failed_request_rate.kql`
+   - `kql/phase3_step1/02_latency_spike.kql`
+   - `kql/phase3_step1/03_sql_connectivity_errors.kql`
+   - `kql/phase3_step1/04_nsg_deny_packet_drop.kql`
+   - validation artifact: `artifacts/phase3_step1_signal_pack_latest.json`
+2. Phase 3 Step 2 (correlation enricher) is the next implementation target.
 
 ## Traceability
 
