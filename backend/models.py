@@ -175,5 +175,20 @@ class Incident(BaseModel):
     supporting_data: dict
 
 
+class CorrelatedEvidence(BaseModel):
+    id: str
+    correlated_at: datetime = Field(default_factory=datetime.utcnow)
+    join_key: str
+    window_start: datetime
+    window_end: datetime
+    source_types: list[TelemetrySource]
+    event_ids: list[str]
+    resource_ids: list[str] = Field(default_factory=list)
+    correlation_ids: list[str] = Field(default_factory=list)
+    confidence_score: float = Field(..., ge=0.0, le=1.0)
+    summary: str
+    supporting_data: dict = Field(default_factory=dict)
+
+
 class SimulationRequest(BaseModel):
     scenario: Literal["network_spike" ,"app_error" ,"db_latency"] = "network_spike"

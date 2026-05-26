@@ -1,6 +1,6 @@
 # Documentation Structure and Governance
 
-Working: Phase 3 | Step 2 | Version v0.3.0 (next)
+Working: Phase 4 | Step 1 | Version v0.4.0 (next)
 
 Purpose: define how documentation is organized, named, and maintained so phase/step execution is consistent.
 
@@ -18,6 +18,7 @@ Purpose: define how documentation is organized, named, and maintained so phase/s
    - `PHASE2_STEP3_SOURCE_COVERAGE_EXPANSION.md`
    - `PHASE2_STEP4_ACCEPTANCE_GATE.md`
    - `PHASE3_STEP1_KQL_SIGNAL_PACKS.md`
+   - `PHASE3_STEP2_CORRELATION_ENRICHER.md`
 
 ## 2. Naming Convention
 
@@ -67,5 +68,6 @@ Purpose: define how documentation is organized, named, and maintained so phase/s
    - Step 2: `PHASE2_STEP2_INGESTION_TUNING.md` (present)
    - Step 3: `PHASE2_STEP3_SOURCE_COVERAGE_EXPANSION.md` (present)
    - Step 4: `PHASE2_STEP4_ACCEPTANCE_GATE.md` (present)
-3. Upcoming required:
-   - Phase 3 Step 2 runbook
+3. Phase 3:
+   - Step 1: `PHASE3_STEP1_KQL_SIGNAL_PACKS.md` (present)
+   - Step 2: `PHASE3_STEP2_CORRELATION_ENRICHER.md` (present)

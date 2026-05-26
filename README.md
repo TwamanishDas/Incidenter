@@ -38,6 +38,7 @@ The current implementation focuses on:
    - `PHASE2_STEP3_SOURCE_COVERAGE_EXPANSION.md`
    - `PHASE2_STEP4_ACCEPTANCE_GATE.md`
    - `PHASE3_STEP1_KQL_SIGNAL_PACKS.md`
+   - `PHASE3_STEP2_CORRELATION_ENRICHER.md`
 8. Production-ready scope:
    - `PRODUCTION_READY_SCOPE.md`
 
@@ -91,7 +92,10 @@ To connect to real Azure telemetry sources instead of simulated data:
 4. Scheduler automatically collects from: Log Analytics, Application Insights, Network Watcher, Azure Monitor
 5. New endpoint: `GET http://127.0.0.1:8000/scheduler/status` to monitor collection
 6. New endpoint: `GET http://127.0.0.1:8000/ingestion/checklist` for pass/warn/fail ingestion readiness summary
-7. Step 6 acceptance runner: `.\.venv\Scripts\python.exe backend\scripts\run_step6_acceptance.py`
+7. New endpoints: `GET http://127.0.0.1:8000/correlations` and `GET http://127.0.0.1:8000/correlations/{correlation_id}`
+8. Step 6 acceptance runner: `.\.venv\Scripts\python.exe backend\scripts\run_step6_acceptance.py`
+9. Phase 3 Step 1 signal pack runner: `.\.venv\Scripts\python.exe backend\scripts\run_phase3_step1_signal_pack.py`
+10. Phase 3 Step 2 correlation runner: `.\.venv\Scripts\python.exe backend\scripts\run_phase3_step2_correlation.py`
 
 ## Implementation Roadmap
 
@@ -99,4 +103,4 @@ Roadmap status is maintained in:
 - `MASTER_PHASE_STEP_TRACKER.md`
 
 Current active line:
-- `Working: Phase 3 | Step 2 | Version v0.3.0 (next)`
+- `Working: Phase 4 | Step 1 | Version v0.4.0 (next)`

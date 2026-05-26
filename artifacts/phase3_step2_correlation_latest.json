@@ -1,0 +1,81 @@
+{
+  "run_started_at": "2026-05-26T06:19:39.191449+00:00",
+  "phase": "Phase 3",
+  "step": "Step 2",
+  "version": "v0.3.0",
+  "input_signal_artifact": "artifacts\\phase3_step1_signal_pack_latest.json",
+  "result": "pass",
+  "reason": "Correlation pipeline executed successfully. No live signal rows were available, synthetic probe correlation passed.",
+  "summary": {
+    "signal_queries_total": 4,
+    "mapped_events_count": 0,
+    "mapping_error_count": 0,
+    "correlations_count": 0,
+    "synthetic_probe_events": 2,
+    "synthetic_probe_correlations": 1
+  },
+  "mapping_errors": [],
+  "correlations": [],
+  "signal_query_status": [
+    {
+      "id": "failed_request_rate",
+      "status": "pass",
+      "row_count": 0
+    },
+    {
+      "id": "latency_spike",
+      "status": "pass",
+      "row_count": 0
+    },
+    {
+      "id": "sql_connectivity_errors",
+      "status": "pass",
+      "row_count": 0
+    },
+    {
+      "id": "nsg_deny_packet_drop",
+      "status": "pass",
+      "row_count": 0
+    }
+  ],
+  "synthetic_probe": {
+    "signals": [
+      {
+        "id": "synthetic::app_failure_rate",
+        "status": "pass",
+        "row_count": 1
+      },
+      {
+        "id": "synthetic::db_timeout",
+        "status": "pass",
+        "row_count": 1
+      }
+    ],
+    "correlations": [
+      {
+        "id": "33064629-e396-4757-873a-c07036db6533",
+        "correlated_at": "2026-05-26T06:19:39.191449",
+        "join_key": "rid:/subscriptions/demo-sub/resourcegroups/demo-rg/providers/microsoft.web/sites/demo-app",
+        "window_start": "2026-05-26T06:19:39.191449",
+        "window_end": "2026-05-26T06:20:39.191449",
+        "source_types": [
+          "application",
+          "database"
+        ],
+        "event_ids": [],
+        "resource_ids": [
+          "/subscriptions/demo-sub/resourceGroups/demo-rg/providers/Microsoft.Web/sites/demo-app"
+        ],
+        "correlation_ids": [],
+        "confidence_score": 0.74,
+        "summary": "Correlated 2 events across 2 sources within 60s using rid:/subscriptions/demo-sub/resourcegroups/demo-rg/providers/microsoft.web/sites/demo-app.",
+        "supporting_data": {
+          "event_count": 2,
+          "distinct_source_count": 2,
+          "window_seconds": 60
+        }
+      }
+    ]
+  },
+  "run_finished_at": "2026-05-26T06:19:39.191449+00:00"
+}

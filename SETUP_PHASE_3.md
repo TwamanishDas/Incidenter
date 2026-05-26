@@ -184,6 +184,15 @@ curl http://localhost:8000/incidents
 curl http://localhost:8000/incidents/{incident-id}
 ```
 
+View correlated evidence:
+```bash
+# List correlated bundles
+curl http://localhost:8000/correlations
+
+# View specific correlated bundle
+curl http://localhost:8000/correlations/{correlation-id}
+```
+
 ## Troubleshooting
 
 ### "Collector initialization failed"
@@ -264,6 +273,20 @@ Outputs:
 Outputs:
 - JSON report: `artifacts/phase3_step1_signal_pack_latest.json`
 - Exit code `0` on pass/warn, `1` on fail
+
+### Phase 3 Step 2 Correlation Validation
+```bash
+.\.venv\Scripts\python.exe backend\scripts\run_phase3_step2_correlation.py
+```
+
+Outputs:
+- JSON report: `artifacts/phase3_step2_correlation_latest.json`
+- Exit code `0` on pass, `1` on fail
+
+### List Correlations
+```bash
+curl http://localhost:8000/correlations
+```
 
 ### List Incidents
 ```bash

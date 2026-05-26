@@ -1,6 +1,6 @@
 # Master Phase-Step Tracker
 
-Working: Phase 3 | Step 2 | Version v0.3.0 (next)
+Working: Phase 4 | Step 1 | Version v0.4.0 (next)
 
 Purpose: single source of truth for phase, step, and sub-step execution status.
 
@@ -24,6 +24,7 @@ Purpose: single source of truth for phase, step, and sub-step execution status.
    - `PHASE2_STEP3_SOURCE_COVERAGE_EXPANSION.md`
    - `PHASE2_STEP4_ACCEPTANCE_GATE.md`
    - `PHASE3_STEP1_KQL_SIGNAL_PACKS.md`
+   - `PHASE3_STEP2_CORRELATION_ENRICHER.md`
 7. Production-ready extension:
    - `PRODUCTION_READY_SCOPE.md`
 
@@ -153,7 +154,7 @@ Purpose: single source of truth for phase, step, and sub-step execution status.
 4. Runbook reference:
    - `PHASE2_STEP4_ACCEPTANCE_GATE.md`
 
-## Phase 3 - Detection and Correlation (`v0.3.0`) [In Progress]
+## Phase 3 - Detection and Correlation (`v0.3.0`) [Completed]
 
 ### Step 1 - KQL signal packs [Completed]
 1. Sub-step 1.1: failed request rate query.
@@ -171,9 +172,30 @@ Purpose: single source of truth for phase, step, and sub-step execution status.
 6. Runbook reference:
    - `PHASE3_STEP1_KQL_SIGNAL_PACKS.md`
 
-### Step 2 - Correlation enricher [Pending]
+### Step 2 - Correlation enricher [Completed]
 1. Sub-step 2.1: add metadata join strategy.
+   - Implemented `backend/correlation_enricher.py` with join tokens across:
+   - correlation ID, resource ID, subscription ID, operation name, and component keys
+   - Added rolling 15-minute time-window matching + duplicate bundle suppression [Completed]
 2. Sub-step 2.2: implement ingestion of query outputs to normalized contract.
+   - Implemented `backend/signal_contract_mapper.py` to map Phase 3 Step 1 query rows into `TelemetryEvent` [Completed]
+3. Sub-step 2.3: expose correlated evidence through API and store.
+   - Added `CorrelatedEvidence` model in `backend/models.py`
+   - Added correlation storage methods in `backend/data_store.py`
+   - Added API endpoints:
+   - `GET /correlations`
+   - `GET /correlations/{correlation_id}` [Completed]
+4. Sub-step 2.4: validate Step 2 execution.
+   - Unit tests:
+   - `backend/tests/test_correlation_enricher.py`
+   - `backend/tests/test_signal_contract_mapper.py`
+   - Runner:
+   - `.\.venv\Scripts\python.exe backend\scripts\run_phase3_step2_correlation.py`
+   - Artifact:
+   - `artifacts/phase3_step2_correlation_latest.json`
+   - Result: `pass` [Completed]
+5. Runbook reference:
+   - `PHASE3_STEP2_CORRELATION_ENRICHER.md`
 
 ## Phase 4 - RCA Engine (`v0.4.0`) [Pending]
 

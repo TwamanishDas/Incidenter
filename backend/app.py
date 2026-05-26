@@ -10,6 +10,8 @@ from .processors import analyze_telemetry, build_forecast_message
 from .telemetry_samples import SAMPLE_EVENTS
 from .azure_scheduler import get_scheduler, stop_scheduler
 from .ingestion_health import build_ingestion_checklist
+from .correlation_enricher import get_correlation_enricher
+from .models import CorrelatedEvidence
 
 logger = logging.getLogger(__name__)
 
@@ -18,6 +20,7 @@ app = FastAPI(title="Azure RCA Planner MVP", version="0.1.0")
 # Global scheduler reference
 scheduler = None
 scheduler_task: asyncio.Task | None = None
+correlation_enricher = get_correlation_enricher()
 
 
 @app.on_event("startup")
@@ -90,6 +93,9 @@ def ingest_telemetry(event: TelemetryEvent):
     incident = analyze_telemetry(persisted)
     if incident:
         store.add_incident(incident)
+    correlation = correlation_enricher.ingest(persisted)
+    if correlation:
+        store.add_correlation(correlation)
     return persisted
 
 
@@ -104,6 +110,19 @@ def get_incident(incident_id: str):
     if not incident:
         raise HTTPException(status_code=404, detail="Incident not found")
     return incident
+
+
+@app.get("/correlations", response_model=list[CorrelatedEvidence])
+def list_correlations():
+    return store.get_correlations()
+
+
+@app.get("/correlations/{correlation_id}", response_model=CorrelatedEvidence)
+def get_correlation(correlation_id: str):
+    correlation = store.get_correlation(correlation_id)
+    if not correlation:
+        raise HTTPException(status_code=404, detail="Correlation not found")
+    return correlation
 
 
 @app.get("/forecast")
@@ -121,4 +140,7 @@ def simulate(request: SimulationRequest):
     incident = analyze_telemetry(persisted)
     if incident:
         store.add_incident(incident)
+    correlation = correlation_enricher.ingest(persisted)
+    if correlation:
+        store.add_correlation(correlation)
     return {"scenario": scenario, "event": persisted, "incident_created": incident is not None}

@@ -1,6 +1,6 @@
 # Low Level Architecture: Detection and Correlation
 
-Working: Phase 3 | Step 2 | Version v0.3.0 (next)
+Working: Phase 3 | Step 2 | Version v0.3.0 (completed)
 
 ## Purpose
 
@@ -57,7 +57,15 @@ Define the detailed design for signal extraction, anomaly detection, and cross-l
    - `kql/phase3_step1/03_sql_connectivity_errors.kql`
    - `kql/phase3_step1/04_nsg_deny_packet_drop.kql`
    - validation artifact: `artifacts/phase3_step1_signal_pack_latest.json`
-2. Phase 3 Step 2 (correlation enricher) is the next implementation target.
+2. Phase 3 Step 2 (correlation enricher) completed:
+   - metadata + time-window correlation implemented in `backend/correlation_enricher.py`
+   - signal-row mapper implemented in `backend/signal_contract_mapper.py`
+   - API exposure implemented:
+   - `GET /correlations`
+   - `GET /correlations/{correlation_id}`
+   - validation runner:
+   - `backend/scripts/run_phase3_step2_correlation.py`
+   - validation artifact: `artifacts/phase3_step2_correlation_latest.json`
 
 ## Traceability
 

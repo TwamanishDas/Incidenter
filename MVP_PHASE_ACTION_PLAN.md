@@ -1,6 +1,6 @@
 # MVP Phase Action Plan
 
-Working: Phase 3 | Step 2 | Version v0.3.0 (next)
+Working: Phase 4 | Step 1 | Version v0.4.0 (next)
 
 Purpose: execution-oriented MVP plan connected to tracker phases and low-level architecture.
 
@@ -10,9 +10,9 @@ Purpose: execution-oriented MVP plan connected to tracker phases and low-level a
    - Outcome: ingestion baseline + tags + release notes.
 2. Phase 2 (`v0.2.0`) - completed.
    - Outcome: live ingestion acceptance gate passed and release tags prepared.
-3. Phase 3 (`v0.3.0`) - active.
-   - Action: Step 1 KQL signal packs completed; execute Step 2 correlation enricher.
-4. Phase 4 (`v0.4.0`) - pending.
+3. Phase 3 (`v0.3.0`) - completed.
+   - Outcome: KQL signal packs + correlation enricher executed with validation artifacts.
+4. Phase 4 (`v0.4.0`) - active.
    - Action: implement RCA scoring and incident explanation model.
 5. Phase 5 (`v0.5.0`) - pending.
    - Action: deliver dashboard and alert channels.
