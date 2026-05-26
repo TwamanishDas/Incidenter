@@ -39,6 +39,7 @@ The current implementation focuses on:
    - `PHASE2_STEP4_ACCEPTANCE_GATE.md`
    - `PHASE3_STEP1_KQL_SIGNAL_PACKS.md`
    - `PHASE3_STEP2_CORRELATION_ENRICHER.md`
+   - `PHASE4_STEP1_EVIDENCE_SCORING_MODEL.md`
 8. Production-ready scope:
    - `PRODUCTION_READY_SCOPE.md`
 
@@ -103,4 +104,4 @@ Roadmap status is maintained in:
 - `MASTER_PHASE_STEP_TRACKER.md`
 
 Current active line:
-- `Working: Phase 4 | Step 1 | Version v0.4.0 (next)`
+- `Working: Phase 4 | Step 1.2 | Version v0.4.0 (next)`

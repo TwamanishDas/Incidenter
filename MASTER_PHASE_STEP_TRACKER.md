@@ -1,6 +1,6 @@
 # Master Phase-Step Tracker
 
-Working: Phase 4 | Step 1 | Version v0.4.0 (next)
+Working: Phase 4 | Step 1.2 | Version v0.4.0 (next)
 
 Purpose: single source of truth for phase, step, and sub-step execution status.
 
@@ -25,6 +25,7 @@ Purpose: single source of truth for phase, step, and sub-step execution status.
    - `PHASE2_STEP4_ACCEPTANCE_GATE.md`
    - `PHASE3_STEP1_KQL_SIGNAL_PACKS.md`
    - `PHASE3_STEP2_CORRELATION_ENRICHER.md`
+   - `PHASE4_STEP1_EVIDENCE_SCORING_MODEL.md`
 7. Production-ready extension:
    - `PRODUCTION_READY_SCOPE.md`
 
@@ -32,8 +33,8 @@ Purpose: single source of truth for phase, step, and sub-step execution status.
 
 1. `v0.1.0` - Phase 1 completion baseline (tagged and published).
 2. `v0.2.0` - Phase 2 execution track (completed and tagged).
-3. `v0.3.0` - Phase 3 detection and correlation track (in progress).
-4. `v0.4.0` - Phase 4 RCA engine target.
+3. `v0.3.0` - Phase 3 detection and correlation track (completed).
+4. `v0.4.0` - Phase 4 RCA engine target (in progress).
 5. `v0.5.0` - Phase 5 dashboard and notifications target.
 6. `v0.6.0` - Phase 6 validation and handoff target.
 
@@ -197,12 +198,19 @@ Purpose: single source of truth for phase, step, and sub-step execution status.
 5. Runbook reference:
    - `PHASE3_STEP2_CORRELATION_ENRICHER.md`
 
-## Phase 4 - RCA Engine (`v0.4.0`) [Pending]
+## Phase 4 - RCA Engine (`v0.4.0`) [In Progress]
 
-### Step 1 - Evidence scoring model
+### Step 1 - Evidence scoring model [In Progress]
 1. Sub-step 1.1: layer signature weighting.
-2. Sub-step 1.2: dependency relationship scoring.
-3. Sub-step 1.3: repeated-incident weighting.
+   - Implemented weighted layer signatures in `backend/processors.py` [Completed]
+   - Added scoring output under incident `supporting_data.rca_scoring` [Completed]
+   - Added tests: `backend/tests/test_rca_layer_scoring.py` [Completed]
+   - Added runner: `backend/scripts/run_phase4_step1_scoring.py` [Completed]
+   - Artifact: `artifacts/phase4_step1_scoring_latest.json` (result: `pass`) [Completed]
+2. Sub-step 1.2: dependency relationship scoring. [Pending]
+3. Sub-step 1.3: repeated-incident weighting. [Pending]
+4. Runbook reference:
+   - `PHASE4_STEP1_EVIDENCE_SCORING_MODEL.md`
 
 ### Step 2 - RCA output contract
 1. Sub-step 2.1: finalize incident output fields.

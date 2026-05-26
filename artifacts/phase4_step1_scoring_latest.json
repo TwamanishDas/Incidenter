@@ -1,0 +1,53 @@
+{
+  "run_started_at": "2026-05-26T07:38:39.754960+00:00",
+  "phase": "Phase 4",
+  "step": "Step 1",
+  "sub_step": "1.1",
+  "version": "v0.4.0",
+  "result": "pass",
+  "reason": "Phase 4 Step 1.1 layer-signature scoring checks passed.",
+  "cases": [
+    {
+      "sample": "network_spike",
+      "incident_created": true,
+      "severity": "critical",
+      "layer": "network",
+      "layer_signature_score": 1.0,
+      "matched_signal_count": 4,
+      "top_signal": "nsg_denied_connections",
+      "model_version": "phase4-step1.1-layer-signature-v1"
+    },
+    {
+      "sample": "app_error",
+      "incident_created": true,
+      "severity": "critical",
+      "layer": "application",
+      "layer_signature_score": 1.0,
+      "matched_signal_count": 3,
+      "top_signal": "error_rate_or_5xx",
+      "model_version": "phase4-step1.1-layer-signature-v1"
+    },
+    {
+      "sample": "db_latency",
+      "incident_created": true,
+      "severity": "critical",
+      "layer": "database",
+      "layer_signature_score": 1.0,
+      "matched_signal_count": 4,
+      "top_signal": "connection_errors",
+      "model_version": "phase4-step1.1-layer-signature-v1"
+    },
+    {
+      "sample": "benign_application",
+      "incident_created": false,
+      "expected": "no_incident"
+    }
+  ],
+  "summary": {
+    "required_samples": 3,
+    "cases_total": 4,
+    "failure_count": 0
+  },
+  "failures": [],
+  "run_finished_at": "2026-05-26T07:38:39.754960+00:00"
+}

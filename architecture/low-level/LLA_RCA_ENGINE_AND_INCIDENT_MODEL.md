@@ -1,6 +1,6 @@
 # Low Level Architecture: RCA Engine and Incident Model
 
-Working: Phase 2 | Step 1 | Version v0.2.0 (planning)
+Working: Phase 4 | Step 1.2 | Version v0.4.0 (execution)
 
 ## Purpose
 
@@ -39,7 +39,10 @@ Define the RCA decision logic, evidence scoring model, and final incident output
 2. Phase 4 (`v0.4.0`) target:
    - formal evidence scoring model
    - expanded incident output contract
-3. Tracker source:
+3. Current Step status:
+   - Step 1.1 layer signature weighting completed
+   - Step 1.2 dependency relationship scoring next
+4. Tracker source:
    - `MASTER_PHASE_STEP_TRACKER.md` -> Phase 4
 
 ## Plan of Action
