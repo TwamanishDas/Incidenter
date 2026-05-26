@@ -13,7 +13,7 @@ if str(ROOT_DIR) not in sys.path:
     sys.path.insert(0, str(ROOT_DIR))
 
 from backend.models import TelemetryEvent, TelemetryOrigin, TelemetrySource
-from backend.processors import analyze_telemetry
+from backend.processors import analyze_telemetry, reset_repeat_incident_tracker
 from backend.telemetry_samples import SAMPLE_EVENTS
 
 
@@ -29,7 +29,7 @@ def run_scoring_validation() -> dict[str, Any]:
         "run_started_at": _utc_now_iso(),
         "phase": "Phase 4",
         "step": "Step 1",
-        "sub_step": "1.2",
+        "sub_step": "1.3",
         "version": "v0.4.0",
         "result": "fail",
         "reason": "",
@@ -38,9 +38,11 @@ def run_scoring_validation() -> dict[str, Any]:
 
     required_samples = ["network_spike", "app_error", "db_latency"]
     failures: list[str] = []
+    reset_repeat_incident_tracker()
 
     for sample_name in required_samples:
         sample_event = SAMPLE_EVENTS[sample_name]
+        _ = analyze_telemetry(sample_event)
         incident = analyze_telemetry(sample_event)
         case_result: dict[str, Any] = {
             "sample": sample_name,
@@ -57,6 +59,10 @@ def run_scoring_validation() -> dict[str, Any]:
         matched_signal_count = int(scoring.get("matched_signal_count") or 0)
         model_version = str(scoring.get("model_version") or "")
         dependency_edges = scoring.get("dependency_edges") or []
+        repeat_count = int(scoring.get("repeat_incident_count_prior_window") or 0)
+        repeat_bonus = float(scoring.get("repeat_weight_bonus") or 0.0)
+        composite_pre_repeat = float(scoring.get("composite_score_pre_repeat") or 0.0)
+        composite_final = float(scoring.get("composite_score_final") or 0.0)
 
         case_result["severity"] = incident.severity.value
         case_result["layer"] = scoring.get("layer")
@@ -65,6 +71,10 @@ def run_scoring_validation() -> dict[str, Any]:
         case_result["matched_signal_count"] = matched_signal_count
         case_result["top_signal"] = scoring.get("top_signal")
         case_result["dependency_edge_count"] = len(dependency_edges)
+        case_result["repeat_incident_count_prior_window"] = repeat_count
+        case_result["repeat_weight_bonus"] = repeat_bonus
+        case_result["composite_score_pre_repeat"] = composite_pre_repeat
+        case_result["composite_score_final"] = composite_final
         case_result["model_version"] = model_version
 
         if not (0.0 <= score <= 1.0):
@@ -75,7 +85,13 @@ def run_scoring_validation() -> dict[str, Any]:
             failures.append(f"{sample_name}: matched_signal_count < 1")
         if len(dependency_edges) < 1:
             failures.append(f"{sample_name}: dependency_edge_count < 1")
-        if model_version != "phase4-step1.2-dependency-v1":
+        if repeat_count < 1:
+            failures.append(f"{sample_name}: repeat_incident_count_prior_window < 1")
+        if repeat_bonus <= 0.0:
+            failures.append(f"{sample_name}: repeat_weight_bonus <= 0")
+        if composite_final < composite_pre_repeat:
+            failures.append(f"{sample_name}: composite_score_final < composite_score_pre_repeat")
+        if model_version != "phase4-step1.3-repeat-v1":
             failures.append(f"{sample_name}: unexpected model_version")
 
         report["cases"].append(case_result)
@@ -112,10 +128,10 @@ def run_scoring_validation() -> dict[str, Any]:
 
     if failures:
         report["result"] = "fail"
-        report["reason"] = "One or more Phase 4 Step 1.2 scoring checks failed."
+        report["reason"] = "One or more Phase 4 Step 1.3 scoring checks failed."
     else:
         report["result"] = "pass"
-        report["reason"] = "Phase 4 Step 1.2 dependency scoring checks passed."
+        report["reason"] = "Phase 4 Step 1.3 repeated-incident weighting checks passed."
     return report
 
 
@@ -124,7 +140,7 @@ def main() -> int:
     REPORT_PATH.parent.mkdir(parents=True, exist_ok=True)
     REPORT_PATH.write_text(json.dumps(report, indent=2), encoding="utf-8")
 
-    print(f"Phase 4 Step 1.2 scoring result: {report.get('result')}")
+    print(f"Phase 4 Step 1.3 scoring result: {report.get('result')}")
     print(f"Reason: {report.get('reason')}")
     print(f"Report: {REPORT_PATH}")
     return 0 if report.get("result") == "pass" else 1

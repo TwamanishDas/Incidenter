@@ -1,6 +1,6 @@
 # Master Phase-Step Tracker
 
-Working: Phase 4 | Step 1.3 | Version v0.4.0 (next)
+Working: Phase 4 | Step 2.1 | Version v0.4.0 (next)
 
 Purpose: single source of truth for phase, step, and sub-step execution status.
 
@@ -200,14 +200,14 @@ Purpose: single source of truth for phase, step, and sub-step execution status.
 
 ## Phase 4 - RCA Engine (`v0.4.0`) [In Progress]
 
-### Step 1 - Evidence scoring model [In Progress]
+### Step 1 - Evidence scoring model [Completed]
 1. Sub-step 1.1: layer signature weighting.
    - Implemented weighted layer signatures in `backend/processors.py` [Completed]
    - Added scoring output under incident `supporting_data.rca_scoring` [Completed]
    - Added tests: `backend/tests/test_rca_layer_scoring.py` [Completed]
    - Added runner: `backend/scripts/run_phase4_step1_scoring.py` [Completed]
    - Artifact: `artifacts/phase4_step1_scoring_latest.json` (result: `pass`) [Completed]
-2. Sub-step 1.2: dependency relationship scoring. [Pending]
+2. Sub-step 1.2: dependency relationship scoring.
    - Extended scoring model in `backend/processors.py` with:
    - dependency layer mapping
    - dependency hint extraction
@@ -217,13 +217,22 @@ Purpose: single source of truth for phase, step, and sub-step execution status.
    - Updated runner:
    - `backend/scripts/run_phase4_step1_scoring.py` [Completed]
    - Artifact: `artifacts/phase4_step1_scoring_latest.json` (result: `pass`) [Completed]
-3. Sub-step 1.3: repeated-incident weighting. [Pending]
+3. Sub-step 1.3: repeated-incident weighting.
+   - Extended scoring model in `backend/processors.py` with:
+   - repeat incident signature tracking
+   - 120-minute repeat window
+   - repeat bonus added to composite RCA score [Completed]
+   - Updated tests:
+   - `backend/tests/test_rca_layer_scoring.py` [Completed]
+   - Updated runner:
+   - `backend/scripts/run_phase4_step1_scoring.py` [Completed]
+   - Artifact: `artifacts/phase4_step1_scoring_latest.json` (result: `pass`) [Completed]
 4. Runbook reference:
    - `PHASE4_STEP1_EVIDENCE_SCORING_MODEL.md`
 
-### Step 2 - RCA output contract
-1. Sub-step 2.1: finalize incident output fields.
-2. Sub-step 2.2: persist supporting evidence links.
+### Step 2 - RCA output contract [In Progress]
+1. Sub-step 2.1: finalize incident output fields. [Pending]
+2. Sub-step 2.2: persist supporting evidence links. [Pending]
 
 ## Phase 5 - Dashboard and Notifications (`v0.5.0`) [Pending]
 

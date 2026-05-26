@@ -1,6 +1,6 @@
 # Documentation Structure and Governance
 
-Working: Phase 4 | Step 1.3 | Version v0.4.0 (next)
+Working: Phase 4 | Step 2.1 | Version v0.4.0 (next)
 
 Purpose: define how documentation is organized, named, and maintained so phase/step execution is consistent.
 
@@ -73,4 +73,5 @@ Purpose: define how documentation is organized, named, and maintained so phase/s
    - Step 1: `PHASE3_STEP1_KQL_SIGNAL_PACKS.md` (present)
    - Step 2: `PHASE3_STEP2_CORRELATION_ENRICHER.md` (present)
 4. Phase 4:
-   - Step 1: `PHASE4_STEP1_EVIDENCE_SCORING_MODEL.md` (present, in progress)
+   - Step 1: `PHASE4_STEP1_EVIDENCE_SCORING_MODEL.md` (present, completed)
+   - Step 2: runbook pending

@@ -1,4 +1,5 @@
-from datetime import datetime
+from collections import defaultdict
+from datetime import datetime, timedelta
 import uuid
 from typing import Any
 
@@ -14,7 +15,10 @@ from .models import (
 )
 
 
-_SCORING_MODEL_VERSION = "phase4-step1.2-dependency-v1"
+_SCORING_MODEL_VERSION = "phase4-step1.3-repeat-v1"
+_REPEAT_WINDOW_MINUTES = 120
+_REPEAT_MAX_BONUS = 0.20
+_REPEAT_INCREMENT_PER_OCCURRENCE = 0.05
 
 
 _DEPENDENCY_RELATIONSHIPS = {
@@ -34,6 +38,34 @@ _DEPENDENCY_RELATIONSHIPS = {
         "base_score": 0.30,
     },
 }
+
+
+class _RepeatIncidentTracker:
+    def __init__(self, window_minutes: int = _REPEAT_WINDOW_MINUTES, max_entries: int = 200):
+        self.window_minutes = max(1, window_minutes)
+        self.window = timedelta(minutes=self.window_minutes)
+        self.max_entries = max(20, max_entries)
+        self._history: dict[str, list[datetime]] = defaultdict(list)
+
+    def reset(self) -> None:
+        self._history.clear()
+
+    def register_and_get_repeat_state(self, signature: str, occurred_at: datetime) -> tuple[int, int]:
+        cutoff = occurred_at - self.window
+        existing = [item for item in self._history.get(signature, []) if item >= cutoff]
+        prior_count = len(existing)
+        existing.append(occurred_at)
+        if len(existing) > self.max_entries:
+            existing = existing[-self.max_entries :]
+        self._history[signature] = existing
+        return prior_count, len(existing)
+
+
+_repeat_incident_tracker = _RepeatIncidentTracker()
+
+
+def reset_repeat_incident_tracker() -> None:
+    _repeat_incident_tracker.reset()
 
 
 def _add_weighted_signal(
@@ -156,6 +188,62 @@ def _build_dependency_relationship_scoring(
     }
 
 
+def _build_incident_signature(event: TelemetryEvent, source: TelemetrySource, payload: Any) -> str:
+    component_value = ""
+    if source == TelemetrySource.APPLICATION:
+        component_value = str(getattr(payload, "application_name", "") or "")
+    elif source == TelemetrySource.DATABASE:
+        component_value = str(getattr(payload, "database_name", "") or "")
+    elif source == TelemetrySource.NETWORK:
+        component_value = "|".join(
+            [
+                str(getattr(payload, "source_ip", "") or ""),
+                str(getattr(payload, "destination_ip", "") or ""),
+                str(getattr(payload, "destination_port", "") or ""),
+            ]
+        )
+
+    parts = [
+        source.value,
+        str(event.resource_id or ""),
+        str(event.operation_name or ""),
+        component_value,
+    ]
+    normalized_parts = [item.strip().lower() for item in parts if item and item.strip()]
+    return "|".join(normalized_parts) if normalized_parts else f"{source.value}|generic"
+
+
+def _build_repeat_incident_scoring(
+    event: TelemetryEvent,
+    source: TelemetrySource,
+    payload: Any,
+    layer_scoring: dict[str, Any],
+) -> dict[str, Any]:
+    incident_signature = _build_incident_signature(event, source, payload)
+    prior_count, occurrences_window = _repeat_incident_tracker.register_and_get_repeat_state(
+        incident_signature,
+        event.timestamp,
+    )
+
+    repeat_bonus = min(_REPEAT_MAX_BONUS, prior_count * _REPEAT_INCREMENT_PER_OCCURRENCE)
+
+    layer_score = float(layer_scoring.get("layer_signature_score") or 0.0)
+    dependency_score = float(layer_scoring.get("dependency_relationship_score") or 0.0)
+    composite_pre_repeat = round(min(1.0, (layer_score * 0.60) + (dependency_score * 0.40)), 2)
+    composite_final = round(min(1.0, composite_pre_repeat + repeat_bonus), 2)
+
+    return {
+        "incident_signature": incident_signature,
+        "repeat_incident_window_minutes": _repeat_incident_tracker.window_minutes,
+        "repeat_incident_count_prior_window": prior_count,
+        "repeat_incident_occurrences_window": occurrences_window,
+        "is_repeat_incident": prior_count > 0,
+        "repeat_weight_bonus": round(repeat_bonus, 2),
+        "composite_score_pre_repeat": composite_pre_repeat,
+        "composite_score_final": composite_final,
+    }
+
+
 def _build_supporting_data(
     event: TelemetryEvent,
     source: TelemetrySource,
@@ -165,6 +253,8 @@ def _build_supporting_data(
     layer_scoring = _build_layer_signature_scoring(source, matched_signals)
     dependency_scoring = _build_dependency_relationship_scoring(event, source, payload, layer_scoring)
     layer_scoring.update(dependency_scoring)
+    repeat_scoring = _build_repeat_incident_scoring(event, source, payload, layer_scoring)
+    layer_scoring.update(repeat_scoring)
 
     supporting_data = payload.model_dump()
     supporting_data["rca_scoring"] = layer_scoring

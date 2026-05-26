@@ -1,6 +1,6 @@
 # Phase 4 Step 1 Evidence Scoring Model
 
-Working: Phase 4 | Step 1 | Version v0.4.0 (in progress)
+Working: Phase 4 | Step 1 | Version v0.4.0 (completed)
 
 Purpose: implement a formal RCA evidence scoring baseline for deterministic, explainable incident confidence.
 
@@ -67,5 +67,46 @@ Verify:
    - Reason: `Phase 4 Step 1.2 dependency scoring checks passed.`
 
 Next:
-1. Step 1.3: implement repeated-incident weighting.
+1. Step 1.3 implementation details captured below.
 2. Phase 4 Step 2: formalize RCA output contract fields and evidence linkage.
+
+## Step 1.3 - Repeated-incident weighting
+
+Goal:
+1. Increase RCA confidence when the same incident signature repeats in a recent time window.
+2. Keep scoring deterministic and explainable with explicit repeat metadata.
+
+Action:
+1. Extended scoring model in:
+   - `backend/processors.py`
+2. Added in-memory repeat tracker with 120-minute window:
+   - incident signature generation by layer + resource + operation + component identity
+   - repeat history registration and pruning
+   - repeat bonus contribution to final composite score
+3. Added repeat scoring fields under `supporting_data.rca_scoring`:
+   - `repeat_incident_count_prior_window`
+   - `repeat_incident_occurrences_window`
+   - `repeat_weight_bonus`
+   - `composite_score_pre_repeat`
+   - `composite_score_final`
+4. Updated tests:
+   - `backend/tests/test_rca_layer_scoring.py`
+   - added repeat-weighting test and deterministic tracker reset per test
+5. Updated runner:
+   - `backend/scripts/run_phase4_step1_scoring.py`
+   - runner now validates Step 1.3 model version and repeat-weighting output
+6. Refreshed artifact:
+   - `artifacts/phase4_step1_scoring_latest.json`
+
+Verify:
+1. Unit tests:
+   - `.\.venv\Scripts\python.exe -m unittest discover -s backend\tests -v`
+   - Result: `Ran 23 tests ... OK`
+2. Step 1.3 scoring runner:
+   - `.\.venv\Scripts\python.exe backend\scripts\run_phase4_step1_scoring.py`
+   - Result: `pass`
+   - Reason: `Phase 4 Step 1.3 repeated-incident weighting checks passed.`
+
+Next:
+1. Phase 4 Step 2.1: finalize incident output fields.
+2. Phase 4 Step 2.2: persist supporting evidence links.
