@@ -14,7 +14,26 @@ from .models import (
 )
 
 
-_SCORING_MODEL_VERSION = "phase4-step1.1-layer-signature-v1"
+_SCORING_MODEL_VERSION = "phase4-step1.2-dependency-v1"
+
+
+_DEPENDENCY_RELATIONSHIPS = {
+    TelemetrySource.NETWORK: {
+        "upstream_layers": ["edge", "dns"],
+        "downstream_layers": [TelemetrySource.APPLICATION.value, TelemetrySource.DATABASE.value],
+        "base_score": 0.40,
+    },
+    TelemetrySource.APPLICATION: {
+        "upstream_layers": [TelemetrySource.NETWORK.value, "identity"],
+        "downstream_layers": [TelemetrySource.DATABASE.value],
+        "base_score": 0.35,
+    },
+    TelemetrySource.DATABASE: {
+        "upstream_layers": [TelemetrySource.APPLICATION.value, TelemetrySource.NETWORK.value],
+        "downstream_layers": ["storage"],
+        "base_score": 0.30,
+    },
+}
 
 
 def _add_weighted_signal(
@@ -60,13 +79,95 @@ def _build_layer_signature_scoring(
     }
 
 
+def _build_dependency_relationship_scoring(
+    event: TelemetryEvent,
+    source: TelemetrySource,
+    payload: Any,
+    layer_scoring: dict[str, Any],
+) -> dict[str, Any]:
+    config = _DEPENDENCY_RELATIONSHIPS[source]
+    upstream_layers = list(config["upstream_layers"])
+    downstream_layers = list(config["downstream_layers"])
+    base_score = float(config["base_score"])
+
+    hint_flags = {
+        "has_correlation_id": bool(event.correlation_id),
+        "has_resource_id": bool(event.resource_id),
+        "has_operation_name": bool(event.operation_name),
+        "has_application_name": bool(getattr(payload, "application_name", None)),
+        "has_database_name": bool(getattr(payload, "database_name", None)),
+        "has_source_ip": bool(getattr(payload, "source_ip", None)),
+        "has_destination_ip": bool(getattr(payload, "destination_ip", None)),
+        "has_destination_port": bool(getattr(payload, "destination_port", None)),
+    }
+
+    hint_count = sum(1 for value in hint_flags.values() if value)
+    hint_bonus = min(0.25, hint_count * 0.03)
+    identity_bonus = 0.0
+    if hint_flags["has_correlation_id"]:
+        identity_bonus += 0.10
+    if hint_flags["has_resource_id"]:
+        identity_bonus += 0.08
+    if hint_flags["has_operation_name"]:
+        identity_bonus += 0.05
+
+    layer_signature_score = float(layer_scoring.get("layer_signature_score") or 0.0)
+    if layer_signature_score >= 0.90:
+        layer_bonus = 0.15
+    elif layer_signature_score >= 0.70:
+        layer_bonus = 0.10
+    elif layer_signature_score >= 0.40:
+        layer_bonus = 0.05
+    else:
+        layer_bonus = 0.0
+
+    raw_score = base_score + hint_bonus + identity_bonus + layer_bonus
+    dependency_score = round(min(1.0, raw_score), 2)
+
+    if dependency_score >= 0.75:
+        blast_radius = "high"
+    elif dependency_score >= 0.50:
+        blast_radius = "medium"
+    else:
+        blast_radius = "low"
+
+    dependency_edges: list[dict[str, Any]] = []
+    for index, layer_name in enumerate(downstream_layers):
+        dependency_edges.append(
+            {
+                "from_layer": source.value,
+                "to_layer": layer_name,
+                "relationship": "supports",
+                "confidence": round(max(0.1, dependency_score - (index * 0.08)), 2),
+            }
+        )
+
+    return {
+        "dependency_relationship_score": dependency_score,
+        "dependency_weight_raw": round(raw_score, 3),
+        "dependency_base_score": base_score,
+        "dependency_upstream_layers": upstream_layers,
+        "dependency_downstream_layers": downstream_layers,
+        "dependency_hint_count": hint_count,
+        "dependency_hints": hint_flags,
+        "dependency_edges": dependency_edges,
+        "estimated_blast_radius": blast_radius,
+        "primary_dependency_edge": dependency_edges[0] if dependency_edges else None,
+    }
+
+
 def _build_supporting_data(
+    event: TelemetryEvent,
     source: TelemetrySource,
     payload: Any,
     matched_signals: list[dict[str, Any]],
 ) -> dict[str, Any]:
+    layer_scoring = _build_layer_signature_scoring(source, matched_signals)
+    dependency_scoring = _build_dependency_relationship_scoring(event, source, payload, layer_scoring)
+    layer_scoring.update(dependency_scoring)
+
     supporting_data = payload.model_dump()
-    supporting_data["rca_scoring"] = _build_layer_signature_scoring(source, matched_signals)
+    supporting_data["rca_scoring"] = layer_scoring
     return supporting_data
 
 
@@ -133,7 +234,7 @@ def evaluate_network_event(event: TelemetryEvent) -> Incident | None:
         likely_root_cause="Network path or security rule issue",
         affected_component="Network layer",
         evidence=evidence,
-        supporting_data=_build_supporting_data(TelemetrySource.NETWORK, payload, matched_signals),
+        supporting_data=_build_supporting_data(event, TelemetrySource.NETWORK, payload, matched_signals),
     )
 
 
@@ -192,7 +293,7 @@ def evaluate_application_event(event: TelemetryEvent) -> Incident | None:
         likely_root_cause="Application code, dependency failure, or backend service degradation",
         affected_component=payload.application_name or "Application service",
         evidence=evidence,
-        supporting_data=_build_supporting_data(TelemetrySource.APPLICATION, payload, matched_signals),
+        supporting_data=_build_supporting_data(event, TelemetrySource.APPLICATION, payload, matched_signals),
     )
 
 
@@ -259,7 +360,7 @@ def evaluate_database_event(event: TelemetryEvent) -> Incident | None:
         likely_root_cause="Database resource, connection limit, or query performance issue",
         affected_component=payload.database_name or "Database service",
         evidence=evidence,
-        supporting_data=_build_supporting_data(TelemetrySource.DATABASE, payload, matched_signals),
+        supporting_data=_build_supporting_data(event, TelemetrySource.DATABASE, payload, matched_signals),
     )
 
 

@@ -11,6 +11,9 @@ class RCALayerScoringTests(unittest.TestCase):
             timestamp=datetime.utcnow(),
             source=TelemetrySource.NETWORK,
             origin=TelemetryOrigin.SIMULATOR,
+            resource_id="/subscriptions/sub1/resourceGroups/rg1/providers/Microsoft.Network/networkWatchers/nw1",
+            correlation_id="corr-net-1",
+            operation_name="network_flow_signal",
             payload={
                 "packet_loss": 9.0,
                 "avg_latency_ms": 320.0,
@@ -24,17 +27,22 @@ class RCALayerScoringTests(unittest.TestCase):
         self.assertIsNotNone(incident)
         self.assertEqual(incident.severity.value, "critical")
         scoring = incident.supporting_data.get("rca_scoring", {})
-        self.assertEqual(scoring.get("model_version"), "phase4-step1.1-layer-signature-v1")
+        self.assertEqual(scoring.get("model_version"), "phase4-step1.2-dependency-v1")
         self.assertEqual(scoring.get("layer"), "network")
         self.assertEqual(scoring.get("layer_signature_score"), 1.0)
         self.assertEqual(scoring.get("matched_signal_count"), 4)
         self.assertEqual(scoring.get("top_signal"), "nsg_denied_connections")
+        self.assertGreaterEqual(scoring.get("dependency_relationship_score"), 0.75)
+        self.assertEqual(scoring.get("estimated_blast_radius"), "high")
+        self.assertEqual(scoring.get("dependency_downstream_layers"), ["application", "database"])
 
     def test_application_warning_only_path_has_partial_score(self):
         event = TelemetryEvent(
             timestamp=datetime.utcnow(),
             source=TelemetrySource.APPLICATION,
             origin=TelemetryOrigin.SIMULATOR,
+            resource_id="/subscriptions/sub1/resourceGroups/rg1/providers/Microsoft.Web/sites/checkout-api",
+            operation_name="request_latency_signal",
             payload={
                 "request_rate_per_min": 150,
                 "error_rate_pct": 1.0,
@@ -54,6 +62,9 @@ class RCALayerScoringTests(unittest.TestCase):
         self.assertEqual(scoring.get("layer_signature_score"), 0.3)
         self.assertEqual(scoring.get("matched_signal_count"), 1)
         self.assertEqual(scoring.get("top_signal"), "avg_response_ms")
+        self.assertGreaterEqual(scoring.get("dependency_relationship_score"), 0.40)
+        self.assertEqual(scoring.get("estimated_blast_radius"), "medium")
+        self.assertEqual(scoring.get("dependency_downstream_layers"), ["database"])
 
     def test_database_event_below_thresholds_returns_none(self):
         event = TelemetryEvent(

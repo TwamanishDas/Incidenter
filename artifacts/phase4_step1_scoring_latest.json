@@ -1,11 +1,11 @@
 {
-  "run_started_at": "2026-05-26T07:38:39.754960+00:00",
+  "run_started_at": "2026-05-26T09:32:48.234307+00:00",
   "phase": "Phase 4",
   "step": "Step 1",
-  "sub_step": "1.1",
+  "sub_step": "1.2",
   "version": "v0.4.0",
   "result": "pass",
-  "reason": "Phase 4 Step 1.1 layer-signature scoring checks passed.",
+  "reason": "Phase 4 Step 1.2 dependency scoring checks passed.",
   "cases": [
     {
       "sample": "network_spike",
@@ -13,9 +13,11 @@
       "severity": "critical",
       "layer": "network",
       "layer_signature_score": 1.0,
+      "dependency_relationship_score": 0.64,
       "matched_signal_count": 4,
       "top_signal": "nsg_denied_connections",
-      "model_version": "phase4-step1.1-layer-signature-v1"
+      "dependency_edge_count": 2,
+      "model_version": "phase4-step1.2-dependency-v1"
     },
     {
       "sample": "app_error",
@@ -23,9 +25,11 @@
       "severity": "critical",
       "layer": "application",
       "layer_signature_score": 1.0,
+      "dependency_relationship_score": 0.53,
       "matched_signal_count": 3,
       "top_signal": "error_rate_or_5xx",
-      "model_version": "phase4-step1.1-layer-signature-v1"
+      "dependency_edge_count": 1,
+      "model_version": "phase4-step1.2-dependency-v1"
     },
     {
       "sample": "db_latency",
@@ -33,9 +37,11 @@
       "severity": "critical",
       "layer": "database",
       "layer_signature_score": 1.0,
+      "dependency_relationship_score": 0.48,
       "matched_signal_count": 4,
       "top_signal": "connection_errors",
-      "model_version": "phase4-step1.1-layer-signature-v1"
+      "dependency_edge_count": 1,
+      "model_version": "phase4-step1.2-dependency-v1"
     },
     {
       "sample": "benign_application",
@@ -49,5 +55,5 @@
     "failure_count": 0
   },
   "failures": [],
-  "run_finished_at": "2026-05-26T07:38:39.754960+00:00"
+  "run_finished_at": "2026-05-26T09:32:48.234307+00:00"
 }

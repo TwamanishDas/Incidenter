@@ -104,4 +104,4 @@ Roadmap status is maintained in:
 - `MASTER_PHASE_STEP_TRACKER.md`
 
 Current active line:
-- `Working: Phase 4 | Step 1.2 | Version v0.4.0 (next)`
+- `Working: Phase 4 | Step 1.3 | Version v0.4.0 (next)`

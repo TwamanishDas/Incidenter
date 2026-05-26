@@ -1,6 +1,6 @@
 # Master Phase-Step Tracker
 
-Working: Phase 4 | Step 1.2 | Version v0.4.0 (next)
+Working: Phase 4 | Step 1.3 | Version v0.4.0 (next)
 
 Purpose: single source of truth for phase, step, and sub-step execution status.
 
@@ -208,6 +208,15 @@ Purpose: single source of truth for phase, step, and sub-step execution status.
    - Added runner: `backend/scripts/run_phase4_step1_scoring.py` [Completed]
    - Artifact: `artifacts/phase4_step1_scoring_latest.json` (result: `pass`) [Completed]
 2. Sub-step 1.2: dependency relationship scoring. [Pending]
+   - Extended scoring model in `backend/processors.py` with:
+   - dependency layer mapping
+   - dependency hint extraction
+   - `dependency_relationship_score` and blast radius output [Completed]
+   - Updated tests:
+   - `backend/tests/test_rca_layer_scoring.py` [Completed]
+   - Updated runner:
+   - `backend/scripts/run_phase4_step1_scoring.py` [Completed]
+   - Artifact: `artifacts/phase4_step1_scoring_latest.json` (result: `pass`) [Completed]
 3. Sub-step 1.3: repeated-incident weighting. [Pending]
 4. Runbook reference:
    - `PHASE4_STEP1_EVIDENCE_SCORING_MODEL.md`

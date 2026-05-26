@@ -29,7 +29,7 @@ def run_scoring_validation() -> dict[str, Any]:
         "run_started_at": _utc_now_iso(),
         "phase": "Phase 4",
         "step": "Step 1",
-        "sub_step": "1.1",
+        "sub_step": "1.2",
         "version": "v0.4.0",
         "result": "fail",
         "reason": "",
@@ -53,21 +53,29 @@ def run_scoring_validation() -> dict[str, Any]:
 
         scoring = incident.supporting_data.get("rca_scoring", {})
         score = float(scoring.get("layer_signature_score") or 0.0)
+        dependency_score = float(scoring.get("dependency_relationship_score") or 0.0)
         matched_signal_count = int(scoring.get("matched_signal_count") or 0)
         model_version = str(scoring.get("model_version") or "")
+        dependency_edges = scoring.get("dependency_edges") or []
 
         case_result["severity"] = incident.severity.value
         case_result["layer"] = scoring.get("layer")
         case_result["layer_signature_score"] = score
+        case_result["dependency_relationship_score"] = dependency_score
         case_result["matched_signal_count"] = matched_signal_count
         case_result["top_signal"] = scoring.get("top_signal")
+        case_result["dependency_edge_count"] = len(dependency_edges)
         case_result["model_version"] = model_version
 
         if not (0.0 <= score <= 1.0):
             failures.append(f"{sample_name}: score out of range")
+        if not (0.0 <= dependency_score <= 1.0):
+            failures.append(f"{sample_name}: dependency score out of range")
         if matched_signal_count < 1:
             failures.append(f"{sample_name}: matched_signal_count < 1")
-        if model_version != "phase4-step1.1-layer-signature-v1":
+        if len(dependency_edges) < 1:
+            failures.append(f"{sample_name}: dependency_edge_count < 1")
+        if model_version != "phase4-step1.2-dependency-v1":
             failures.append(f"{sample_name}: unexpected model_version")
 
         report["cases"].append(case_result)
@@ -104,10 +112,10 @@ def run_scoring_validation() -> dict[str, Any]:
 
     if failures:
         report["result"] = "fail"
-        report["reason"] = "One or more Phase 4 Step 1.1 scoring checks failed."
+        report["reason"] = "One or more Phase 4 Step 1.2 scoring checks failed."
     else:
         report["result"] = "pass"
-        report["reason"] = "Phase 4 Step 1.1 layer-signature scoring checks passed."
+        report["reason"] = "Phase 4 Step 1.2 dependency scoring checks passed."
     return report
 
 
@@ -116,7 +124,7 @@ def main() -> int:
     REPORT_PATH.parent.mkdir(parents=True, exist_ok=True)
     REPORT_PATH.write_text(json.dumps(report, indent=2), encoding="utf-8")
 
-    print(f"Phase 4 Step 1.1 scoring result: {report.get('result')}")
+    print(f"Phase 4 Step 1.2 scoring result: {report.get('result')}")
     print(f"Reason: {report.get('reason')}")
     print(f"Report: {REPORT_PATH}")
     return 0 if report.get("result") == "pass" else 1
