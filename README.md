@@ -40,6 +40,8 @@ The current implementation focuses on:
    - `PHASE3_STEP1_KQL_SIGNAL_PACKS.md`
    - `PHASE3_STEP2_CORRELATION_ENRICHER.md`
    - `PHASE4_STEP1_EVIDENCE_SCORING_MODEL.md`
+   - `PHASE4_STEP2_RCA_OUTPUT_CONTRACT.md`
+   - `PHASE5_STEP1_INCIDENT_DASHBOARD.md`
 8. Production-ready scope:
    - `PRODUCTION_READY_SCOPE.md`
 
@@ -97,6 +99,9 @@ To connect to real Azure telemetry sources instead of simulated data:
 8. Step 6 acceptance runner: `.\.venv\Scripts\python.exe backend\scripts\run_step6_acceptance.py`
 9. Phase 3 Step 1 signal pack runner: `.\.venv\Scripts\python.exe backend\scripts\run_phase3_step1_signal_pack.py`
 10. Phase 3 Step 2 correlation runner: `.\.venv\Scripts\python.exe backend\scripts\run_phase3_step2_correlation.py`
+11. Phase 4 Step 2 contract runner: `.\.venv\Scripts\python.exe backend\scripts\run_phase4_step2_contract.py`
+12. Phase 4 Step 2 evidence-link runner: `.\.venv\Scripts\python.exe backend\scripts\run_phase4_step2_evidence_links.py`
+13. Phase 5 Step 1.1 dashboard runner: `.\.venv\Scripts\python.exe backend\scripts\run_phase5_step1_active_dashboard.py`
 
 ## Implementation Roadmap
 
@@ -104,4 +109,4 @@ Roadmap status is maintained in:
 - `MASTER_PHASE_STEP_TRACKER.md`
 
 Current active line:
-- `Working: Phase 4 | Step 2.1 | Version v0.4.0 (next)`
+- `Working: Phase 5 | Step 1.1 | Version v0.5.0 (execution)`

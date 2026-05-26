@@ -261,6 +261,39 @@ def _build_supporting_data(
     return supporting_data
 
 
+def _build_incident_contract_fields(
+    supporting_data: dict[str, Any],
+    evidence: list[RCALink],
+) -> dict[str, Any]:
+    scoring = supporting_data.get("rca_scoring", {}) if isinstance(supporting_data, dict) else {}
+    raw_probability = float(
+        scoring.get("composite_score_final")
+        or scoring.get("composite_score_pre_repeat")
+        or scoring.get("layer_signature_score")
+        or 0.0
+    )
+    probability_score = round(min(1.0, max(0.0, raw_probability)), 2)
+    if probability_score >= 0.80:
+        confidence_label: str = "high"
+    elif probability_score >= 0.50:
+        confidence_label = "medium"
+    else:
+        confidence_label = "low"
+
+    evidence_texts = [item.evidence for item in evidence]
+    primary_evidence = evidence_texts[0] if evidence_texts else "No evidence available"
+
+    return {
+        "probability_score": probability_score,
+        "confidence_label": confidence_label,
+        "incident_signature": str(scoring.get("incident_signature") or "generic"),
+        "scoring_model_version": str(scoring.get("model_version") or _SCORING_MODEL_VERSION),
+        "evidence_count": len(evidence_texts),
+        "primary_evidence": primary_evidence,
+        "supporting_evidence": evidence_texts,
+    }
+
+
 def evaluate_network_event(event: TelemetryEvent) -> Incident | None:
     payload = NetworkPayload(**event.payload)
     evidence: list[RCALink] = []
@@ -315,6 +348,8 @@ def evaluate_network_event(event: TelemetryEvent) -> Incident | None:
         return None
 
     severity = Severity.CRITICAL if any(item.severity == Severity.CRITICAL for item in evidence) else Severity.WARNING
+    supporting_data = _build_supporting_data(event, TelemetrySource.NETWORK, payload, matched_signals)
+    contract_fields = _build_incident_contract_fields(supporting_data, evidence)
     return Incident(
         id=str(uuid.uuid4()),
         incident_type=TelemetrySource.NETWORK,
@@ -324,7 +359,8 @@ def evaluate_network_event(event: TelemetryEvent) -> Incident | None:
         likely_root_cause="Network path or security rule issue",
         affected_component="Network layer",
         evidence=evidence,
-        supporting_data=_build_supporting_data(event, TelemetrySource.NETWORK, payload, matched_signals),
+        supporting_data=supporting_data,
+        **contract_fields,
     )
 
 
@@ -374,6 +410,8 @@ def evaluate_application_event(event: TelemetryEvent) -> Incident | None:
         return None
 
     severity = Severity.CRITICAL if any(item.severity == Severity.CRITICAL for item in evidence) else Severity.WARNING
+    supporting_data = _build_supporting_data(event, TelemetrySource.APPLICATION, payload, matched_signals)
+    contract_fields = _build_incident_contract_fields(supporting_data, evidence)
     return Incident(
         id=str(uuid.uuid4()),
         incident_type=TelemetrySource.APPLICATION,
@@ -383,7 +421,8 @@ def evaluate_application_event(event: TelemetryEvent) -> Incident | None:
         likely_root_cause="Application code, dependency failure, or backend service degradation",
         affected_component=payload.application_name or "Application service",
         evidence=evidence,
-        supporting_data=_build_supporting_data(event, TelemetrySource.APPLICATION, payload, matched_signals),
+        supporting_data=supporting_data,
+        **contract_fields,
     )
 
 
@@ -441,6 +480,8 @@ def evaluate_database_event(event: TelemetryEvent) -> Incident | None:
         return None
 
     severity = Severity.CRITICAL if any(item.severity == Severity.CRITICAL for item in evidence) else Severity.WARNING
+    supporting_data = _build_supporting_data(event, TelemetrySource.DATABASE, payload, matched_signals)
+    contract_fields = _build_incident_contract_fields(supporting_data, evidence)
     return Incident(
         id=str(uuid.uuid4()),
         incident_type=TelemetrySource.DATABASE,
@@ -450,7 +491,8 @@ def evaluate_database_event(event: TelemetryEvent) -> Incident | None:
         likely_root_cause="Database resource, connection limit, or query performance issue",
         affected_component=payload.database_name or "Database service",
         evidence=evidence,
-        supporting_data=_build_supporting_data(event, TelemetrySource.DATABASE, payload, matched_signals),
+        supporting_data=supporting_data,
+        **contract_fields,
     )
 
 

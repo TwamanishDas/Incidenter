@@ -1,6 +1,6 @@
 # Low Level Architecture: Dashboard and Alerting
 
-Working: Phase 2 | Step 1 | Version v0.2.0 (planning)
+Working: Phase 5 | Step 1.1 | Version v0.5.0 (execution)
 
 ## Purpose
 
@@ -36,7 +36,11 @@ Define the user-facing investigation view and notification paths for active inci
    - notification integration
 2. Dependency:
    - requires stable incident contract from Phase 4
-3. Tracker source:
+3. Current step status:
+   - Step 1.1 active incident list API completed
+   - Step 1.2 RCA summary panel pending
+   - Step 1.3 trend/forecast chart payload pending
+4. Tracker source:
    - `MASTER_PHASE_STEP_TRACKER.md` -> Phase 5
 
 ## Plan of Action

@@ -1,0 +1,48 @@
+{
+  "run_started_at": "2026-05-26T12:13:52.153569+00:00",
+  "phase": "Phase 4",
+  "step": "Step 2",
+  "sub_step": "2.2",
+  "version": "v0.4.0",
+  "result": "pass",
+  "reason": "Phase 4 Step 2.2 evidence-link persistence checks passed.",
+  "cases": [
+    {
+      "sample": "network_spike",
+      "incident_created": true,
+      "incident_id": "4f001d73-ee94-45e5-9a54-6b4a02912a02",
+      "evidence_count": 4,
+      "persisted_records": 4,
+      "supporting_evidence_links": 4,
+      "resolved_links": 4,
+      "failure_count": 0
+    },
+    {
+      "sample": "app_error",
+      "incident_created": true,
+      "incident_id": "210e4fb1-1035-4b8a-8b69-464f7d3682c0",
+      "evidence_count": 3,
+      "persisted_records": 3,
+      "supporting_evidence_links": 3,
+      "resolved_links": 3,
+      "failure_count": 0
+    },
+    {
+      "sample": "db_latency",
+      "incident_created": true,
+      "incident_id": "56d6707b-b523-4a32-8498-06896f3c6d69",
+      "evidence_count": 4,
+      "persisted_records": 4,
+      "supporting_evidence_links": 4,
+      "resolved_links": 4,
+      "failure_count": 0
+    }
+  ],
+  "failures": [],
+  "summary": {
+    "cases_total": 3,
+    "persisted_evidence_total": 11,
+    "failure_count": 0
+  },
+  "run_finished_at": "2026-05-26T12:13:52.155583+00:00"
+}

@@ -1,0 +1,23 @@
+{
+  "run_started_at": "2026-05-26T12:13:53.971651+00:00",
+  "phase": "Phase 5",
+  "step": "Step 1",
+  "sub_step": "1.1",
+  "version": "v0.5.0",
+  "result": "pass",
+  "reason": "Phase 5 Step 1.1 active incident dashboard checks passed.",
+  "checks": [
+    {
+      "check": "active_incidents_response",
+      "function_status": "ok",
+      "card_count": 3
+    }
+  ],
+  "failures": [],
+  "summary": {
+    "incidents_in_store": 3,
+    "cards_returned": 3,
+    "failure_count": 0
+  },
+  "run_finished_at": "2026-05-26T12:13:53.973668+00:00"
+}

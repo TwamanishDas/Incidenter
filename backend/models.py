@@ -171,8 +171,43 @@ class Incident(BaseModel):
     severity: Severity
     likely_root_cause: str
     affected_component: str
+    probability_score: float = Field(..., ge=0.0, le=1.0)
+    confidence_label: Literal["low", "medium", "high"]
+    incident_signature: str
+    scoring_model_version: str
+    evidence_count: int = Field(..., ge=0)
+    primary_evidence: str
+    supporting_evidence: list[str] = Field(default_factory=list)
+    supporting_evidence_links: list[str] = Field(default_factory=list)
     evidence: list[RCALink]
     supporting_data: dict
+
+
+class EvidenceRecord(BaseModel):
+    id: str
+    incident_id: str
+    captured_at: datetime = Field(default_factory=datetime.utcnow)
+    incident_type: TelemetrySource
+    severity: Severity
+    evidence_text: str
+    link: str
+    supporting_data: dict = Field(default_factory=dict)
+
+
+class ActiveIncidentCard(BaseModel):
+    incident_id: str
+    detected_at: datetime
+    incident_type: TelemetrySource
+    title: str
+    severity: Severity
+    affected_component: str
+    likely_root_cause: str
+    probability_score: float = Field(..., ge=0.0, le=1.0)
+    confidence_label: Literal["low", "medium", "high"]
+    evidence_count: int = Field(..., ge=0)
+    primary_evidence: str
+    evidence_links: list[str] = Field(default_factory=list)
+    status: Literal["active"] = "active"
 
 
 class CorrelatedEvidence(BaseModel):

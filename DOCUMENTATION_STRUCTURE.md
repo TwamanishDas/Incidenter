@@ -1,6 +1,6 @@
 # Documentation Structure and Governance
 
-Working: Phase 4 | Step 2.1 | Version v0.4.0 (next)
+Working: Phase 5 | Step 1.1 | Version v0.5.0 (execution)
 
 Purpose: define how documentation is organized, named, and maintained so phase/step execution is consistent.
 
@@ -20,6 +20,8 @@ Purpose: define how documentation is organized, named, and maintained so phase/s
    - `PHASE3_STEP1_KQL_SIGNAL_PACKS.md`
    - `PHASE3_STEP2_CORRELATION_ENRICHER.md`
    - `PHASE4_STEP1_EVIDENCE_SCORING_MODEL.md`
+   - `PHASE4_STEP2_RCA_OUTPUT_CONTRACT.md`
+   - `PHASE5_STEP1_INCIDENT_DASHBOARD.md`
 
 ## 2. Naming Convention
 
@@ -74,4 +76,6 @@ Purpose: define how documentation is organized, named, and maintained so phase/s
    - Step 2: `PHASE3_STEP2_CORRELATION_ENRICHER.md` (present)
 4. Phase 4:
    - Step 1: `PHASE4_STEP1_EVIDENCE_SCORING_MODEL.md` (present, completed)
-   - Step 2: runbook pending
+   - Step 2: `PHASE4_STEP2_RCA_OUTPUT_CONTRACT.md` (present, completed)
+5. Phase 5:
+   - Step 1: `PHASE5_STEP1_INCIDENT_DASHBOARD.md` (present, in progress)

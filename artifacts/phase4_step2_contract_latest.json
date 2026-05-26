@@ -1,0 +1,44 @@
+{
+  "run_started_at": "2026-05-26T12:13:52.011988+00:00",
+  "phase": "Phase 4",
+  "step": "Step 2",
+  "sub_step": "2.1",
+  "version": "v0.4.0",
+  "result": "pass",
+  "reason": "Phase 4 Step 2.1 incident output contract checks passed.",
+  "cases": [
+    {
+      "sample": "network_spike",
+      "incident_created": true,
+      "incident_type": "network",
+      "probability_score": 0.86,
+      "confidence_label": "high",
+      "evidence_count": 4,
+      "failure_count": 0
+    },
+    {
+      "sample": "app_error",
+      "incident_created": true,
+      "incident_type": "application",
+      "probability_score": 0.81,
+      "confidence_label": "high",
+      "evidence_count": 3,
+      "failure_count": 0
+    },
+    {
+      "sample": "db_latency",
+      "incident_created": true,
+      "incident_type": "database",
+      "probability_score": 0.79,
+      "confidence_label": "medium",
+      "evidence_count": 4,
+      "failure_count": 0
+    }
+  ],
+  "failures": [],
+  "summary": {
+    "cases_total": 3,
+    "failure_count": 0
+  },
+  "run_finished_at": "2026-05-26T12:13:52.014001+00:00"
+}

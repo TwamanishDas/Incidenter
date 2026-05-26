@@ -11,7 +11,7 @@ from .telemetry_samples import SAMPLE_EVENTS
 from .azure_scheduler import get_scheduler, stop_scheduler
 from .ingestion_health import build_ingestion_checklist
 from .correlation_enricher import get_correlation_enricher
-from .models import CorrelatedEvidence
+from .models import ActiveIncidentCard, CorrelatedEvidence, EvidenceRecord
 
 logger = logging.getLogger(__name__)
 
@@ -93,6 +93,7 @@ def ingest_telemetry(event: TelemetryEvent):
     incident = analyze_telemetry(persisted)
     if incident:
         store.add_incident(incident)
+        store.persist_incident_evidence(incident)
     correlation = correlation_enricher.ingest(persisted)
     if correlation:
         store.add_correlation(correlation)
@@ -110,6 +111,49 @@ def get_incident(incident_id: str):
     if not incident:
         raise HTTPException(status_code=404, detail="Incident not found")
     return incident
+
+
+@app.get("/dashboard/incidents/active", response_model=list[ActiveIncidentCard])
+def list_active_incident_cards():
+    incidents = sorted(store.get_incidents(), key=lambda item: item.detected_at, reverse=True)
+    return [
+        ActiveIncidentCard(
+            incident_id=incident.id,
+            detected_at=incident.detected_at,
+            incident_type=incident.incident_type,
+            title=incident.title,
+            severity=incident.severity,
+            affected_component=incident.affected_component,
+            likely_root_cause=incident.likely_root_cause,
+            probability_score=incident.probability_score,
+            confidence_label=incident.confidence_label,
+            evidence_count=incident.evidence_count,
+            primary_evidence=incident.primary_evidence,
+            evidence_links=list(incident.supporting_evidence_links),
+        )
+        for incident in incidents
+    ]
+
+
+@app.get("/incidents/{incident_id}/evidence", response_model=list[EvidenceRecord])
+def get_incident_evidence(incident_id: str):
+    incident = store.get_incident(incident_id)
+    if not incident:
+        raise HTTPException(status_code=404, detail="Incident not found")
+    return store.get_incident_evidence(incident_id)
+
+
+@app.get("/evidence", response_model=list[EvidenceRecord])
+def list_evidence():
+    return store.get_evidence_records()
+
+
+@app.get("/evidence/{evidence_id}", response_model=EvidenceRecord)
+def get_evidence(evidence_id: str):
+    evidence = store.get_evidence_record(evidence_id)
+    if not evidence:
+        raise HTTPException(status_code=404, detail="Evidence not found")
+    return evidence
 
 
 @app.get("/correlations", response_model=list[CorrelatedEvidence])
@@ -140,6 +184,7 @@ def simulate(request: SimulationRequest):
     incident = analyze_telemetry(persisted)
     if incident:
         store.add_incident(incident)
+        store.persist_incident_evidence(incident)
     correlation = correlation_enricher.ingest(persisted)
     if correlation:
         store.add_correlation(correlation)

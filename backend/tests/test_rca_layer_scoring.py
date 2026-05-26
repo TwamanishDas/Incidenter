@@ -29,6 +29,11 @@ class RCALayerScoringTests(unittest.TestCase):
 
         self.assertIsNotNone(incident)
         self.assertEqual(incident.severity.value, "critical")
+        self.assertGreaterEqual(incident.probability_score, 0.8)
+        self.assertEqual(incident.confidence_label, "high")
+        self.assertEqual(incident.evidence_count, len(incident.evidence))
+        self.assertEqual(incident.primary_evidence, incident.supporting_evidence[0])
+        self.assertEqual(incident.scoring_model_version, "phase4-step1.3-repeat-v1")
         scoring = incident.supporting_data.get("rca_scoring", {})
         self.assertEqual(scoring.get("model_version"), "phase4-step1.3-repeat-v1")
         self.assertEqual(scoring.get("layer"), "network")
@@ -63,6 +68,8 @@ class RCALayerScoringTests(unittest.TestCase):
 
         self.assertIsNotNone(incident)
         self.assertEqual(incident.severity.value, "warning")
+        self.assertEqual(incident.confidence_label, "low")
+        self.assertGreater(incident.probability_score, 0.0)
         scoring = incident.supporting_data.get("rca_scoring", {})
         self.assertEqual(scoring.get("layer"), "application")
         self.assertEqual(scoring.get("layer_signature_score"), 0.3)
@@ -111,6 +118,7 @@ class RCALayerScoringTests(unittest.TestCase):
 
         self.assertIsNotNone(first)
         self.assertIsNotNone(second)
+        self.assertEqual(first.incident_signature, second.incident_signature)
         first_scoring = first.supporting_data.get("rca_scoring", {})
         second_scoring = second.supporting_data.get("rca_scoring", {})
 
@@ -122,6 +130,7 @@ class RCALayerScoringTests(unittest.TestCase):
             second_scoring.get("composite_score_final"),
             second_scoring.get("composite_score_pre_repeat"),
         )
+        self.assertGreaterEqual(second.probability_score, first.probability_score)
 
 
 if __name__ == "__main__":

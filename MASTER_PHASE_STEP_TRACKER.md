@@ -1,6 +1,6 @@
 # Master Phase-Step Tracker
 
-Working: Phase 4 | Step 2.1 | Version v0.4.0 (next)
+Working: Phase 5 | Step 1.1 | Version v0.5.0 (execution)
 
 Purpose: single source of truth for phase, step, and sub-step execution status.
 
@@ -26,6 +26,8 @@ Purpose: single source of truth for phase, step, and sub-step execution status.
    - `PHASE3_STEP1_KQL_SIGNAL_PACKS.md`
    - `PHASE3_STEP2_CORRELATION_ENRICHER.md`
    - `PHASE4_STEP1_EVIDENCE_SCORING_MODEL.md`
+   - `PHASE4_STEP2_RCA_OUTPUT_CONTRACT.md`
+   - `PHASE5_STEP1_INCIDENT_DASHBOARD.md`
 7. Production-ready extension:
    - `PRODUCTION_READY_SCOPE.md`
 
@@ -34,8 +36,8 @@ Purpose: single source of truth for phase, step, and sub-step execution status.
 1. `v0.1.0` - Phase 1 completion baseline (tagged and published).
 2. `v0.2.0` - Phase 2 execution track (completed and tagged).
 3. `v0.3.0` - Phase 3 detection and correlation track (completed).
-4. `v0.4.0` - Phase 4 RCA engine target (in progress).
-5. `v0.5.0` - Phase 5 dashboard and notifications target.
+4. `v0.4.0` - Phase 4 RCA engine target (completed).
+5. `v0.5.0` - Phase 5 dashboard and notifications target (in progress).
 6. `v0.6.0` - Phase 6 validation and handoff target.
 
 ## Phase 1 - Data Ingestion Baseline (`v0.1.0`) [Completed]
@@ -198,7 +200,7 @@ Purpose: single source of truth for phase, step, and sub-step execution status.
 5. Runbook reference:
    - `PHASE3_STEP2_CORRELATION_ENRICHER.md`
 
-## Phase 4 - RCA Engine (`v0.4.0`) [In Progress]
+## Phase 4 - RCA Engine (`v0.4.0`) [Completed]
 
 ### Step 1 - Evidence scoring model [Completed]
 1. Sub-step 1.1: layer signature weighting.
@@ -230,16 +232,52 @@ Purpose: single source of truth for phase, step, and sub-step execution status.
 4. Runbook reference:
    - `PHASE4_STEP1_EVIDENCE_SCORING_MODEL.md`
 
-### Step 2 - RCA output contract [In Progress]
-1. Sub-step 2.1: finalize incident output fields. [Pending]
-2. Sub-step 2.2: persist supporting evidence links. [Pending]
+### Step 2 - RCA output contract [Completed]
+1. Sub-step 2.1: finalize incident output fields.
+   - Extended `Incident` model in `backend/models.py` with standardized contract fields [Completed]
+   - Added contract mapping in `backend/processors.py` [Completed]
+   - Added tests:
+   - `backend/tests/test_incident_output_contract.py` [Completed]
+   - `backend/tests/test_rca_layer_scoring.py` updated for contract assertions [Completed]
+   - Added runner:
+   - `backend/scripts/run_phase4_step2_contract.py` [Completed]
+   - Artifact:
+   - `artifacts/phase4_step2_contract_latest.json` (result: `pass`) [Completed]
+2. Sub-step 2.2: persist supporting evidence links.
+   - Added `EvidenceRecord` model in `backend/models.py` [Completed]
+   - Added evidence persistence/read APIs in `backend/data_store.py` [Completed]
+   - Integrated evidence persistence into:
+   - `POST /telemetry`
+   - `POST /simulate`
+   - Added evidence endpoints:
+   - `GET /incidents/{incident_id}/evidence`
+   - `GET /evidence`
+   - `GET /evidence/{evidence_id}`
+   - Added tests:
+   - `backend/tests/test_evidence_link_persistence.py` [Completed]
+   - Added runner:
+   - `backend/scripts/run_phase4_step2_evidence_links.py` [Completed]
+   - Artifact:
+   - `artifacts/phase4_step2_evidence_links_latest.json` (result: `pass`) [Completed]
+3. Runbook reference:
+   - `PHASE4_STEP2_RCA_OUTPUT_CONTRACT.md`
 
-## Phase 5 - Dashboard and Notifications (`v0.5.0`) [Pending]
+## Phase 5 - Dashboard and Notifications (`v0.5.0`) [In Progress]
 
-### Step 1 - Incident dashboard
+### Step 1 - Incident dashboard [In Progress]
 1. Sub-step 1.1: active incident list.
-2. Sub-step 1.2: RCA summary panel.
-3. Sub-step 1.3: trend/forecast chart.
+   - Added `ActiveIncidentCard` model in `backend/models.py` [Completed]
+   - Added endpoint `GET /dashboard/incidents/active` in `backend/app.py` [Completed]
+   - Added tests:
+   - `backend/tests/test_dashboard_active_incidents.py` [Completed]
+   - Added runner:
+   - `backend/scripts/run_phase5_step1_active_dashboard.py` [Completed]
+   - Artifact:
+   - `artifacts/phase5_step1_active_incidents_latest.json` [Completed]
+2. Sub-step 1.2: RCA summary panel. [Pending]
+3. Sub-step 1.3: trend/forecast chart. [Pending]
+4. Runbook reference:
+   - `PHASE5_STEP1_INCIDENT_DASHBOARD.md`
 
 ### Step 2 - Alert delivery
 1. Sub-step 2.1: monitor alert rules.
